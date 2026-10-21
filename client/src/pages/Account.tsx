@@ -77,13 +77,13 @@ export default function Account() {
                   More peace of mind.
                 </h2>
                 <p>
-                  Sign in or create an account securely with Manus. Your first
-                  sign-in creates your customer profile—no separate workshop
-                  password to remember.
+                  Sign in securely with Manus to view your private requests and
+                  keep your vehicle details ready for the workshop—no separate
+                  workshop password to remember.
                 </p>
                 <button onClick={beginLogin} className="btn btn-primary">
                   <UserRound size={16} />
-                  Sign in / create account
+                  Sign in to view request history
                   <ArrowRight size={16} />
                 </button>
                 <p className="small" style={{ marginTop: 20 }}>

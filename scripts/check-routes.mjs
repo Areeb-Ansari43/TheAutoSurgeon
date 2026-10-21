@@ -18,6 +18,9 @@ const pages = [
   "/guides/tyre-safety-checks",
   "/guides/warning-lights",
   "/guides/wheel-alignment-signs",
+  "/guides/emergency-car-repair-hayes",
+  "/guides/car-maintenance-checklist",
+  "/guides/after-a-pothole-or-kerb-hit",
   "/contact",
   "/book",
   "/quote",
@@ -43,8 +46,15 @@ for (const path of pages) {
     text.includes("<!--app-html-->")
   )
     throw new Error(`Invalid initial response for ${path}: ${response.status}`);
-  if (path === "/missing-page" && !text.includes("Page Not Found")) throw new Error("Missing-page title is not correct");
-  if (path === "/services/wheel-alignment" && !text.includes("Wheel Alignment in Hayes")) throw new Error("Service page metadata is not route-specific");
+  if (path === "/missing-page" && !text.includes("Page Not Found"))
+    throw new Error("Missing-page title is not correct");
+  if (path === "/services" && !text.includes("URGENT CAR REPAIRS IN HAYES"))
+    throw new Error("Combined Services sections missing");
+  if (
+    path === "/services/wheel-alignment" &&
+    !text.includes("Wheel Alignment in Hayes")
+  )
+    throw new Error("Service page metadata is not route-specific");
   for (const match of text.matchAll(/(?:src|href)="(\/assets\/[^"\s]+)"/g))
     assets.add(match[1]);
   console.log(`${response.status} ${path} — ${text.length} chars`);

@@ -12,13 +12,13 @@ export const staticPages: PageMeta[] = [
     path: "/",
     title: "The Auto Surgeon — Precision Car Care in Hayes",
     description:
-      "Tyres, wheel alignment, brakes, oil service and vehicle diagnostics in Hayes UB3. Clear labour prices and expert care. Request your inspection.",
+      "Car repairs, emergency vehicle help, tyres, brakes, wheel alignment and diagnostics in Hayes UB3. Call The Auto Surgeon for fast, quality car care.",
   },
   {
     path: "/services",
-    title: "Car Repair & Maintenance Services — The Auto Surgeon",
+    title: "Car Repairs, Tyres & Pricing in Hayes — The Auto Surgeon",
     description:
-      "Explore tyre fitting, wheel alignment, brake service, engine oil, diagnostics and Tesla alignment at The Auto Surgeon workshop in Hayes.",
+      "Compare car repair services, tyre fitting, puncture repairs and transparent labour pricing in one Hayes workshop hub. Call for urgent repair help.",
   },
   {
     path: "/tyres",
@@ -34,9 +34,9 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/about",
-    title: "About Our Hayes Workshop — The Auto Surgeon",
+    title: "Quality Car Care in Hayes — About The Auto Surgeon",
     description:
-      "Discover The Auto Surgeon's approach to car care: inspect first, explain clearly and agree the work before starting. Local expertise in Hayes UB3.",
+      "The Auto Surgeon is a Hayes car-care workshop delivering quality repairs, honest advice and careful workmanship after a year serving local drivers.",
   },
   {
     path: "/workshop",
@@ -58,15 +58,15 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/guides",
-    title: "Vehicle Care & Warning Sign Guides — The Auto Surgeon",
+    title: "Car Repair & Emergency Care Guides in Hayes",
     description:
-      "Practical, safety-minded car-care guides on tyre checks, warning lights and signs of poor alignment. Know when to seek a professional inspection.",
+      "Find practical guides on tyres, warning lights, emergency car repairs, maintenance, pothole damage and wheel alignment from The Auto Surgeon in Hayes.",
   },
   {
     path: "/contact",
-    title: "Contact & Find Us in Hayes — The Auto Surgeon",
+    title: "Contact Emergency Car Repairs in Hayes — The Auto Surgeon",
     description:
-      "Visit Unit 3 Squirrels Trading Estate, Viveash Close, Hayes UB3 4RZ. Call 07767 909397, view directions or send a workshop inquiry.",
+      "Need car repair help in Hayes? Call 07767 909397 for urgent vehicle advice, view our workshop map or send The Auto Surgeon a message.",
   },
   {
     path: "/book",
@@ -97,8 +97,9 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/register",
-    title: "Create Your Customer Account — The Auto Surgeon",
-    description: "Create your customer account securely through Manus sign-in.",
+    title: "Customer Account Access — The Auto Surgeon",
+    description:
+      "Sign in securely to view private vehicle requests and customer details.",
     private: true,
   },
   {

@@ -8,7 +8,6 @@ import { PageIntro, SectionHead } from "@/components/Site";
 import { RequestConfirmation } from "./Request";
 
 export default function Contact() {
-  const [map, setMap] = useState(false);
   const [fields, setFields] = useState({
     name: "",
     email: "",
@@ -40,22 +39,32 @@ export default function Contact() {
   return (
     <>
       <PageIntro
-        eyebrow="VISIT THE WORKSHOP"
+        eyebrow="CONTACT & EMERGENCY REPAIRS"
         title={
           <>
-            Local expertise.
+            Car help.
             <br />
             <span className="orange-text">Right here in Hayes.</span>
           </>
         }
-        description="Call for advice, request an inspection or drop into the workshop. Walk-ins are welcome; calling ahead helps us check capacity and parts availability."
-      />
+        description="Call The Auto Surgeon for emergency car repair advice in Hayes, UB3. We’ll aim to get urgent repair enquiries moving as quickly as possible, subject to safety, parts and workshop capacity."
+      >
+        <div className="intro-buttons">
+          <a href={business.tel} className="btn btn-primary">
+            <Phone size={16} /> Call {business.phone}
+          </a>
+          <Link href="/services#emergency" className="btn btn-ghost">
+            Emergency repair information <ArrowRight size={16} />
+          </Link>
+        </div>
+      </PageIntro>
       <section className="section section-alt">
         <div className="container contact-layout">
-          <div>
+          <div className="contact-panel">
             <SectionHead
-              eyebrow="LET’S TALK CARS"
-              title="Easy to find. Easier to talk to."
+              eyebrow="VISIT THE WORKSHOP"
+              title="Easy to find. Easy to contact."
+              description="Use the map for directions, call for urgent vehicle problems or send the workshop a message beside it."
             />
             <div className="contact-row">
               <span className="icon-box">
@@ -77,6 +86,9 @@ export default function Contact() {
               <div>
                 <h3>Call the workshop</h3>
                 <a href={business.tel}>{business.phone}</a>
+                <p className="small">
+                  For emergencies, call rather than waiting for a form reply.
+                </p>
               </div>
             </div>
             <div className="contact-row">
@@ -101,87 +113,35 @@ export default function Contact() {
                 </p>
               </div>
             </div>
-            <div className="intro-buttons">
-              <Link href="/book" className="btn btn-primary">
-                Request an inspection
-                <ArrowRight size={16} />
-              </Link>
-              <a href={business.tel} className="btn btn-ghost">
-                <Phone size={16} />
-                Call now
-              </a>
-            </div>
-          </div>
-          <div>
-            {map ? (
+            <div className="map-frame-wrap">
               <iframe
                 className="contact-map"
-                title="The Auto Surgeon workshop location"
+                title="The Auto Surgeon car repair workshop in Hayes"
                 src="https://maps.google.com/maps?q=Unit%203%20Squirrels%20Trading%20Estate%20Viveash%20Close%20Hayes%20UB3%204RZ&t=m&z=15&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
-            ) : (
-              <div className="map-consent">
-                <MapPin size={37} strokeWidth={1.3} />
-                <div className="eyebrow">HAYES / UB3 4RZ</div>
-                <h3>Find your way to the workshop.</h3>
-                <p>
-                  Load the interactive Google map, or open directions in a
-                  separate tab. Loading the map shares connection details with
-                  Google.
-                </p>
-                <button onClick={() => setMap(true)} className="btn btn-ghost">
-                  Load workshop map
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            )}
-            <div className="contact-map-links">
-              <a
-                href={business.maps}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-link"
-              >
-                Open Google Maps
-                <ArrowRight size={16} />
-              </a>
-              {map && (
-                <button
-                  className="text-link"
-                  style={{ background: "none", border: 0 }}
-                  onClick={() => setMap(false)}
-                >
-                  Hide map
-                </button>
-              )}
             </div>
-            <div className="info-note">
-              <MapPin size={20} />
-              <p>
-                Enter via Viveash Close and look for Unit 3 at Squirrels Trading
-                Estate. Free on-site parking is listed in our original workshop
-                information. Call if you need help finding us.
-              </p>
-            </div>
+            <a
+              href={business.maps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link"
+            >
+              Open directions in Google Maps <ArrowRight size={16} />
+            </a>
           </div>
-        </div>
-      </section>
-      <section className="section">
-        <div className="container">
-          <SectionHead
-            eyebrow="SEND AN INQUIRY"
-            title="A question? We’re all ears."
-            description="For urgent vehicle safety concerns, please call instead of using this form."
-          />
-          {reference ? (
-            <RequestConfirmation reference={reference} kind="contact" />
-          ) : (
-            <div className="form-layout">
+          <div className="contact-form-panel">
+            {reference ? (
+              <RequestConfirmation reference={reference} kind="contact" />
+            ) : (
               <form className="form-card" onSubmit={submit}>
-                <h2>Message the workshop.</h2>
-                <p className="form-lead">Fields marked * are required.</p>
+                <div className="eyebrow">SEND A MESSAGE</div>
+                <h2>Tell us what your car needs.</h2>
+                <p className="form-lead">
+                  For urgent or unsafe vehicle problems, call first. Fields
+                  marked * are required.
+                </p>
                 <div className="form-grid">
                   <div className="field">
                     <label htmlFor="contact-name">
@@ -214,7 +174,7 @@ export default function Contact() {
                     />
                   </div>
                   <div className="field">
-                    <label htmlFor="contact-phone">Phone (optional)</label>
+                    <label htmlFor="contact-phone">Phone</label>
                     <input
                       id="contact-phone"
                       type="tel"
@@ -236,6 +196,7 @@ export default function Contact() {
                     >
                       {[
                         "General inquiry",
+                        "Emergency repair help",
                         "Existing appointment",
                         "Service question",
                         "Tyre availability",
@@ -257,7 +218,7 @@ export default function Contact() {
                       minLength={10}
                       maxLength={3000}
                       onChange={e => update("message", e.target.value)}
-                      placeholder="Tell us how we can help…"
+                      placeholder="Tell us what happened, what warning light appeared or what work you need…"
                     />
                   </div>
                 </div>
@@ -287,41 +248,19 @@ export default function Contact() {
                   >
                     {mutation.isPending ? (
                       <>
-                        <Loader2 size={16} className="spinner" />
-                        Saving message…
+                        <Loader2 size={16} className="spinner" /> Saving
+                        message…
                       </>
                     ) : (
                       <>
-                        Send your message
-                        <ArrowRight size={16} />
+                        Send your message <ArrowRight size={16} />
                       </>
                     )}
                   </button>
                 </div>
               </form>
-              <aside className="booking-summary">
-                <div className="eyebrow">NEED SOMETHING SPECIFIC?</div>
-                <h2>
-                  The right route
-                  <br />
-                  for your request.
-                </h2>
-                <p className="small">
-                  For an accurate service quote, include your vehicle details
-                  using our dedicated quote form. To request a visit, choose
-                  your preferred timing on the booking page.
-                </p>
-                <Link href="/quote" className="btn btn-ghost full-width">
-                  Request a quote
-                  <ArrowRight size={16} />
-                </Link>
-                <Link href="/book" className="btn btn-primary full-width">
-                  Request a visit
-                  <ArrowRight size={16} />
-                </Link>
-              </aside>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
     </>

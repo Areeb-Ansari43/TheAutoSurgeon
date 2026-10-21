@@ -6,7 +6,7 @@ import {
   Clock3,
   ShieldCheck,
 } from "lucide-react";
-import { services, labourPrices } from "@shared/catalog";
+import { services, labourPrices, business } from "@shared/catalog";
 import {
   CTA,
   FAQs,
@@ -31,7 +31,7 @@ export function ServicesHub() {
       />
       <section className="section section-alt">
         <div className="container">
-          <div className="service-grid">
+          <div id="services" className="service-grid">
             {services.map((service, index) => (
               <ServiceCard service={service} index={index} key={service.slug} />
             ))}
@@ -47,6 +47,86 @@ export function ServicesHub() {
               <ArrowRight size={17} />
             </Link>
           </div>
+        </div>
+      </section>
+      <section id="tyres" className="section">
+        <div className="container">
+          <SectionHead
+            eyebrow="TYRES & PUNCTURES"
+            title="The right tyre, fitted properly."
+            description="From emergency pressure loss to planned replacements, we check the specification, condition and fit before you leave."
+            link="/tyres"
+            label="See tyre options"
+          />
+          <div className="tyre-options compact-tyres">
+            {tiers.map(tier => (
+              <Link
+                href={`/quote?service=Tyre%20Fitting&notes=${encodeURIComponent(tier.name + " tyre options")}`}
+                className="tyre-option"
+                key={tier.name}
+              >
+                <span className="eyebrow">{tier.tag}</span>
+                <h3>{tier.name}</h3>
+                <p>{tier.text}</p>
+                <span className="text-link">
+                  Request options <ArrowRight size={15} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section id="pricing" className="section section-alt">
+        <div className="container pricing-layout">
+          <div>
+            <SectionHead
+              eyebrow="CLEAR PRICING"
+              title="Honest labour prices."
+              description="One services page, one place to compare the work we offer and the starting labour price. Parts are confirmed separately unless noted."
+              link="/pricing"
+              label="Open full price list"
+            />
+            <div className="pricing-table compact-pricing">
+              {labourPrices.map(item => (
+                <Link
+                  href={`/quote?service=${encodeURIComponent(item.service)}`}
+                  className="pricing-row"
+                  key={item.name}
+                  aria-label={`Request a quote for ${item.name}`}
+                >
+                  <div>
+                    <h3>{item.name}</h3>
+                    <p>{item.note}</p>
+                  </div>
+                  <span
+                    className={
+                      item.price === null ? "inspection-price" : "listed-price"
+                    }
+                  >
+                    {item.price === null
+                      ? "Price on inspection"
+                      : `£${item.price}`}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <aside id="emergency" className="booking-summary emergency-summary">
+            <div className="eyebrow">URGENT CAR REPAIRS IN HAYES</div>
+            <h2>Need your car fixed quickly?</h2>
+            <p>
+              If your car has a puncture, warning light, braking concern or
+              sudden fault, call us first. We’ll aim to assess urgent repair
+              enquiries as quickly as possible, subject to safety, parts and
+              workshop capacity.
+            </p>
+            <a href={business.tel} className="btn btn-primary full-width">
+              Call {business.phone} <ArrowRight size={16} />
+            </a>
+            <Link href="/contact" className="btn btn-ghost full-width">
+              Send an urgent message
+            </Link>
+          </aside>
         </div>
       </section>
       <CTA />

@@ -62,8 +62,8 @@ function AboutPage() {
     <>
       <PageIntro
         eyebrow="About The Auto Surgeon"
-        title="Clear advice. Measured work."
-        lead="The Auto Surgeon is a Hayes workshop for the everyday maintenance and diagnostic questions that deserve a straightforward answer before work begins."
+        title="Quality car care, based in Hayes."
+        lead="The Auto Surgeon is a Hayes workshop delivering careful, high-quality car care, repairs and vehicle advice for drivers who want a clear answer and a proper fix."
       />
 
       <section className="section">
@@ -71,20 +71,20 @@ function AboutPage() {
           <div className="content-copy">
             <p className="eyebrow">How we approach a job</p>
             <h2 className="section-heading">
-              Start with the vehicle in front of us
+              A year of doing car care properly
             </h2>
             <p>
-              Whether the issue is tyre wear, braking, an engine warning light
-              or steering that no longer feels right, the useful first step is
-              to understand the symptom and inspect the relevant system. We
-              focus on explaining the check, the findings and the practical next
-              step.
+              Based in Hayes, we have spent the last year building The Auto
+              Surgeon around one simple promise: do the best quality work we
+              can, explain what the vehicle needs and never make a driver feel
+              rushed into work they do not understand.
             </p>
             <p>
-              That means no assumptions based only on a dashboard light or a
-              noise described over the phone. Bring the vehicle in, share what
-              has changed, and we can help you decide what should be looked at
-              first.
+              Whether it is tyre wear, braking, a warning light, steering that
+              no longer feels right or an emergency repair, we start with the
+              vehicle in front of us. We inspect the relevant system, explain
+              the finding and work towards getting you safely back on the road
+              as quickly as possible.
             </p>
             <Link href="/workshop" className="text-link">
               Explore workshop services

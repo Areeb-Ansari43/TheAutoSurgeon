@@ -9,16 +9,12 @@ import {
   Menu,
   Phone,
   ShieldCheck,
-  UserRound,
   X,
 } from "lucide-react";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { business, type Service } from "@shared/catalog";
 
 const links = [
   ["/services", "Services"],
-  ["/tyres", "Tyres"],
-  ["/pricing", "Pricing"],
   ["/about", "About"],
   ["/guides", "Car care"],
   ["/contact", "Contact"],
@@ -27,9 +23,10 @@ const links = [
 export function SiteHeader() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
+  const [servicesOpen, setServicesOpen] = useState(false);
   useEffect(() => {
     setOpen(false);
+    setServicesOpen(false);
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
   useEffect(() => {
@@ -60,7 +57,37 @@ export function SiteHeader() {
           </Link>
           <div className="nav-divider" />
           <nav className="desktop-nav" aria-label="Main navigation">
-            {links.map(([path, label]) => (
+            <div className="nav-menu-wrap">
+              <button
+                className={
+                  active("/services")
+                    ? "island-link active nav-menu-trigger"
+                    : "island-link nav-menu-trigger"
+                }
+                onClick={() => setServicesOpen(value => !value)}
+                aria-expanded={servicesOpen}
+                aria-haspopup="menu"
+              >
+                Services <ChevronDown size={12} />
+              </button>
+              {servicesOpen && (
+                <div className="nav-dropdown" role="menu">
+                  <Link href="/services" role="menuitem">
+                    All services <ArrowRight size={14} />
+                  </Link>
+                  <Link href="/services#tyres" role="menuitem">
+                    Tyres & punctures <ArrowRight size={14} />
+                  </Link>
+                  <Link href="/services#pricing" role="menuitem">
+                    Pricing <ArrowRight size={14} />
+                  </Link>
+                  <Link href="/services#emergency" role="menuitem">
+                    Emergency repairs <ArrowRight size={14} />
+                  </Link>
+                </div>
+              )}
+            </div>
+            {links.slice(1).map(([path, label]) => (
               <Link
                 key={path}
                 href={path}
@@ -68,18 +95,18 @@ export function SiteHeader() {
                 aria-current={active(path) ? "page" : undefined}
               >
                 {label}
-                {label === "Services" && <ChevronDown size={12} />}
               </Link>
             ))}
           </nav>
           <div className="island-actions">
-            <Link
-              href="/account"
-              className="account-link"
-              aria-label={user ? "Your account" : "Sign in or register"}
+            <a
+              href={business.tel}
+              className="header-phone"
+              aria-label={`Call The Auto Surgeon on ${business.phone}`}
             >
-              <UserRound size={18} />
-            </Link>
+              <Phone size={16} />
+              <span>{business.phone}</span>
+            </a>
             <Link href="/book" className="btn btn-primary nav-book">
               <CalendarDays size={15} />
               <span>Book inspection</span>
@@ -104,7 +131,22 @@ export function SiteHeader() {
             <Link href="/" className="island-link">
               Home
             </Link>
-            {links.map(([path, label]) => (
+            <div className="mobile-service-links">
+              <span className="mobile-nav-label">Services</span>
+              <Link href="/services" className="island-link">
+                All services <ArrowRight size={15} />
+              </Link>
+              <Link href="/services#tyres" className="island-link">
+                Tyres & punctures <ArrowRight size={15} />
+              </Link>
+              <Link href="/services#pricing" className="island-link">
+                Pricing <ArrowRight size={15} />
+              </Link>
+              <Link href="/services#emergency" className="island-link">
+                Emergency repairs <ArrowRight size={15} />
+              </Link>
+            </div>
+            {links.slice(1).map(([path, label]) => (
               <Link
                 key={path}
                 href={path}
@@ -115,10 +157,6 @@ export function SiteHeader() {
                 <ArrowRight size={15} />
               </Link>
             ))}
-            <Link href="/account" className="island-link">
-              {user ? "My account" : "Sign in / register"}
-              <UserRound size={15} />
-            </Link>
             <a href={business.tel} className="mobile-phone">
               <Phone size={15} />
               {business.phone}
