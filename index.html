@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Auto Surgeon — Precision Repairs. Expert Service.</title>
+  <meta name="description" content="Tyre fitting, wheel alignment, brakes, diagnostics and full mechanic services in Hayes, UB3. Walk-ins welcome. Call 07767 909397.">
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── design tokens ── */
+    :root {
+      --primary-orange:#F26A00;--dark-orange:#D35400;--ember-orange:#FF8A2A;
+      --black:#0B0B0B;--charcoal:#161616;--gunmetal:#2B2B2B;--steel:#3A3A3A;
+      --silver:#D9D9D9;--mist:#9CA0A6;--white:#FFFFFF;--footer-black:#050505;
+      --success:#34C759;--warning:#FFB020;--danger:#FF4D4F;
+      --grad-orange:linear-gradient(90deg,#F26A00 0%,#D35400 100%);
+      --grad-metal:linear-gradient(180deg,#F4F4F4 0%,#B8B8B8 50%,#6E6E6E 100%);
+      --grad-hero:radial-gradient(120% 80% at 20% 0%,rgba(242,106,0,.18) 0%,rgba(11,11,11,0) 55%),#0B0B0B;
+      --glow-orange:0 0 0 1px rgba(242,106,0,.35),0 0 24px rgba(242,106,0,.45);
+      --glow-orange-sm:0 0 16px rgba(242,106,0,.35);
+      --bg:var(--black);--bg-1:var(--charcoal);--bg-2:var(--gunmetal);--bg-3:#1F1F1F;
+      --bg-footer:var(--footer-black);
+      --fg:var(--white);--fg-1:var(--silver);--fg-2:var(--mist);--fg-accent:var(--primary-orange);
+      --border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.16);--border-orange:rgba(242,106,0,.55);
+      --font-display:"Orbitron","Rajdhani",system-ui,sans-serif;
+      --font-heading:"Rajdhani","Orbitron",system-ui,sans-serif;
+      --font-body:"Montserrat","Inter",system-ui,sans-serif;
+      --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+      --fs-display:88px;--fs-h1:56px;--fs-h2:40px;--fs-h3:28px;--fs-h4:22px;
+      --fs-lead:20px;--fs-body:16px;--fs-small:14px;--fs-micro:12px;
+      --lh-tight:1.05;--lh-snug:1.2;--lh-normal:1.5;--lh-loose:1.7;
+      --tracking-display:.02em;--tracking-eyebrow:.18em;--tracking-button:.08em;
+      --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;
+      --s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
+      --r-xs:4px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:20px;--r-pill:999px;
+      --shadow-1:0 1px 0 rgba(255,255,255,.04) inset,0 1px 2px rgba(0,0,0,.4);
+      --shadow-2:0 4px 14px rgba(0,0,0,.45);--shadow-3:0 12px 32px rgba(0,0,0,.55);
+      --shadow-orange:0 8px 24px rgba(242,106,0,.35);
+      --ease-out:cubic-bezier(.16,1,.3,1);--ease-in-out:cubic-bezier(.65,0,.35,1);
+      --dur-fast:120ms;--dur:200ms;--dur-slow:360ms;
+    }
+    /* ── type classes ── */
+    .eyebrow{font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--primary-orange);}
+    .lead{font-family:var(--font-body);font-size:var(--fs-lead);line-height:var(--lh-normal);color:var(--fg-1);font-weight:400;}
+    p,.body{font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-normal);color:var(--fg-1);margin:0;}
+    .small{font-family:var(--font-body);font-size:var(--fs-small);line-height:var(--lh-normal);color:var(--fg-2);}
+    .micro{font-family:var(--font-body);font-size:var(--fs-micro);line-height:var(--lh-normal);color:var(--fg-2);letter-spacing:.02em;}
+    .mono{font-family:var(--font-mono);font-size:var(--fs-small);color:var(--fg-1);}
+    .price{font-family:var(--font-display);font-weight:700;color:var(--primary-orange);letter-spacing:.02em;}
+    h1,.h1{font-family:var(--font-display);font-weight:900;font-size:var(--fs-h1);line-height:var(--lh-tight);text-transform:uppercase;letter-spacing:.01em;color:var(--white);margin:0;}
+    h2,.h2{font-family:var(--font-heading);font-weight:700;font-size:var(--fs-h2);line-height:var(--lh-snug);text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin:0;}
+    h3,.h3{font-family:var(--font-heading);font-weight:700;font-size:var(--fs-h3);line-height:var(--lh-snug);letter-spacing:.02em;color:var(--white);margin:0;}
+    /* ── site styles ── */
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-body);-webkit-font-smoothing:antialiased;}
+    img{max-width:100%;display:block;}
+    a{color:var(--silver);text-decoration:none;}
+    a:hover{color:var(--white);}
+    button{font:inherit;}
+    .container{max-width:1280px;margin:0 auto;padding:0 32px;}
+    /* buttons */
+    .btn{font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:var(--tracking-button);text-transform:uppercase;padding:14px 22px;border-radius:var(--r-md);border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:10px;line-height:1;transition:background var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out),color var(--dur) var(--ease-out),transform var(--dur-fast) var(--ease-out);position:relative;overflow:hidden;}
+    .btn:active{transform:translateY(1px);}
+    .btn-primary{background:var(--primary-orange);color:#0B0B0B;}
+    .btn-primary:hover{background:var(--ember-orange);box-shadow:var(--shadow-orange);}
+    .btn-ghost{background:transparent;color:#fff;border-color:var(--border-strong);}
+    .btn-ghost:hover{border-color:var(--primary-orange);color:var(--primary-orange);}
+    .btn-outline{background:transparent;color:var(--primary-orange);border:1px solid var(--border-orange);}
+    .btn-outline:hover{background:rgba(242,106,0,.08);}
+    .btn-sm{padding:9px 14px;font-size:12px;}
+    .btn-lg{padding:18px 28px;font-size:16px;}
+    .btn__pulse{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.35) 50%,transparent 100%);transform:translateX(-100%);opacity:0;animation:ctaPulse 6s linear infinite;}
+    @keyframes ctaPulse{0%,80%,100%{transform:translateX(-100%);opacity:0;}85%,95%{transform:translateX(100%);opacity:.6;}}
+    /* chips */
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r-pill);font-family:var(--font-display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:var(--bg-2);}
+    .chip--open{background:rgba(52,199,89,.10);color:var(--success);border-color:rgba(52,199,89,.4);}
+    .chip--open .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 6px var(--success);}
+    .chip--neutral{background:rgba(255,255,255,.03);}
+    /* nav */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:32px;padding:14px 32px;transition:background var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out);border-bottom:1px solid transparent;}
+    .nav.is-scrolled{background:rgba(11,11,11,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom-color:var(--border);}
+    .nav__brand{display:inline-flex;align-items:center;gap:12px;color:#fff;}
+    .nav__links{display:flex;gap:28px;margin-left:24px;}
+    .nav__link{font-family:var(--font-heading);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--silver);position:relative;padding:6px 0;}
+    .nav__link::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--primary-orange);transition:width var(--dur) var(--ease-out);}
+    .nav__link:hover{color:#fff;}
+    .nav__link:hover::after{width:100%;}
+    .nav__cta{margin-left:auto;display:flex;align-items:center;gap:16px;}
+    .nav__phone{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-family:var(--font-mono);font-size:13px;color:var(--silver);}
+    .nav__menu{display:none;background:transparent;border:1px solid var(--border-strong);color:#fff;border-radius:var(--r-sm);padding:8px;cursor:pointer;}
+    .nav__mobile{display:none;position:fixed;top:0;left:0;right:0;z-index:49;background:rgba(11,11,11,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:140px 32px 32px;flex-direction:column;gap:4px;border-bottom:1px solid var(--border);}
+    .nav__mobile.is-open{display:flex;}
+    .nav__mobile .nav__link{font-size:20px;padding:14px 0;border-bottom:1px solid var(--border);}
+    .nav__mobile .nav__phone{padding:16px 0;font-size:15px;}
+    @media(max-width:980px){.nav__links,.nav__phone{display:none;}.nav__menu{display:inline-flex;}}
+    /* hero */
+    .hero{background:var(--grad-hero);padding:140px 0 96px;position:relative;overflow:hidden;}
+    .hero::before{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:var(--border);}
+    .hero__inner{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center;}
+    .hero__copy{display:grid;gap:20px;}
+    .hero__title{font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5.5vw,76px);line-height:1.02;letter-spacing:.01em;text-transform:uppercase;color:#fff;margin:0;text-wrap:balance;}
+    .hero__title .orange{color:var(--primary-orange);}
+    .hero__lead{max-width:540px;}
+    .hero__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;}
+    .hero__bullets{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:var(--silver);}
+    .hero__bullets li{display:inline-flex;align-items:center;gap:8px;}
+    .hero__visual{position:relative;border:1px solid var(--border);background:var(--bg-2);border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3.4;box-shadow:var(--shadow-3);}
+    .hero__visual-inner{position:absolute;inset:0;}
+    .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+    .hero__photo-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,11,11,0) 30%,rgba(11,11,11,.55) 100%),radial-gradient(120% 80% at 20% 10%,rgba(242,106,0,.15),transparent 55%);}
+    .hero__corner{position:absolute;top:14px;right:14px;padding:8px 12px;border-radius:var(--r-sm);background:rgba(11,11,11,.6);backdrop-filter:blur(6px);border:1px solid var(--border-orange);}
+    .hero__ribbon{position:absolute;left:16px;bottom:16px;right:16px;display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r-md);background:rgba(11,11,11,.7);backdrop-filter:blur(8px);border:1px solid var(--border-strong);font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:.04em;color:#fff;}
+    @media(max-width:980px){.hero__inner{grid-template-columns:1fr;}.hero{padding-top:110px;}}
+    /* sections */
+    .section{padding:96px 0;position:relative;}
+    .section--black{background:var(--black);}
+    .section--charcoal{background:var(--charcoal);}
+    .section__head{max-width:720px;margin:0 auto 48px;text-align:center;display:grid;gap:12px;}
+    .section__head h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,44px);}
+    /* service grid */
+    .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+    .svc{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:0;text-align:left;cursor:pointer;position:relative;overflow:hidden;display:grid;gap:10px;align-content:start;color:var(--silver);transition:background var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out),transform var(--dur) var(--ease-out);}
+    .svc>:not(.svc__photo):not(.svc__rule){margin-left:22px;margin-right:22px;}
+    .svc>.svc__title{margin-top:16px;}
+    .svc>.svc__foot{margin-bottom:22px;}
+    .svc:hover{background:var(--bg-3);border-color:var(--border-strong);}
+    .svc--active{background:var(--bg-3);border-color:var(--border-orange);}
+    .svc__photo{position:relative;height:180px;overflow:hidden;border-bottom:1px solid var(--border);background:#0B0B0B;}
+    .svc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.72) contrast(1.12) saturate(.85) hue-rotate(-6deg);transition:transform var(--dur-slow) var(--ease-out),filter var(--dur) var(--ease-out);}
+    .svc:hover .svc__photo img{transform:scale(1.04);filter:brightness(.82) contrast(1.12) saturate(.95) hue-rotate(-6deg);}
+    .svc--active .svc__photo img{filter:brightness(.85) contrast(1.15) saturate(1) hue-rotate(-6deg);}
+    .svc__photo-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,11,11,.25) 0%,rgba(11,11,11,0) 35%,rgba(11,11,11,.85) 100%),radial-gradient(80% 60% at 15% 90%,rgba(242,106,0,.18),transparent 60%);mix-blend-mode:normal;}
+    .svc__ic{position:absolute;left:14px;bottom:14px;width:36px;height:36px;border-radius:var(--r-md);display:inline-flex;align-items:center;justify-content:center;background:rgba(11,11,11,.7);backdrop-filter:blur(6px);border:1px solid var(--border-strong);color:var(--silver);}
+    .svc--active .svc__ic{background:rgba(242,106,0,.92);border-color:var(--primary-orange);color:#0B0B0B;}
+    .svc__title{font-family:var(--font-heading);font-weight:700;font-size:20px;color:#fff;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;}
+    .svc__desc{color:var(--mist);font-size:13.5px;line-height:1.55;}
+    .svc__foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+    .svc__from{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);margin-right:6px;font-family:var(--font-display);}
+    .svc__price{font-family:var(--font-display);font-weight:700;color:var(--primary-orange);font-size:18px;letter-spacing:.04em;}
+    .svc__meta{font-size:11px;color:var(--fg-2);letter-spacing:.08em;text-transform:uppercase;}
+    .svc__rule{position:absolute;left:22px;right:22px;bottom:0;height:1px;background:var(--border);transition:background var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
+    .svc--active .svc__rule{background:var(--primary-orange);box-shadow:0 0 12px rgba(242,106,0,.55);}
+    @media(max-width:860px){.svc-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:560px){.svc-grid{grid-template-columns:1fr;}}
+    /* price list */
+    .price-card{max-width:920px;margin:0 auto;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-2);}
+    .price-card__head{display:flex;justify-content:space-between;padding:16px 24px;background:var(--bg);font-family:var(--font-display);font-size:11px;letter-spacing:.18em;color:var(--fg-2);border-bottom:1px solid var(--border);}
+    .price-card__rows{display:grid;}
+    .price-row{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border);transition:background var(--dur) var(--ease-out);}
+    .price-row:hover{background:rgba(242,106,0,.03);}
+    .price-row:last-child{border-bottom:none;}
+    .price-row__svc{font-size:15px;color:var(--silver);}
+    .price-row__val{font-family:var(--font-display);font-weight:700;color:var(--primary-orange);font-size:16px;letter-spacing:.04em;white-space:nowrap;}
+    .price-row__val--poi{color:var(--silver);font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;}
+    .price-card__foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--border);background:var(--bg);}
+    /* tyre tiers */
+    .tyre-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+    .tyre{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;display:grid;gap:10px;align-content:start;}
+    .tyre__top{display:flex;align-items:center;justify-content:space-between;}
+    .tyre__viz{width:56px;height:56px;border-radius:var(--r-pill);background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+    .tyre__bars{display:flex;gap:3px;}
+    .tyre__bars .bar{width:6px;height:18px;background:var(--steel);border-radius:1px;}
+    .tyre__bars .bar.on{background:var(--primary-orange);}
+    .tyre__name{font-family:var(--font-display);font-weight:700;color:#fff;font-size:16px;letter-spacing:.04em;text-transform:uppercase;}
+    .tyre__sub{color:var(--mist);font-size:12px;}
+    .tyre__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+    .tyre__tags .chip{padding:4px 8px;font-size:10px;}
+    @media(max-width:980px){.tyre-grid{grid-template-columns:repeat(2,1fr);}}
+    /* testimonials */
+    .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+    .testi-card{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;margin:0;display:grid;gap:14px;align-content:start;}
+    .testi-card__stars{display:inline-flex;gap:2px;color:var(--primary-orange);}
+    .testi-card__text{font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.45;color:#fff;margin:0;}
+    .testi-card__by{display:flex;gap:12px;align-items:center;margin:0;}
+    .testi-card__avatar{width:36px;height:36px;border-radius:50%;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--silver);}
+    .testi-card__name{font-family:var(--font-display);font-size:12px;letter-spacing:.12em;color:#fff;text-transform:uppercase;}
+    .testi-card__car{font-size:12px;color:var(--fg-2);}
+    @media(max-width:860px){.testi-grid{grid-template-columns:1fr;}}
+    /* contact */
+    .contact__inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;}
+    .contact__left{display:grid;gap:16px;align-content:start;}
+    .contact__rows{display:grid;gap:16px;margin-top:16px;}
+    .contact__row{display:flex;gap:14px;align-items:flex-start;}
+    .contact__ic{width:40px;height:40px;flex:none;border-radius:var(--r-md);background:rgba(242,106,0,.10);border:1px solid var(--border-orange);display:flex;align-items:center;justify-content:center;}
+    .contact__val{font-size:14px;color:var(--silver);line-height:1.5;}
+    .contact__ctas{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+    .map{position:relative;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg);overflow:hidden;min-height:420px;box-shadow:var(--shadow-2);}
+    .map__frame{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.55) invert(.88) hue-rotate(180deg) brightness(.95) contrast(.95);}
+    .map__chip{position:absolute;left:14px;top:14px;background:rgba(11,11,11,.75);backdrop-filter:blur(8px);padding:4px;border-radius:var(--r-pill);border:1px solid var(--border-strong);z-index:2;}
+    .map__open{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--r-md);background:var(--primary-orange);color:#0B0B0B;font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;box-shadow:var(--shadow-orange);z-index:2;transition:background var(--dur) var(--ease-out);}
+    .map__open:hover{background:var(--ember-orange);color:#0B0B0B;}
+    @media(max-width:860px){.contact__inner{grid-template-columns:1fr;}.map{min-height:280px;}}
+    /* directions */
+    .directions{margin-top:56px;}
+    .directions__head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:20px;margin-bottom:24px;border-bottom:1px solid var(--border);}
+    .directions__title{font-family:var(--font-display);font-weight:900;font-size:clamp(22px,2.4vw,32px);letter-spacing:.02em;text-transform:uppercase;color:#fff;margin:0;}
+    .directions__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .dir{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;display:grid;gap:8px;align-content:start;transition:background var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out);}
+    .dir:hover{background:var(--bg-3);border-color:var(--border-strong);}
+    .dir__ic{width:40px;height:40px;border-radius:var(--r-md);background:rgba(242,106,0,.10);border:1px solid var(--border-orange);display:inline-flex;align-items:center;justify-content:center;color:var(--primary-orange);margin-bottom:4px;}
+    .dir__title{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#fff;}
+    .dir__desc{font-size:13.5px;line-height:1.55;color:var(--mist);margin:0;}
+    .dir__desc strong{color:var(--primary-orange);font-weight:700;font-family:var(--font-display);letter-spacing:.02em;}
+    .dir__meta{font-family:var(--font-mono);font-size:11px;line-height:1.4;color:var(--fg-2);margin:4px 0 0;padding-top:8px;border-top:1px solid var(--border);}
+    .dir__meta strong{color:var(--silver);font-weight:600;}
+    @media(max-width:860px){.directions__grid{grid-template-columns:1fr 1fr;}}
+    /* footer */
+    .footer{background:var(--bg-footer);border-top:1px solid var(--border);padding-top:64px;}
+    .footer__inner{display:grid;grid-template-columns:1fr 2fr;gap:48px;}
+    .footer__brand{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+    .footer__tag{font-family:var(--font-heading);font-size:13px;color:var(--mist);margin-top:4px;}
+    .footer__cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .footer__h{font-family:var(--font-display);font-size:11px;letter-spacing:.18em;color:var(--primary-orange);margin-bottom:14px;}
+    .footer__cols a{display:block;font-size:14px;color:var(--silver);padding:4px 0;}
+    .footer__cols a:hover{color:#fff;}
+    .footer__bar{margin-top:56px;border-top:1px solid var(--border);}
+    .footer__bar-inner{display:flex;justify-content:space-between;padding:18px 32px;color:var(--fg-2);}
+    @media(max-width:860px){.footer__inner,.footer__cols{grid-template-columns:1fr;}}
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;z-index:100;background:rgba(5,5,5,.75);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn var(--dur-slow) var(--ease-out);}
+    @keyframes fadeIn{from{opacity:0}}
+    .modal{width:100%;max-width:640px;background:var(--bg-2);border:1px solid var(--border-strong);border-radius:var(--r-lg);box-shadow:var(--shadow-3);display:grid;grid-template-rows:auto auto 1fr auto;overflow:hidden;animation:lift var(--dur-slow) var(--ease-out);}
+    @keyframes lift{from{transform:translateY(12px);opacity:0}}
+    .modal__head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px;border-bottom:1px solid var(--border);}
+    .modal__head h3{margin:0;color:#fff;letter-spacing:.04em;text-transform:uppercase;}
+    .modal__close{background:transparent;border:1px solid var(--border-strong);color:#fff;width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+    .modal__close:hover{border-color:var(--primary-orange);color:var(--primary-orange);}
+    .modal__stepper{display:grid;padding:12px 24px;gap:8px;border-bottom:1px solid var(--border);background:var(--bg);}
+    .stepper-cell{display:flex;align-items:center;gap:8px;padding:6px 0;color:var(--fg-2);}
+    .stepper-num{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-strong);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;}
+    .stepper-lbl{font-family:var(--font-display);font-size:10px;letter-spacing:.18em;}
+    .stepper-cell.on .stepper-num{background:var(--primary-orange);color:#0B0B0B;border-color:var(--primary-orange);}
+    .stepper-cell.on .stepper-lbl{color:#fff;}
+    .stepper-cell.now .stepper-lbl{color:var(--primary-orange);}
+    .modal__body{padding:24px;min-height:220px;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .field{display:grid;gap:6px;}
+    .field label{font-family:var(--font-display);font-size:10px;letter-spacing:.18em;color:var(--fg-2);text-transform:uppercase;}
+    .inp{background:var(--bg);border:1px solid var(--border-strong);border-radius:var(--r-md);padding:12px 14px;color:#fff;font-family:var(--font-body);font-size:14px;outline:none;transition:border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);}
+    .inp:focus{border-color:var(--primary-orange);box-shadow:var(--glow-orange-sm);}
+    .inp::placeholder{color:var(--fg-2);}
+    .inp--plate{background:#FFD300;color:#0B0B0B;font-family:var(--font-display);font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:18px;text-align:center;border-color:#FFD300;}
+    .inp--plate:focus{box-shadow:0 0 0 2px rgba(242,106,0,.5);}
+    textarea.inp{font-family:var(--font-body);}
+    .svc-pick{display:flex;flex-wrap:wrap;gap:8px;}
+    .svc-chip{font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:var(--r-pill);background:var(--bg);color:var(--silver);border:1px solid var(--border-strong);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all var(--dur) var(--ease-out);}
+    .svc-chip:hover{border-color:var(--primary-orange);color:#fff;}
+    .svc-chip.on{background:var(--primary-orange);color:#0B0B0B;border-color:var(--primary-orange);}
+    .slots__day{margin-bottom:14px;color:var(--fg-2);}
+    .slots__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+    .slot{background:var(--bg);border:1px solid var(--border-strong);border-radius:var(--r-md);padding:14px 12px;font-family:var(--font-mono);font-size:15px;color:var(--silver);cursor:pointer;transition:all var(--dur) var(--ease-out);}
+    .slot:hover{border-color:var(--primary-orange);color:#fff;}
+    .slot.on{background:var(--primary-orange);color:#0B0B0B;border-color:var(--primary-orange);}
+    .confirm{display:grid;gap:8px;}
+    .confirm__row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--border);font-family:var(--font-heading);color:var(--silver);font-size:14px;}
+    .confirm__row>span:first-child{font-family:var(--font-display);font-size:10px;letter-spacing:.18em;color:var(--fg-2);text-transform:uppercase;}
+    .confirm__row--total{border-bottom:none;}
+    .confirm__row--total .price{font-family:var(--font-display);font-weight:700;color:var(--primary-orange);font-size:28px;letter-spacing:.04em;}
+    .modal__foot{padding:16px 24px;border-top:1px solid var(--border);background:var(--bg);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__brand">
+    <img src="assets/brand/auto-surgeon-logo.svg" alt="The Auto Surgeon" style="height:88px;width:auto;display:block">
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#services" class="nav__link">Services</a>
+    <a href="#tyres" class="nav__link">Tyres</a>
+    <a href="#pricing" class="nav__link">Pricing</a>
+    <a href="#about" class="nav__link">About</a>
+    <a href="#contact" class="nav__link">Contact</a>
+  </nav>
+  <div class="nav__cta">
+    <span class="nav__phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.6.6 2 2 0 0 1 1.7 2z"/></svg>
+      <span>07767 909397</span>
+    </span>
+    <button class="btn btn-primary btn-sm" id="nav-book-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+      BOOK INSPECTION
+    </button>
+  </div>
+  <button class="nav__menu" id="nav-menu-btn" aria-label="Menu" aria-expanded="false">
+    <span id="nav-icon-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+    </span>
+    <span id="nav-icon-close" style="display:none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+    </span>
+  </button>
+</header>
+
+<!-- ── MOBILE NAV ── -->
+<div class="nav__mobile" id="nav-mobile" aria-hidden="true">
+  <a href="#services" class="nav__link" onclick="closeMobileNav()">Services</a>
+  <a href="#tyres" class="nav__link" onclick="closeMobileNav()">Tyres</a>
+  <a href="#pricing" class="nav__link" onclick="closeMobileNav()">Pricing</a>
+  <a href="#about" class="nav__link" onclick="closeMobileNav()">About</a>
+  <a href="#contact" class="nav__link" onclick="closeMobileNav()">Contact</a>
+  <span class="nav__phone" style="margin-top:8px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.6.6 2 2 0 0 1 1.7 2z"/></svg>
+    <span>07767 909397</span>
+  </span>
+</div>
+
+<main>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <div class="eyebrow">SPECIALIST &middot; HAYES, UB3</div>
+      <h1 class="hero__title">
+        PRECISION REPAIRS.<br>
+        EXPERT SERVICE.<br>
+        <span class="orange">YOUR CAR DESERVES<br>A SURGEON.</span>
+      </h1>
+      <p class="lead hero__lead">Tyre fitting, wheel alignment, brakes, diagnostics and full mechanic services. Walk-ins welcome &mdash; most jobs fitted while you wait.</p>
+      <div class="hero__ctas">
+        <button class="btn btn-primary btn-lg" id="hero-book-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          BOOK YOUR VEHICLE INSPECTION
+          <span class="btn__pulse"></span>
+        </button>
+        <a href="#pricing" class="btn btn-ghost btn-lg">
+          VIEW PRICE LIST
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+      <ul class="hero__bullets">
+        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Walk-ins welcome</li>
+        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Same-day service</li>
+        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Tesla wheel alignment</li>
+      </ul>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__visual-inner">
+        <img class="hero__photo" src="assets/photos/hero-orange-caliper.jpg" alt="Performance brake caliper in orange — The Auto Surgeon">
+        <div class="hero__photo-veil"></div>
+        <div class="hero__ribbon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12zm-3-10 2 2 4-4"/></svg>
+          <span>Trusted in Hayes since day one</span>
+        </div>
+        <div class="hero__corner">
+          <span class="micro" style="color:#F26A00;letter-spacing:.18em;text-transform:uppercase;font-family:var(--font-display);font-size:10px">ALIGNMENT &middot; BRAKES &middot; TYRES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="section section--charcoal" id="services">
+  <div class="container">
+    <div class="section__head">
+      <div class="eyebrow">WHAT WE DO</div>
+      <h2>Vehicle Health, Performed By Specialists.</h2>
+      <p class="lead">Six core services. Honest prices. No upsell, no waffle.</p>
+    </div>
+    <div class="svc-grid" id="svc-grid">
+
+      <!-- Tyre Fitting -->
+      <button class="svc" data-key="tyres">
+        <div class="svc__photo">
+          <img src="assets/photos/tyre-dunlop-dark.jpg" alt="" style="object-position:center 60%">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Tyre Fitting</div>
+        <div class="svc__desc">Budget, mid-range, premium, performance and run-flat tyres fitted while you wait.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£10</span></span>
+          <span class="svc__meta">Puncture repair</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+      <!-- Wheel Alignment -->
+      <button class="svc svc--active" data-key="alignment">
+        <div class="svc__photo">
+          <img src="assets/photos/wheel-alignment.jpg" alt="" style="object-position:70% 50%">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/><path d="M8 3v18"/><path d="M16 3v18"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Wheel Alignment</div>
+        <div class="svc__desc">Laser-precise 4-wheel alignment for safer handling and longer tyre life.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£50</span></span>
+          <span class="svc__meta">45 min</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+      <!-- Brake Service -->
+      <button class="svc" data-key="brakes">
+        <div class="svc__photo">
+          <img src="assets/photos/hero-orange-caliper.jpg" alt="" style="object-position:center 55%">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v4"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M12 18v4"/><path d="M5 5l3 3"/><path d="M16 16l3 3"/><path d="M5 19l3-3"/><path d="M16 8l3-3"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Brake Service</div>
+        <div class="svc__desc">Pads, discs, full front and rear replacement. Fitted same day.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£30</span></span>
+          <span class="svc__meta">Pads / discs</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+      <!-- Engine Oil -->
+      <button class="svc" data-key="oil">
+        <div class="svc__photo">
+          <img src="assets/photos/engine-oil-pour.jpg" alt="" style="object-position:center 35%">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c-3 5-6 8-6 12a6 6 0 0 0 12 0c0-4-3-7-6-12z"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Engine Oil Service</div>
+        <div class="svc__desc">Engine oil and filter replacement using grade-correct lubricants.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£30</span></span>
+          <span class="svc__meta">Full service £50</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+      <!-- Diagnostics -->
+      <button class="svc" data-key="diag">
+        <div class="svc__photo">
+          <img src="assets/photos/diagnostics-tablet.jpg" alt="" style="object-position:center 55%">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-5"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Auto Diagnostics</div>
+        <div class="svc__desc">Full OBD-II scan, fault code reading and live data analysis.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£30</span></span>
+          <span class="svc__meta">All makes</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+      <!-- Tesla -->
+      <button class="svc" data-key="tesla">
+        <div class="svc__photo">
+          <img src="assets/photos/tesla-wheel.jpg" alt="" style="object-position:center center">
+          <div class="svc__photo-veil"></div>
+          <div class="svc__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/><path d="M15 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/><path d="M3 12l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5"/><path d="M3 12v5h2"/><path d="M19 17h2v-5"/><path d="M3 12h18"/></svg>
+          </div>
+        </div>
+        <div class="svc__title">Tesla Specialist</div>
+        <div class="svc__desc">Tesla wheel alignment and EV-aware servicing.</div>
+        <div class="svc__foot">
+          <span><span class="svc__from">FROM</span><span class="svc__price">£60</span></span>
+          <span class="svc__meta">Alignment</span>
+        </div>
+        <span class="svc__rule"></span>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section section--black" id="pricing">
+  <div class="container">
+    <div class="section__head">
+      <div class="eyebrow">HONEST LABOUR PRICES</div>
+      <h2>Price List.</h2>
+      <p class="lead">Quoted up front. Anything else is &lsquo;Price on inspection&rsquo; &mdash; we&rsquo;ll look before we charge.</p>
+    </div>
+    <div class="price-card">
+      <div class="price-card__head"><span>SERVICE</span><span>LABOUR PRICE</span></div>
+      <div class="price-card__rows">
+        <div class="price-row"><span class="price-row__svc">Brake Pads</span><span class="price-row__val">&pound;30</span></div>
+        <div class="price-row"><span class="price-row__svc">Front Brake Discs &amp; Pads</span><span class="price-row__val">&pound;50</span></div>
+        <div class="price-row"><span class="price-row__svc">Rear Brake Discs &amp; Pads</span><span class="price-row__val">&pound;50</span></div>
+        <div class="price-row"><span class="price-row__svc">Engine Oil Service</span><span class="price-row__val">&pound;30</span></div>
+        <div class="price-row"><span class="price-row__svc">Full Oil Service</span><span class="price-row__val">&pound;50</span></div>
+        <div class="price-row"><span class="price-row__svc">Gearbox Service</span><span class="price-row__val price-row__val--poi">Price on inspection</span></div>
+        <div class="price-row"><span class="price-row__svc">Tyre Puncture Repair</span><span class="price-row__val">&pound;10</span></div>
+        <div class="price-row"><span class="price-row__svc">Front Suspension Arm</span><span class="price-row__val price-row__val--poi">Price on inspection</span></div>
+        <div class="price-row"><span class="price-row__svc">Rear Suspension Arm</span><span class="price-row__val price-row__val--poi">Price on inspection</span></div>
+        <div class="price-row"><span class="price-row__svc">TPMS Sensor Change (Including Part)</span><span class="price-row__val">&pound;60</span></div>
+        <div class="price-row"><span class="price-row__svc">Wheel Alignment</span><span class="price-row__val">&pound;50</span></div>
+        <div class="price-row"><span class="price-row__svc">Tesla Wheel Alignment</span><span class="price-row__val">&pound;60</span></div>
+      </div>
+      <div class="price-card__foot">
+        <span class="small" style="color:var(--fg-2)">Labour only. Parts quoted separately.</span>
+        <button class="btn btn-outline btn-sm" id="quote-btn">
+          REQUEST WRITTEN QUOTE
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TYRE TIERS ── -->
+<section class="section section--charcoal" id="tyres">
+  <div class="container">
+    <div class="section__head">
+      <div class="eyebrow">TYRES AVAILABLE</div>
+      <h2>Every Tyre, Every Budget.</h2>
+      <p class="lead">Stocked, fitted, balanced and aligned in-house.</p>
+    </div>
+    <div class="tyre-grid">
+
+      <div class="tyre">
+        <div class="tyre__top">
+          <div class="tyre__viz"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D9D9D9" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg></div>
+          <div class="tyre__bars"><span class="bar on"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+        <div class="tyre__name">Budget</div>
+        <div class="tyre__sub">Everyday driving</div>
+        <div class="tyre__tags"><span class="chip chip--neutral">Punctures</span><span class="chip chip--neutral">Spare swaps</span></div>
+      </div>
+
+      <div class="tyre">
+        <div class="tyre__top">
+          <div class="tyre__viz"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D9D9D9" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg></div>
+          <div class="tyre__bars"><span class="bar on"></span><span class="bar on"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+        <div class="tyre__name">Mid-Range</div>
+        <div class="tyre__sub">Balanced value</div>
+        <div class="tyre__tags"><span class="chip chip--neutral">Daily commute</span><span class="chip chip--neutral">Family</span></div>
+      </div>
+
+      <div class="tyre">
+        <div class="tyre__top">
+          <div class="tyre__viz"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg></div>
+          <div class="tyre__bars"><span class="bar on"></span><span class="bar on"></span><span class="bar on"></span><span class="bar"></span></div>
+        </div>
+        <div class="tyre__name">Premium Branded</div>
+        <div class="tyre__sub">Top-tier compounds</div>
+        <div class="tyre__tags"><span class="chip chip--neutral">Long life</span><span class="chip chip--neutral">Quiet ride</span></div>
+      </div>
+
+      <div class="tyre">
+        <div class="tyre__top">
+          <div class="tyre__viz"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg></div>
+          <div class="tyre__bars"><span class="bar on"></span><span class="bar on"></span><span class="bar on"></span><span class="bar on"></span></div>
+        </div>
+        <div class="tyre__name">Performance</div>
+        <div class="tyre__sub">Track-grade grip</div>
+        <div class="tyre__tags"><span class="chip chip--neutral">Sport saloons</span><span class="chip chip--neutral">Hot hatches</span></div>
+      </div>
+
+      <div class="tyre">
+        <div class="tyre__top">
+          <div class="tyre__viz"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg></div>
+          <div class="tyre__bars"><span class="bar on"></span><span class="bar on"></span><span class="bar on"></span><span class="bar"></span></div>
+        </div>
+        <div class="tyre__name">Run-Flat</div>
+        <div class="tyre__sub">Drive on after damage</div>
+        <div class="tyre__tags"><span class="chip chip--neutral">BMW</span><span class="chip chip--neutral">MINI</span><span class="chip chip--neutral">Mercedes</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section section--black testi" id="about">
+  <div class="container">
+    <div class="section__head">
+      <div class="eyebrow">CUSTOMERS</div>
+      <h2>Trusted In Hayes.</h2>
+    </div>
+    <div class="testi-grid">
+
+      <figure class="testi-card">
+        <div class="testi-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+        </div>
+        <blockquote class="testi-card__text">&ldquo;Booked alignment after a kerb hit. Diagnosed, aligned and out the door in under an hour. Steering is back to dead-centre.&rdquo;</blockquote>
+        <figcaption class="testi-card__by">
+          <div class="testi-card__avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+          <div><div class="testi-card__name">Sandeep K.</div><div class="testi-card__car">BMW 3 Series</div></div>
+        </figcaption>
+      </figure>
+
+      <figure class="testi-card">
+        <div class="testi-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+        </div>
+        <blockquote class="testi-card__text">&ldquo;Honest pricing &mdash; quoted &pound;50 for front discs and pads and that&rsquo;s what I paid. No surprises.&rdquo;</blockquote>
+        <figcaption class="testi-card__by">
+          <div class="testi-card__avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+          <div><div class="testi-card__name">Aisha M.</div><div class="testi-card__car">Volkswagen Polo</div></div>
+        </figcaption>
+      </figure>
+
+      <figure class="testi-card">
+        <div class="testi-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 14.9 8.6 22 9.3l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.9L2 9.3l7.1-.7z"/></svg>
+        </div>
+        <blockquote class="testi-card__text">&ldquo;One of the few places near Hayes that knows Tesla alignment specs. Properly done.&rdquo;</blockquote>
+        <figcaption class="testi-card__by">
+          <div class="testi-card__avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+          <div><div class="testi-card__name">Daniel R.</div><div class="testi-card__car">Tesla Model 3</div></div>
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="section section--charcoal contact" id="contact">
+  <div class="container contact__inner">
+    <div class="contact__left">
+      <div class="eyebrow">VISIT THE WORKSHOP</div>
+      <h2>Hayes, UB3.</h2>
+      <p class="lead">Walk-ins welcome. Most jobs fitted same day.</p>
+      <div class="contact__rows">
+        <div class="contact__row">
+          <div class="contact__ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/></svg></div>
+          <div>
+            <div class="micro" style="color:var(--fg-2);letter-spacing:.18em">ADDRESS</div>
+            <div class="contact__val">Unit 3 Squirrels Trading Estate<br>Viveash Close, Hayes UB3 4RZ</div>
+          </div>
+        </div>
+        <div class="contact__row">
+          <div class="contact__ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.6.6 2 2 0 0 1 1.7 2z"/></svg></div>
+          <div>
+            <div class="micro" style="color:var(--fg-2);letter-spacing:.18em">CALL</div>
+            <div class="contact__val">07767 909397</div>
+          </div>
+        </div>
+        <div class="contact__row">
+          <div class="contact__ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F26A00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div>
+            <div class="micro" style="color:var(--fg-2);letter-spacing:.18em">OPENING HOURS</div>
+            <div class="contact__val">Mon &ndash; Sat &nbsp;<span style="color:#fff">9:00 AM &ndash; 6:00 PM</span></div>
+            <div class="contact__val" style="color:var(--fg-2)">Sunday by appointment</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact__ctas">
+        <button class="btn btn-primary" id="contact-book-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          BOOK INSPECTION
+        </button>
+        <a class="btn btn-ghost" href="tel:07767909397">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.6.6 2 2 0 0 1 1.7 2z"/></svg>
+          CALL NOW
+        </a>
+      </div>
+    </div>
+    <div class="contact__right">
+      <div class="map">
+        <iframe
+          class="map__frame"
+          title="The Auto Surgeon — Hayes UB3 4RZ"
+          src="https://maps.google.com/maps?q=Unit%203%20Squirrels%20Trading%20Estate%2C%20Viveash%20Close%2C%20Hayes%20UB3%204RZ&t=m&z=15&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen=""
+        ></iframe>
+        <div class="map__chip">
+          <span class="chip chip--open"><span class="dot"></span>OPEN NOW &middot; UNTIL 6:00 PM</span>
+        </div>
+        <a class="map__open" href="https://maps.google.com/?q=Unit+3+Squirrels+Trading+Estate,+Viveash+Close,+Hayes+UB3+4RZ" target="_blank" rel="noopener noreferrer">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+          OPEN IN MAPS
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container directions">
+    <div class="directions__head">
+      <div class="eyebrow">GETTING HERE</div>
+      <h3 class="directions__title">Easy to find. Easier to park.</h3>
+    </div>
+    <div class="directions__grid">
+      <div class="dir">
+        <div class="dir__ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/><path d="M15 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/><path d="M3 12l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5"/><path d="M3 12v5h2"/><path d="M19 17h2v-5"/><path d="M3 12h18"/></svg></div>
+        <div class="dir__title">By car</div>
+        <p class="dir__desc">Off the <strong>A312 Parkway</strong>, just south of Hayes town centre. Nearest motorway: <strong>M4 J3</strong>.</p>
+        <p class="dir__meta">Free on-site parking at Squirrels Trading Estate.</p>
+      </div>
+      <div class="dir">
+        <div class="dir__ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/></svg></div>
+        <div class="dir__title">By rail</div>
+        <p class="dir__desc"><strong>Hayes &amp; Harlington</strong> on the Elizabeth line &mdash; short ride from central London and Heathrow.</p>
+        <p class="dir__meta">~15 min walk, or a short bus / cab from the station.</p>
+      </div>
+      <div class="dir">
+        <div class="dir__ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+        <div class="dir__title">By bus</div>
+        <p class="dir__desc">Routes <strong>90, 140, 195, U4, U5, E6, H98</strong> stop on North Hyde Road, a few minutes&rsquo; walk from Viveash Close.</p>
+        <p class="dir__meta">Night bus: <strong>N140</strong>.</p>
+      </div>
+      <div class="dir">
+        <div class="dir__ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12zm-3-10 2 2 4-4"/></svg></div>
+        <div class="dir__title">By tube</div>
+        <p class="dir__desc">Nearest tube is <strong>Hounslow West</strong> on the Piccadilly line. Best paired with a short bus to North Hyde Road.</p>
+        <p class="dir__meta">Heathrow terminals: short drive away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="assets/brand/auto-surgeon-logo.svg" alt="The Auto Surgeon" style="height:120px;width:auto;display:block">
+      <div class="footer__tag">Your Car Deserves A Surgeon.</div>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__h">SERVICES</div>
+        <a href="#services">Tyre fitting</a>
+        <a href="#services">Wheel alignment</a>
+        <a href="#services">Brake service</a>
+        <a href="#services">Diagnostics</a>
+        <a href="#services">MOT</a>
+      </div>
+      <div>
+        <div class="footer__h">HOURS</div>
+        <a href="#contact">Mon &ndash; Fri &middot; 9:00 AM &ndash; 6:00 PM</a>
+        <a href="#contact">Saturday &middot; 9:00 AM &ndash; 6:00 PM</a>
+        <a href="#contact">Sunday &middot; Closed</a>
+        <a href="#contact">Walk-ins welcome</a>
+      </div>
+      <div>
+        <div class="footer__h">CONTACT</div>
+        <a href="tel:07767909397">07767 909397</a>
+        <a href="mailto:hello@theautosurgeon.co.uk">hello@theautosurgeon.co.uk</a>
+        <a href="#contact">Unit 3 Squirrels Trading Estate</a>
+        <a href="#contact">Viveash Close, Hayes UB3 4RZ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bar">
+    <div class="container footer__bar-inner">
+      <span class="micro">&copy; 2026 THE AUTO SURGEON &middot; ALL RIGHTS RESERVED</span>
+      <span class="micro">9:00 AM &ndash; 6:00 PM &middot; MON &ndash; SAT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── BOOKING MODAL ── -->
+<div class="modal-backdrop" id="modal-backdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <header class="modal__head">
+      <div>
+        <div class="eyebrow" id="modal-eyebrow">BOOK INSPECTION</div>
+        <h3 id="modal-title" style="font-family:var(--font-display);font-size:24px;margin:4px 0 0;color:#fff;letter-spacing:.04em;text-transform:uppercase">Step 1 &middot; VEHICLE</h3>
+      </div>
+      <button class="modal__close" id="modal-close" aria-label="Close modal"></button>
+    </header>
+    <div class="modal__stepper" id="modal-stepper" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="modal__body" id="modal-body"></div>
+    <footer class="modal__foot">
+      <button class="btn btn-ghost btn-sm" id="modal-back">CANCEL</button>
+      <button class="btn btn-primary" id="modal-fwd">CONTINUE</button>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── icon helper (no string-based DOM injection) ── */
+  var PATHS = {
+    x:        'M18 6 6 18M6 6l12 12',
+    check:    'M4 12l5 5L20 6',
+    arrow:    'M5 12h14M13 5l7 7-7 7',
+    calendar: 'M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM16 2v4M8 2v4M3 10h18'
+  };
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function createIcon(name, size, color, sw) {
+    var d = PATHS[name];
+    if (!d) return document.createTextNode('');
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('width', size || 20);
+    svg.setAttribute('height', size || 20);
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', color || 'currentColor');
+    svg.setAttribute('stroke-width', sw || 1.75);
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    d.split(/(?=M)/).forEach(function (seg) {
+      var p = document.createElementNS(SVG_NS, 'path');
+      p.setAttribute('d', seg.trim());
+      svg.appendChild(p);
+    });
+    return svg;
+  }
+
+  /* ── createElement shorthand ── */
+  function ce(tag, cls) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    return el;
+  }
+
+  function empty(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  /* ── nav scroll ── */
+  var navEl = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    navEl.classList.toggle('is-scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  /* ── mobile nav ── */
+  var menuBtn    = document.getElementById('nav-menu-btn');
+  var navMobile  = document.getElementById('nav-mobile');
+  var iconMenu   = document.getElementById('nav-icon-menu');
+  var iconClose  = document.getElementById('nav-icon-close');
+  var mobileOpen = false;
+
+  function closeMobileNav() {
+    mobileOpen = false;
+    navMobile.classList.remove('is-open');
+    navMobile.setAttribute('aria-hidden', 'true');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    iconMenu.style.display = '';
+    iconClose.style.display = 'none';
+  }
+  window.closeMobileNav = closeMobileNav;
+
+  menuBtn.addEventListener('click', function () {
+    mobileOpen = !mobileOpen;
+    navMobile.classList.toggle('is-open', mobileOpen);
+    navMobile.setAttribute('aria-hidden', String(!mobileOpen));
+    menuBtn.setAttribute('aria-expanded', String(mobileOpen));
+    iconMenu.style.display  = mobileOpen ? 'none' : '';
+    iconClose.style.display = mobileOpen ? '' : 'none';
+  });
+
+  /* ── service grid ── */
+  var svcGrid = document.getElementById('svc-grid');
+  svcGrid.addEventListener('click', function (e) {
+    var card = e.target.closest('.svc');
+    if (!card) return;
+    var cards = svcGrid.querySelectorAll('.svc');
+    for (var i = 0; i < cards.length; i++) cards[i].classList.remove('svc--active');
+    card.classList.add('svc--active');
+  });
+
+  /* ── modal state ── */
+  var state = {
+    mode: 'booking', step: 0,
+    reg: '', postcode: '', email: '', notes: '',
+    service: 'Wheel Alignment', slot: '10:30'
+  };
+
+  var SERVICES = [
+    'Tyre Fitting', 'Tyre Puncture Repair', 'Wheel Alignment', 'Tesla Wheel Alignment',
+    'Brake Pads', 'Front Brake Discs & Pads', 'Rear Brake Discs & Pads',
+    'Engine Oil Service', 'Full Oil Service', 'Auto Diagnostics', 'MOT', 'Other'
+  ];
+  var SLOTS = ['09:30', '10:30', '11:30', '13:00', '14:00', '15:30', '16:30'];
+
+  function getSteps() {
+    return state.mode === 'quote'
+      ? ['VEHICLE', 'SERVICE', 'CONFIRM']
+      : ['VEHICLE', 'SERVICE', 'SLOT', 'CONFIRM'];
+  }
+
+  var backdrop  = document.getElementById('modal-backdrop');
+  var closeBtn  = document.getElementById('modal-close');
+  var backBtn   = document.getElementById('modal-back');
+  var fwdBtn    = document.getElementById('modal-fwd');
+  var stepperEl = document.getElementById('modal-stepper');
+  var bodyEl    = document.getElementById('modal-body');
+  var eyebrowEl = document.getElementById('modal-eyebrow');
+  var titleEl   = document.getElementById('modal-title');
+
+  closeBtn.appendChild(createIcon('x', 18));
+
+  function openModal(mode) {
+    state.mode = mode;
+    state.step = 0;
+    document.body.style.overflow = 'hidden';
+    backdrop.style.display = 'flex';
+    renderModal();
+  }
+
+  function closeModal() {
+    backdrop.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', function (e) {
+    if (e.target === backdrop) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && backdrop.style.display !== 'none') closeModal();
+  });
+
+  backBtn.addEventListener('click', function () {
+    if (state.step === 0) { closeModal(); return; }
+    state.step--;
+    renderModal();
+  });
+
+  fwdBtn.addEventListener('click', function () {
+    var steps = getSteps();
+    if (state.step >= steps.length - 1) {
+      handleSubmit();
+    } else {
+      state.step++;
+      renderModal();
+    }
+  });
+
+  function handleSubmit() {
+    var lines;
+    if (state.mode === 'quote') {
+      lines = [
+        '*Written quote request — The Auto Surgeon*', '',
+        'Vehicle: ' + (state.reg || '—'),
+        'Postcode: ' + (state.postcode || '—'),
+        'Service: ' + state.service,
+        'Email quote to: ' + (state.email || '—')
+      ];
+    } else {
+      lines = [
+        '*Booking request — The Auto Surgeon*', '',
+        'Vehicle: ' + (state.reg || '—'),
+        'Postcode: ' + (state.postcode || '—'),
+        'Service: ' + state.service,
+        'Preferred slot: Mon 19 May · ' + state.slot
+      ];
+    }
+    if (state.notes) lines.push('Notes: ' + state.notes);
+    var text = lines.filter(Boolean).join('\n');
+    var url = 'https://wa.me/447767909397?text=' + encodeURIComponent(text);
+    window.open(url, '_blank', 'noopener,noreferrer');
+    closeModal();
+  }
+
+  function checkVehicleValid() {
+    var regEl = document.getElementById('inp-reg');
+    var disabled = !regEl || regEl.value.trim() === '';
+    fwdBtn.disabled = disabled;
+    fwdBtn.style.opacity = disabled ? '0.4' : '';
+    fwdBtn.style.cursor = disabled ? 'not-allowed' : '';
+    fwdBtn.style.pointerEvents = disabled ? 'none' : '';
+  }
+
+  function renderModal() {
+    var steps = getSteps();
+    var isQuote = state.mode === 'quote';
+    var isLast = state.step >= steps.length - 1;
+
+    eyebrowEl.textContent = isQuote ? 'REQUEST WRITTEN QUOTE' : 'BOOK INSPECTION';
+    titleEl.textContent = 'Step ' + (state.step + 1) + ' · ' + steps[state.step];
+
+    stepperEl.style.gridTemplateColumns = 'repeat(' + steps.length + ', 1fr)';
+    empty(stepperEl);
+    steps.forEach(function (s, i) {
+      var cell = ce('div', 'stepper-cell' + (i <= state.step ? ' on' : '') + (i === state.step ? ' now' : ''));
+      var num = ce('span', 'stepper-num'); num.textContent = i + 1;
+      var lbl = ce('span', 'stepper-lbl'); lbl.textContent = s;
+      cell.appendChild(num); cell.appendChild(lbl);
+      stepperEl.appendChild(cell);
+    });
+
+    empty(bodyEl);
+    var stepName = steps[state.step];
+    if (stepName === 'VEHICLE')  bodyEl.appendChild(buildVehicleStep());
+    if (stepName === 'SERVICE')  bodyEl.appendChild(buildServiceStep());
+    if (stepName === 'SLOT')     bodyEl.appendChild(buildSlotStep());
+    if (stepName === 'CONFIRM')  bodyEl.appendChild(buildConfirmStep());
+
+    backBtn.textContent = state.step === 0 ? 'CANCEL' : 'BACK';
+
+    empty(fwdBtn);
+    if (isLast) {
+      fwdBtn.appendChild(createIcon('check', 14));
+      var lbl2 = document.createTextNode(' ' + (isQuote ? 'SEND QUOTE REQUEST' : 'CONFIRM BOOKING'));
+      fwdBtn.appendChild(lbl2);
+    } else {
+      fwdBtn.appendChild(document.createTextNode('CONTINUE '));
+      fwdBtn.appendChild(createIcon('arrow', 14));
+    }
+
+    if (stepName !== 'VEHICLE') {
+      fwdBtn.disabled = false;
+      fwdBtn.style.opacity = '';
+      fwdBtn.style.cursor = '';
+      fwdBtn.style.pointerEvents = '';
+    } else {
+      checkVehicleValid();
+    }
+  }
+
+  function buildVehicleStep() {
+    var isQuote = state.mode === 'quote';
+    var grid = ce('div', 'form-grid');
+
+    var f1 = ce('div', 'field');
+    var l1 = ce('label'); l1.textContent = 'VEHICLE REG';
+    var inp1 = ce('input', 'inp inp--plate');
+    inp1.id = 'inp-reg'; inp1.placeholder = 'AB12 CDE'; inp1.maxLength = 8;
+    inp1.setAttribute('autocomplete', 'off');
+    inp1.value = state.reg;
+    inp1.addEventListener('input', function () {
+      state.reg = inp1.value.toUpperCase();
+      inp1.value = state.reg;
+      checkVehicleValid();
+    });
+    f1.appendChild(l1); f1.appendChild(inp1);
+
+    var f2 = ce('div', 'field');
+    var l2 = ce('label'); l2.textContent = 'POSTCODE';
+    var inp2 = ce('input', 'inp');
+    inp2.id = 'inp-postcode'; inp2.placeholder = 'UB3 4RZ';
+    inp2.value = state.postcode;
+    inp2.addEventListener('input', function () {
+      state.postcode = inp2.value.toUpperCase();
+      inp2.value = state.postcode;
+    });
+    f2.appendChild(l2); f2.appendChild(inp2);
+
+    grid.appendChild(f1); grid.appendChild(f2);
+
+    if (isQuote) {
+      var f3 = ce('div', 'field');
+      f3.style.gridColumn = '1 / -1';
+      var l3 = ce('label'); l3.textContent = 'EMAIL (FOR WRITTEN QUOTE)';
+      var inp3 = ce('input', 'inp');
+      inp3.id = 'inp-email'; inp3.type = 'email'; inp3.placeholder = 'you@example.com';
+      inp3.value = state.email;
+      inp3.addEventListener('input', function () { state.email = inp3.value; });
+      f3.appendChild(l3); f3.appendChild(inp3);
+      grid.appendChild(f3);
+    }
+
+    var f4 = ce('div', 'field');
+    f4.style.gridColumn = '1 / -1';
+    var l4 = ce('label'); l4.textContent = 'NOTES (OPTIONAL)';
+    var ta = ce('textarea', 'inp');
+    ta.rows = 3; ta.placeholder = 'Pulls left at speed, kerb hit last week…';
+    ta.value = state.notes;
+    ta.addEventListener('input', function () { state.notes = ta.value; });
+    f4.appendChild(l4); f4.appendChild(ta);
+    grid.appendChild(f4);
+
+    return grid;
+  }
+
+  function buildServiceStep() {
+    var wrap = ce('div', 'svc-pick');
+    SERVICES.forEach(function (s) {
+      var chip = ce('button', 'svc-chip' + (state.service === s ? ' on' : ''));
+      if (state.service === s) {
+        chip.appendChild(createIcon('check', 12, '#0B0B0B'));
+        chip.appendChild(document.createTextNode(' ' + s));
+      } else {
+        chip.textContent = s;
+      }
+      chip.addEventListener('click', function () {
+        state.service = s;
+        empty(bodyEl);
+        bodyEl.appendChild(buildServiceStep());
+      });
+      wrap.appendChild(chip);
+    });
+    return wrap;
+  }
+
+  function buildSlotStep() {
+    var wrap = ce('div', 'slots');
+
+    var day = ce('div', 'slots__day');
+    var micro = ce('span', 'micro');
+    micro.textContent = 'TODAY · MON 19 MAY';
+    day.appendChild(micro);
+
+    var grid = ce('div', 'slots__grid');
+    SLOTS.forEach(function (t) {
+      var btn = ce('button', 'slot' + (state.slot === t ? ' on' : ''));
+      btn.textContent = t;
+      btn.addEventListener('click', function () {
+        state.slot = t;
+        empty(bodyEl);
+        bodyEl.appendChild(buildSlotStep());
+      });
+      grid.appendChild(btn);
+    });
+
+    var note = ce('p', 'small');
+    note.style.color = 'var(--fg-2)';
+    note.textContent = 'Walk-ins also accepted — but booking guarantees your bay.';
+
+    wrap.appendChild(day); wrap.appendChild(grid); wrap.appendChild(note);
+    return wrap;
+  }
+
+  function buildConfirmStep() {
+    var isQuote = state.mode === 'quote';
+    var wrap = ce('div', 'confirm');
+
+    function addRow(label, value, mono) {
+      var row = ce('div', 'confirm__row');
+      var lbl = ce('span'); lbl.textContent = label;
+      var val = ce('span'); val.style.color = '#fff';
+      if (mono) val.style.fontFamily = 'var(--font-mono)';
+      val.textContent = value;
+      row.appendChild(lbl); row.appendChild(val);
+      wrap.appendChild(row);
+    }
+
+    addRow('VEHICLE', (state.reg || 'AB12 CDE') + ' · ' + (state.postcode || 'UB3 4RZ'), true);
+    addRow('SERVICE', state.service, false);
+    if (!isQuote) addRow('SLOT', 'Mon 19 May · ' + state.slot, false);
+    if (isQuote)  addRow('EMAIL', state.email || '—', false);
+
+    var totalRow = ce('div', 'confirm__row confirm__row--total');
+    var totalLbl = ce('span'); totalLbl.textContent = isQuote ? 'TURNAROUND' : 'ESTIMATE';
+    var totalVal = ce('span', 'price');
+    if (isQuote) {
+      totalVal.style.fontSize = '22px';
+      totalVal.textContent = 'WITHIN 24H';
+    } else {
+      totalVal.style.fontSize = '28px';
+      totalVal.appendChild(document.createTextNode('£50'));
+      var sub = ce('span');
+      sub.style.cssText = 'color:var(--fg-2);font-size:11px;font-family:var(--font-body);font-weight:400';
+      sub.textContent = ' labour';
+      totalVal.appendChild(sub);
+    }
+    totalRow.appendChild(totalLbl); totalRow.appendChild(totalVal);
+    wrap.appendChild(totalRow);
+
+    var note = ce('p', 'small');
+    note.style.cssText = 'color:var(--fg-2);margin-top:14px';
+    note.textContent = isQuote
+      ? 'Tapping send opens WhatsApp to the workshop with your request pre-filled. Written quote returned to your email within 24h.'
+      : "Tapping confirm opens WhatsApp to the workshop with your booking pre-filled. We'll confirm your slot by WhatsApp — if unavailable we'll offer the next one.";
+    wrap.appendChild(note);
+
+    return wrap;
+  }
+
+  /* ── CTA wiring ── */
+  document.getElementById('nav-book-btn').addEventListener('click', function () { openModal('booking'); });
+  document.getElementById('hero-book-btn').addEventListener('click', function () { openModal('booking'); });
+  document.getElementById('contact-book-btn').addEventListener('click', function () { openModal('booking'); });
+  document.getElementById('quote-btn').addEventListener('click', function () { openModal('quote'); });
+
+}());
+</script>
+</body>
+</html>
