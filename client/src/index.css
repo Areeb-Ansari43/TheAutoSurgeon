@@ -3019,3 +3019,69 @@ p {
     background: #fff;
   }
 }
+
+/* Guide readability pass: never place customer copy on a dark glass layer. */
+.guide-card,
+.process-card,
+.article-sidebar,
+.article-content,
+.confirmation-card,
+.signin-card,
+.request-card {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+}
+.guide-card {
+  overflow: hidden;
+}
+.guide-body {
+  background: rgba(255, 255, 255, 0.94);
+  color: #111;
+}
+.guide-body h3,
+.guide-body p,
+.article-content h2,
+.article-content p,
+.article-sidebar h2,
+.article-sidebar p,
+.process-card h3,
+.process-card p,
+.confirmation-card h2,
+.confirmation-card p,
+.request-card h3,
+.request-card p {
+  color: #111;
+}
+.guide-body p,
+.article-content p,
+.article-sidebar p,
+.process-card p,
+.request-card p {
+  color: #555;
+}
+.guide-meta {
+  color: #555;
+}
+.badge {
+  background: #fff0e3;
+  color: #b84d00;
+  border-color: #ffc99e;
+}
+.article-content a:not(.btn),
+.article-sidebar a:not(.btn),
+.guide-card .text-link {
+  color: #b84d00;
+}
+.article-content a:not(.btn):hover,
+.article-sidebar a:not(.btn):hover,
+.guide-card .text-link:hover {
+  color: #7f3300;
+}
+.article-sidebar {
+  position: sticky;
+  top: 110px;
+}

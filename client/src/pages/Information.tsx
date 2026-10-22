@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { guides, type Guide } from "@shared/guides";
+import { services as catalogServices } from "@shared/catalog";
 
 type InformationProps = {
   page: string;
@@ -749,6 +750,17 @@ function GuideArticle({
   guide: Guide;
   relatedGuides: Guide[];
 }) {
+  const relatedService = catalogServices.find(
+    service =>
+      service.name.toLowerCase() === guide.relatedService.toLowerCase() ||
+      service.bookingName.toLowerCase() === guide.relatedService.toLowerCase()
+  );
+  const relatedServiceHref = relatedService
+    ? `/services/${relatedService.slug}`
+    : "/services";
+  const quoteHref = relatedService
+    ? `/quote?service=${encodeURIComponent(relatedService.bookingName)}`
+    : "/quote";
   return (
     <>
       <PageIntro
@@ -793,6 +805,45 @@ function GuideArticle({
                     </a>
                   </>
                 )}
+                {guide.slug.includes("tesla") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.tesla.com/ownersmanual/model3/en_us/GUID-94F63B13-EA2C-45D9-83AB-5DCA6295D587.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Tesla tyre-care manual
+                    </a>
+                  </>
+                )}
+                {guide.slug.includes("toyota") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.toyota.co.uk/owners/vehicle-information/warning-signs-and-sensors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Toyota warning-sign guide
+                    </a>
+                  </>
+                )}
+                {guide.slug.includes("mercedes") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.mercedes-benz.co.uk/passengercars/services/manuals.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Mercedes owner manuals
+                    </a>
+                  </>
+                )}
               </p>
             </section>
             <section className="article-section">
@@ -814,11 +865,13 @@ function GuideArticle({
               Discuss the symptoms, vehicle details and the most useful next
               check with the workshop.
             </p>
-            <Link href="/workshop" className="btn btn-primary">
-              View workshop services
+            <Link href={relatedServiceHref} className="btn btn-primary">
+              {relatedService
+                ? `See ${relatedService.name}`
+                : "View workshop services"}
             </Link>
-            <Link href="/book" className="btn btn-ghost">
-              Request a booking
+            <Link href={quoteHref} className="btn btn-ghost">
+              Request a quote
             </Link>
             <p className="eyebrow">More guides</p>
             {relatedGuides.map(relatedGuide => (
