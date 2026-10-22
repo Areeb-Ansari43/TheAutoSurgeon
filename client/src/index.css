@@ -2672,6 +2672,130 @@ ul {
     gap: 30px;
   }
 }
+
+/* Light workshop system: white canvas, black type and the original orange signal colour. */
+:root,
+.dark {
+  --background: #ffffff;
+  --foreground: #111111;
+  --primary-foreground: #111111;
+  --border: #e3e3e3;
+  --muted: #f5f5f5;
+  --muted-foreground: #626262;
+  --popover: #ffffff;
+  --card: #ffffff;
+  --accent: #fff3e8;
+}
+body {
+  background: #fff;
+  color: #111;
+}
+p {
+  color: #565656;
+}
+.section-alt,
+.page-intro,
+.mobile-island,
+.nav-dropdown,
+.form-card,
+.booking-summary,
+.info-card,
+.service-card,
+.pricing-table,
+.tyre-option,
+.service-help,
+.info-note,
+.contact-panel,
+.contact-form-panel,
+.faq-item,
+.review-card,
+.cta-banner {
+  background: #fff;
+  color: #111;
+  border-color: #e2e2e2;
+}
+.section-alt {
+  background: #f8f8f8;
+}
+.nav-island {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #dedede;
+  box-shadow: 0 12px 34px rgba(20, 20, 20, 0.12);
+}
+.nav-divider {
+  background: #dedede;
+}
+.island-link,
+.header-phone,
+.text-link {
+  color: #222;
+}
+.island-link:hover,
+.island-link.active,
+.header-phone:hover,
+.text-link:hover {
+  color: var(--orange);
+}
+.nav-dropdown {
+  box-shadow: 0 16px 36px rgba(20, 20, 20, 0.14);
+}
+.nav-dropdown a {
+  color: #222;
+}
+.nav-dropdown a:hover,
+.nav-dropdown a:focus-visible {
+  color: #111;
+}
+.btn-ghost {
+  border-color: #cfcfcf;
+  color: #222;
+}
+.btn-ghost:hover {
+  border-color: var(--orange);
+  background: #fff8f2;
+}
+.muted,
+.muted-heading,
+.small.muted {
+  color: #6a6a6a;
+}
+.hero,
+.page-intro {
+  color: #111;
+}
+.page-title,
+.hero-title,
+.section-heading,
+.article-section h2,
+.info-card h3,
+.service-card h3,
+.pricing-row h3,
+.tyre-option h3,
+.booking-summary h2,
+.form-card h2,
+.contact-panel h3 {
+  color: #111;
+}
+.field input,
+.field select,
+.field textarea {
+  background: #fff;
+  color: #111;
+  border-color: #cfcfcf;
+}
+.icon-box {
+  background: #fff3e8;
+  color: var(--orange);
+  border-color: #ffd7b5;
+}
+.check-list li svg,
+.symptom-grid svg {
+  color: var(--orange);
+}
+.footer {
+  background: #111;
+  color: #fff;
+}
 @media (max-width: 820px) {
   .header-phone span {
     display: none;

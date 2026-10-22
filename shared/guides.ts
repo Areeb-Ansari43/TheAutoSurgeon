@@ -181,4 +181,96 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "tesla-tyre-warning-and-alignment",
+    title: "Tesla tyre warnings and alignment: what to check",
+    category: "Tesla care",
+    summary:
+      "A safe, practical guide to Tesla tyre-pressure alerts, cold-pressure checks, tyre damage and when alignment or inspection is needed.",
+    image: "/assets/photos/wheel-alignment.webp",
+    readTime: "5 min read",
+    relatedService: "Tesla wheel alignment",
+    sections: [
+      {
+        title: "Read the alert before driving",
+        text: "Tesla's Model 3 manual distinguishes an amber under-inflation alert from a red severe-under-inflation alert. A red alert means pull over safely; do not continue as though the warning is only a dashboard nuisance.",
+      },
+      {
+        title: "Check pressures cold",
+        text: "Use the recommended cold pressure shown on the vehicle's tyre-and-loading label, not the maximum pressure printed on the tyre. Tesla advises checking with an accurate gauge when the car has been stationary and not letting air out of a warm tyre to chase a cold-pressure number.",
+      },
+      {
+        title: "Look for damage, not only pressure",
+        text: "Inspect the tread and sidewalls for cuts, bulges, foreign objects, unusual wear or exposed cord. Do not drive on a damaged or incorrectly inflated tyre. A pressure warning can have more than one cause, including a leak or TPMS fault.",
+      },
+      {
+        title: "When alignment is worth checking",
+        text: "A kerb impact, steering-wheel vibration, off-centre steering or uneven shoulder wear can justify a measured alignment and wheel inspection. Tesla also notes that rotation and alignment requirements vary with wheel and tyre configuration, so the exact vehicle setup matters.",
+      },
+      {
+        title: "What we can and cannot promise",
+        text: "The Auto Surgeon can assess Tesla tyre condition and alignment-related symptoms. High-voltage battery, charging-system and other specialist repairs should follow Tesla or appropriately qualified EV service guidance; do not attempt high-voltage work from an online guide.",
+      },
+    ],
+  },
+  {
+    slug: "toyota-hybrid-warning-lights",
+    title: "Toyota hybrid warning lights: safe next steps",
+    category: "Toyota care",
+    summary:
+      "How Toyota owners should respond to hybrid, brake, tyre and master-warning messages without guessing at the repair.",
+    image: "/assets/photos/diagnostics-tablet.webp",
+    readTime: "5 min read",
+    relatedService: "Vehicle diagnostics",
+    sections: [
+      {
+        title: "Start with the exact symbol",
+        text: "Toyota says its warning lights and sensors are there to inform drivers about possible faults, and directs owners to the vehicle information and owner's manual for the relevant model. A symbol can look similar across cars but mean something different, so record the wording and colour shown on your Toyota.",
+      },
+      {
+        title: "Do not ignore a hybrid-system warning",
+        text: "A hybrid-system or master-warning message needs the model-specific manual's instructions and a proper assessment. Do not open high-voltage components or try to repair the hybrid battery yourself. If the car is losing power, behaving abnormally or showing a red safety warning, stop safely and arrange appropriate assistance.",
+      },
+      {
+        title: "Check the ordinary safety items too",
+        text: "Hybrid ownership does not remove normal tyre, brake, light, fluid and windscreen checks. UK Highway Code guidance says tyres must be correctly inflated to the manufacturer's specification and cars need at least 1.6 mm of tread across the central three-quarters around the full circumference.",
+      },
+      {
+        title: "Useful details for a diagnostic visit",
+        text: "Bring the registration, model and year, the warning text or symbol, whether it was steady or flashing, and any change in braking, steering, starting or power. That information helps separate a sensor message from a broader vehicle fault.",
+      },
+    ],
+  },
+  {
+    slug: "mercedes-warning-lights-service",
+    title: "Mercedes warning lights and service messages explained",
+    category: "Mercedes care",
+    summary:
+      "A sensible first response to Mercedes service reminders, tyre and brake alerts, and model-specific dashboard messages.",
+    image: "/assets/photos/diagnostics-tablet.webp",
+    readTime: "5 min read",
+    relatedService: "Vehicle diagnostics",
+    sections: [
+      {
+        title: "Use the correct Mercedes manual",
+        text: "Mercedes-Benz UK provides owner manuals by model and body type. Check the manual for your exact vehicle because the meaning and response for a warning lamp or display message can depend on the model, engine, equipment and model year.",
+      },
+      {
+        title: "Service reminder versus fault warning",
+        text: "A routine service reminder is not the same as a red brake, oil-pressure, overheating or steering warning. Record the exact message and colour. If the vehicle feels unsafe or a serious warning remains on after starting, stop safely and follow the manual or recovery guidance.",
+      },
+      {
+        title: "Common tyre and brake symptoms",
+        text: "Pressure loss, a tyre-pressure warning, pulling under braking, a soft or changing brake pedal, grinding or a new vibration all deserve prompt inspection. Do not assume a sensor reset has fixed the underlying tyre, brake or suspension issue.",
+      },
+      {
+        title: "Diesel and AdBlue messages",
+        text: "AdBlue and diesel-related messages are model-specific. Follow the displayed instruction and owner's manual rather than guessing a quantity or reset procedure. If a countdown or reduced-power warning appears, contact a qualified workshop promptly.",
+      },
+      {
+        title: "Bring the message with you",
+        text: "A photo of the dashboard, the exact model and year, recent work, and any new noise or driving change make a first diagnostic conversation more useful. We can assess common service, tyre, brake and diagnostic concerns and explain when Mercedes-specific support is needed.",
+      },
+    ],
+  },
 ];
