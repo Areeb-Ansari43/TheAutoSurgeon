@@ -69,6 +69,18 @@ export const staticPages: PageMeta[] = [
       "Need car repair help in Hayes? Call 07767 909397 for urgent vehicle advice, view our workshop map or send The Auto Surgeon a message.",
   },
   {
+    path: "/whatspp",
+    title: "WhatsApp Car Repair Enquiry in Hayes — The Auto Surgeon",
+    description:
+      "Send The Auto Surgeon a pre-filled WhatsApp enquiry about a car repair, quote or emergency vehicle problem in Hayes.",
+  },
+  {
+    path: "/whatsapp",
+    title: "WhatsApp Car Repair Enquiry in Hayes — The Auto Surgeon",
+    description:
+      "Send The Auto Surgeon a pre-filled WhatsApp enquiry about a car repair, quote or emergency vehicle problem in Hayes.",
+  },
+  {
     path: "/book",
     title: "Request a Vehicle Inspection — The Auto Surgeon",
     description:
@@ -133,7 +145,7 @@ export function getPageMeta(path: string): PageMeta | undefined {
   if (guide)
     return {
       path: clean,
-      title: `${guide.title} — The Auto Surgeon`,
+      title: `${guide.category} Guide in Hayes — The Auto Surgeon`,
       description: guide.summary,
       image: guide.image,
     };

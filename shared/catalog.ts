@@ -2,6 +2,7 @@ export const business = {
   name: "The Auto Surgeon",
   phone: "07767 909397",
   tel: "tel:07767909397",
+  whatsapp: "https://wa.me/447767909397",
   email: "hello@theautosurgeon.co.uk",
   address: "Unit 3 Squirrels Trading Estate, Viveash Close, Hayes UB3 4RZ",
   maps: "https://www.google.com/maps/search/?api=1&query=Unit+3+Squirrels+Trading+Estate+Viveash+Close+Hayes+UB3+4RZ",

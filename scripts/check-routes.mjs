@@ -22,6 +22,8 @@ const pages = [
   "/guides/car-maintenance-checklist",
   "/guides/after-a-pothole-or-kerb-hit",
   "/contact",
+  "/whatspp",
+  "/whatsapp",
   "/book",
   "/quote",
   "/account",
@@ -72,7 +74,7 @@ if (
   throw new Error("Manifest response is not JSON");
 const routes = (await manifest.json()).routes;
 if (
-  routes.length !== 19 ||
+  routes.length !== 21 ||
   !routes.some(route => route.path === "/services/:slug") ||
   !routes.some(route => route.path === "/guides/:slug")
 )

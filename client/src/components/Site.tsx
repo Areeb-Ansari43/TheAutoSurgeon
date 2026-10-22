@@ -18,6 +18,7 @@ const links = [
   ["/about", "About"],
   ["/guides", "Car care"],
   ["/contact", "Contact"],
+  ["/whatspp", "WhatsApp"],
 ];
 
 export function SiteHeader() {

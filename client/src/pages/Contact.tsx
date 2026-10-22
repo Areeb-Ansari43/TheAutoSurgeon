@@ -1,6 +1,14 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "wouter";
-import { ArrowRight, Clock3, Loader2, Mail, MapPin, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  Clock3,
+  Loader2,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
 import { business } from "@shared/catalog";
 import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
@@ -12,7 +20,7 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
-    subject: "General inquiry",
+    subject: "Quote request",
     message: "",
     consent: false,
   });
@@ -39,7 +47,7 @@ export default function Contact() {
   return (
     <>
       <PageIntro
-        eyebrow="CONTACT & EMERGENCY REPAIRS"
+        eyebrow="QUOTE & REPAIR ENQUIRIES"
         title={
           <>
             Car help.
@@ -47,14 +55,14 @@ export default function Contact() {
             <span className="orange-text">Right here in Hayes.</span>
           </>
         }
-        description="Call The Auto Surgeon for emergency car repair advice in Hayes, UB3. We’ll aim to get urgent repair enquiries moving as quickly as possible, subject to safety, parts and workshop capacity."
+        description="Use this form for a quote or to ask whether we can fix your car. For emergencies, sudden faults or urgent repair questions, contact The Auto Surgeon through WhatsApp."
       >
         <div className="intro-buttons">
-          <a href={business.tel} className="btn btn-primary">
-            <Phone size={16} /> Call {business.phone}
+          <a href="/whatspp" className="btn btn-primary">
+            <MessageCircle size={16} /> Contact us on WhatsApp
           </a>
           <Link href="/services#emergency" className="btn btn-ghost">
-            Emergency repair information <ArrowRight size={16} />
+            See emergency repair information <ArrowRight size={16} />
           </Link>
         </div>
       </PageIntro>
@@ -87,7 +95,8 @@ export default function Contact() {
                 <h3>Call the workshop</h3>
                 <a href={business.tel}>{business.phone}</a>
                 <p className="small">
-                  For emergencies, call rather than waiting for a form reply.
+                  For emergencies and sudden faults, use WhatsApp rather than
+                  waiting for a form reply.
                 </p>
               </div>
             </div>
@@ -139,8 +148,9 @@ export default function Contact() {
                 <div className="eyebrow">SEND A MESSAGE</div>
                 <h2>Tell us what your car needs.</h2>
                 <p className="form-lead">
-                  For urgent or unsafe vehicle problems, call first. Fields
-                  marked * are required.
+                  This form is for quote requests and questions about whether we
+                  can fix your car. For emergencies, use WhatsApp. Fields marked
+                  * are required.
                 </p>
                 <div className="form-grid">
                   <div className="field">
@@ -195,13 +205,11 @@ export default function Contact() {
                       onChange={e => update("subject", e.target.value)}
                     >
                       {[
-                        "General inquiry",
-                        "Emergency repair help",
-                        "Existing appointment",
+                        "Quote request",
+                        "Can you fix my car?",
                         "Service question",
                         "Tyre availability",
-                        "MOT inquiry",
-                        "Feedback",
+                        "Existing appointment",
                       ].map(item => (
                         <option key={item}>{item}</option>
                       ))}
