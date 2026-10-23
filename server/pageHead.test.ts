@@ -35,4 +35,9 @@ describe("form error messages", () => {
     );
     expect(formError(undefined)).toContain("Please try again");
   });
+  it("handles an empty JSON response from a static deployment", () => {
+    expect(
+      formError(new SyntaxError("Unexpected end of JSON input"))
+    ).toContain("hello@theautosurgeon.co.uk");
+  });
 });

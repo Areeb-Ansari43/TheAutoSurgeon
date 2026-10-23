@@ -39,11 +39,11 @@ export function formError(error: unknown): string {
     }
   }
   if (
-    /failed to fetch|network|fetch failed|unexpected token|not valid json|http error/i.test(
+    /failed to fetch|network|fetch failed|unexpected token|unexpected end of json|not valid json|http error/i.test(
       error.message
     )
   )
-    return "We couldn’t reach the workshop website. Check your connection and try again.";
+    return "The online form is temporarily unavailable. Check your connection and try again, or email hello@theautosurgeon.co.uk or call 07767 909397 for direct help.";
   if (error.message.trim().startsWith("[")) {
     try {
       const issues = JSON.parse(error.message) as { message?: string }[];
