@@ -470,8 +470,8 @@ function ManagerRequests() {
     <>
       <div className="form-notice">
         Changing a status updates the record only. Contact the customer
-        separately to agree a confirmed date/time; no automatic email or text is
-        sent.
+        separately to agree a confirmed date/time; the initial request
+        confirmation is sent automatically by email.
       </div>
       <div className="account-tabs">
         {["all", "booking", "quote", "contact"].map(value => (

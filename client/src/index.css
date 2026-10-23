@@ -3085,3 +3085,197 @@ p {
   position: sticky;
   top: 110px;
 }
+/* Rounded liquid-glass refinement: cards should feel tactile, spacious and clearly grouped. */
+.process-card,
+.guide-card,
+.article-sidebar,
+.article-content,
+.confirmation-card,
+.signin-card,
+.request-card,
+.form-card,
+.booking-summary,
+.info-note,
+.contact-panel,
+.contact-form-panel,
+.service-card,
+.info-card,
+.tyre-option,
+.pricing-table,
+.cta-banner,
+.review-card,
+.faq-item,
+.thank-you-card,
+.email-notice {
+  border-radius: 24px;
+}
+.process-card {
+  min-height: 245px;
+  padding: 30px 28px 28px;
+  border: 1px solid rgba(17, 17, 17, 0.09);
+  border-top: 3px solid var(--orange);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 18px 42px rgba(24, 31, 42, 0.08),
+    inset 0 1px 0 #fff;
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+.process-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(242, 106, 0, 0.42);
+  box-shadow:
+    0 24px 54px rgba(242, 106, 0, 0.14),
+    inset 0 1px 0 #fff;
+}
+.process-card p {
+  max-width: 33rem;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.step-number {
+  font-size: 32px;
+  margin-bottom: 28px;
+}
+.guide-card,
+.service-card,
+.info-card,
+.tyre-option,
+.review-card,
+.faq-item {
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+.guide-card:hover,
+.service-card:hover,
+.info-card:hover,
+.tyre-option:hover,
+.review-card:hover,
+.faq-item:hover {
+  transform: translateY(-5px);
+}
+.thank-you-section {
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+}
+.thank-you-wrap {
+  width: min(720px, 100%);
+}
+.thank-you-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 6vw, 70px);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow:
+    0 28px 80px rgba(24, 31, 42, 0.12),
+    inset 0 1px 0 #fff;
+  animation: thank-you-rise 650ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+}
+.thank-you-card::before {
+  content: "";
+  position: absolute;
+  inset: -45% 15% auto;
+  height: 260px;
+  background: radial-gradient(circle, rgba(242, 106, 0, 0.16), transparent 68%);
+  pointer-events: none;
+}
+.thank-you-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--orange);
+  box-shadow: 0 14px 30px rgba(242, 106, 0, 0.28);
+  animation: thank-you-pulse 2.8s ease-in-out infinite;
+}
+.thank-you-card h2 {
+  position: relative;
+  margin: 12px 0;
+  color: #111;
+  font-size: clamp(32px, 5vw, 54px);
+}
+.thank-you-lead {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto 22px;
+  color: #555;
+  font-size: 17px;
+  line-height: 1.7;
+}
+.thank-you-card .intro-buttons {
+  position: relative;
+  justify-content: center;
+  margin-top: 26px;
+}
+.email-notice {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 550px;
+  margin: 24px auto;
+  padding: 18px 20px;
+  text-align: left;
+  background: #fff4e8;
+  border: 1px solid #ffd6aa;
+  color: #6b350e;
+}
+.email-notice svg {
+  flex: 0 0 auto;
+  color: var(--orange);
+}
+.email-notice p {
+  margin: 0;
+  color: #6b350e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+@keyframes thank-you-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes thank-you-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 700px) {
+  .process-card {
+    min-height: 0;
+    padding: 24px 22px;
+  }
+  .thank-you-card {
+    padding: 34px 22px;
+  }
+}
