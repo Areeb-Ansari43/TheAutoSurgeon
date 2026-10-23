@@ -17,6 +17,7 @@ import {
 import RequestPage from "./pages/Request";
 import Contact from "./pages/Contact";
 import WhatsApp from "./pages/WhatsApp";
+import ThankYou from "./pages/ThankYou";
 import Account, { WorkshopManager } from "./pages/Account";
 import { getPageMeta } from "@shared/routes";
 import { useAuth } from "./_core/hooks/useAuth";
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/tyres" component={Tyres} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/contact" component={Contact} />
+      <Route path="/thank-you" component={ThankYou} />
       <Route path="/whatspp" component={WhatsApp} />
       <Route path="/whatsapp" component={WhatsApp} />
       <Route path="/book">

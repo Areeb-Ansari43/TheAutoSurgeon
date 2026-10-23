@@ -18,7 +18,7 @@ describe("public page metadata", () => {
     expect(pageHead("/missing-page")).toContain("Page Not Found");
     expect(pageHead("/account")).toContain("noindex, nofollow");
     expect(publicPaths).not.toContain("/manage");
-    expect(pageRouteManifest.routes).toHaveLength(21);
+    expect(pageRouteManifest.routes).toHaveLength(22);
   });
 });
 describe("form error messages", () => {

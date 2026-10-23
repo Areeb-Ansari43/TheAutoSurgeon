@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { guides, type Guide } from "@shared/guides";
+import { services as catalogServices } from "@shared/catalog";
 
 type InformationProps = {
   page: string;
@@ -86,6 +87,14 @@ function AboutPage() {
               the finding and work towards getting you safely back on the road
               as quickly as possible.
             </p>
+            <p>
+              We work across everyday cars and specialist models, including
+              Tesla, Mercedes-Benz and Toyota. Our team is comfortable with
+              Tesla wheel alignment and tyre-related checks, Mercedes and Toyota
+              diagnostic symptoms, and the careful inspection needed before
+              deciding whether a vehicle needs parts, adjustment or further
+              specialist support.
+            </p>
             <Link href="/workshop" className="text-link">
               Explore workshop services
             </Link>
@@ -164,6 +173,49 @@ function AboutPage() {
               with the vehicle registration, the issue you have noticed and a
               convenient time to talk.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">WHY LOCAL DRIVERS TRUST US</p>
+              <h2 className="section-heading">Clear work. Useful answers.</h2>
+            </div>
+            <p className="muted">
+              A proper repair conversation starts before the tools come out.
+            </p>
+          </div>
+          <div className="feature-grid expertise-grid">
+            <article className="info-card">
+              <div className="icon-box">01</div>
+              <h3>We diagnose before replacing</h3>
+              <p>
+                Warning lights and symptoms are clues, not automatic parts
+                lists. We record what the car is doing, inspect the relevant
+                system and explain what the next check is for.
+              </p>
+            </article>
+            <article className="info-card">
+              <div className="icon-box">02</div>
+              <h3>EV and premium-car aware</h3>
+              <p>
+                We understand that Tesla, Mercedes and Toyota vehicles can have
+                different tyre, sensor, service and warning-light requirements.
+                Vehicle-specific information is checked before work is agreed.
+              </p>
+            </article>
+            <article className="info-card">
+              <div className="icon-box">03</div>
+              <h3>Work you can understand</h3>
+              <p>
+                We explain what was found, what is urgent and what can wait. If
+                a job is outside the safe scope of a routine inspection, we say
+                so rather than guessing.
+              </p>
+            </article>
           </div>
         </div>
       </section>
@@ -698,6 +750,17 @@ function GuideArticle({
   guide: Guide;
   relatedGuides: Guide[];
 }) {
+  const relatedService = catalogServices.find(
+    service =>
+      service.name.toLowerCase() === guide.relatedService.toLowerCase() ||
+      service.bookingName.toLowerCase() === guide.relatedService.toLowerCase()
+  );
+  const relatedServiceHref = relatedService
+    ? `/services/${relatedService.slug}`
+    : "/services";
+  const quoteHref = relatedService
+    ? `/quote?service=${encodeURIComponent(relatedService.bookingName)}`
+    : "/quote";
   return (
     <>
       <PageIntro
@@ -742,6 +805,45 @@ function GuideArticle({
                     </a>
                   </>
                 )}
+                {guide.slug.includes("tesla") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.tesla.com/ownersmanual/model3/en_us/GUID-94F63B13-EA2C-45D9-83AB-5DCA6295D587.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Tesla tyre-care manual
+                    </a>
+                  </>
+                )}
+                {guide.slug.includes("toyota") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.toyota.co.uk/owners/vehicle-information/warning-signs-and-sensors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Toyota warning-sign guide
+                    </a>
+                  </>
+                )}
+                {guide.slug.includes("mercedes") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a
+                      href="https://www.mercedes-benz.co.uk/passengercars/services/manuals.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Mercedes owner manuals
+                    </a>
+                  </>
+                )}
               </p>
             </section>
             <section className="article-section">
@@ -763,11 +865,13 @@ function GuideArticle({
               Discuss the symptoms, vehicle details and the most useful next
               check with the workshop.
             </p>
-            <Link href="/workshop" className="btn btn-primary">
-              View workshop services
+            <Link href={relatedServiceHref} className="btn btn-primary">
+              {relatedService
+                ? `See ${relatedService.name}`
+                : "View workshop services"}
             </Link>
-            <Link href="/book" className="btn btn-ghost">
-              Request a booking
+            <Link href={quoteHref} className="btn btn-ghost">
+              Request a quote
             </Link>
             <p className="eyebrow">More guides</p>
             {relatedGuides.map(relatedGuide => (

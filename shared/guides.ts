@@ -181,4 +181,146 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "tesla-tyre-warning-and-alignment",
+    title: "Tesla tyre warnings and alignment: what to check",
+    category: "Tesla care",
+    summary:
+      "A safe, practical guide to Tesla tyre-pressure alerts, cold-pressure checks, tyre damage and when alignment or inspection is needed.",
+    image: "/assets/photos/wheel-alignment.webp",
+    readTime: "5 min read",
+    relatedService: "Tesla wheel alignment",
+    sections: [
+      {
+        title: "Read the alert before driving",
+        text: "Tesla's Model 3 manual distinguishes an amber under-inflation alert from a red severe-under-inflation alert. A red alert means pull over safely; do not continue as though the warning is only a dashboard nuisance.",
+      },
+      {
+        title: "Check pressures cold",
+        text: "Use the recommended cold pressure shown on the vehicle's tyre-and-loading label, not the maximum pressure printed on the tyre. Tesla advises checking with an accurate gauge when the car has been stationary and not letting air out of a warm tyre to chase a cold-pressure number.",
+      },
+      {
+        title: "Look for damage, not only pressure",
+        text: "Inspect the tread and sidewalls for cuts, bulges, foreign objects, unusual wear or exposed cord. Do not drive on a damaged or incorrectly inflated tyre. A pressure warning can have more than one cause, including a leak or TPMS fault.",
+      },
+      {
+        title: "When alignment is worth checking",
+        text: "A kerb impact, steering-wheel vibration, off-centre steering or uneven shoulder wear can justify a measured alignment and wheel inspection. Tesla also notes that rotation and alignment requirements vary with wheel and tyre configuration, so the exact vehicle setup matters.",
+      },
+      {
+        title: "What we can and cannot promise",
+        text: "The Auto Surgeon can assess Tesla tyre condition and alignment-related symptoms. High-voltage battery, charging-system and other specialist repairs should follow Tesla or appropriately qualified EV service guidance; do not attempt high-voltage work from an online guide.",
+      },
+    ],
+  },
+  {
+    slug: "toyota-hybrid-warning-lights",
+    title: "Toyota hybrid warning lights: safe next steps",
+    category: "Toyota care",
+    summary:
+      "How Toyota owners should respond to hybrid, brake, tyre and master-warning messages without guessing at the repair.",
+    image: "/assets/photos/diagnostics-tablet.webp",
+    readTime: "5 min read",
+    relatedService: "Auto Diagnostics",
+    sections: [
+      {
+        title: "Start with the exact symbol",
+        text: "Toyota says its warning lights and sensors are there to inform drivers about possible faults, and directs owners to the vehicle information and owner's manual for the relevant model. A symbol can look similar across cars but mean something different, so record the wording and colour shown on your Toyota.",
+      },
+      {
+        title: "Do not ignore a hybrid-system warning",
+        text: "A hybrid-system or master-warning message needs the model-specific manual's instructions and a proper assessment. Do not open high-voltage components or try to repair the hybrid battery yourself. If the car is losing power, behaving abnormally or showing a red safety warning, stop safely and arrange appropriate assistance.",
+      },
+      {
+        title: "Check the ordinary safety items too",
+        text: "Hybrid ownership does not remove normal tyre, brake, light, fluid and windscreen checks. UK Highway Code guidance says tyres must be correctly inflated to the manufacturer's specification and cars need at least 1.6 mm of tread across the central three-quarters around the full circumference.",
+      },
+      {
+        title: "Useful details for a diagnostic visit",
+        text: "Bring the registration, model and year, the warning text or symbol, whether it was steady or flashing, and any change in braking, steering, starting or power. That information helps separate a sensor message from a broader vehicle fault.",
+      },
+    ],
+  },
+  {
+    slug: "mercedes-warning-lights-service",
+    title: "Mercedes warning lights and service messages explained",
+    category: "Mercedes care",
+    summary:
+      "A sensible first response to Mercedes service reminders, tyre and brake alerts, and model-specific dashboard messages.",
+    image: "/assets/photos/diagnostics-tablet.webp",
+    readTime: "5 min read",
+    relatedService: "Auto Diagnostics",
+    sections: [
+      {
+        title: "Use the correct Mercedes manual",
+        text: "Mercedes-Benz UK provides owner manuals by model and body type. Check the manual for your exact vehicle because the meaning and response for a warning lamp or display message can depend on the model, engine, equipment and model year.",
+      },
+      {
+        title: "Service reminder versus fault warning",
+        text: "A routine service reminder is not the same as a red brake, oil-pressure, overheating or steering warning. Record the exact message and colour. If the vehicle feels unsafe or a serious warning remains on after starting, stop safely and follow the manual or recovery guidance.",
+      },
+      {
+        title: "Common tyre and brake symptoms",
+        text: "Pressure loss, a tyre-pressure warning, pulling under braking, a soft or changing brake pedal, grinding or a new vibration all deserve prompt inspection. Do not assume a sensor reset has fixed the underlying tyre, brake or suspension issue.",
+      },
+      {
+        title: "Diesel and AdBlue messages",
+        text: "AdBlue and diesel-related messages are model-specific. Follow the displayed instruction and owner's manual rather than guessing a quantity or reset procedure. If a countdown or reduced-power warning appears, contact a qualified workshop promptly.",
+      },
+      {
+        title: "Bring the message with you",
+        text: "A photo of the dashboard, the exact model and year, recent work, and any new noise or driving change make a first diagnostic conversation more useful. We can assess common service, tyre, brake and diagnostic concerns and explain when Mercedes-specific support is needed.",
+      },
+    ],
+  },
+  {
+    slug: "common-car-problems-by-make",
+    title: "Common car problems by make: Tesla, Toyota, Mercedes and more",
+    category: "Car problems",
+    summary:
+      "A practical starting point for the vehicle problems drivers commonly search for, with safe checks and the right Hayes workshop next step.",
+    image: "/assets/photos/diagnostics-tablet.webp",
+    readTime: "8 min read",
+    relatedService: "Vehicle diagnostics",
+    sections: [
+      {
+        title:
+          "Tesla Model 3 and Model Y: tyre warnings, vibration and alignment",
+        text: "Owners commonly search for Tesla tyre-pressure warnings, steering vibration, uneven shoulder wear and an off-centre steering wheel. Start with the cold pressures shown on the car's tyre-and-loading label and inspect for cuts, bulges or a slow leak. A red severe-under-inflation warning means pull over safely. If pressure is correct but the vehicle still vibrates, pulls or wears a tyre unevenly, request a measured wheel and alignment inspection from The Auto Surgeon. Do not attempt high-voltage battery or charging repairs from an online guide.",
+      },
+      {
+        title:
+          "Toyota Yaris, Corolla and Prius: warning lights and hybrid messages",
+        text: "Toyota drivers often search for a hybrid-system warning, master warning, brake warning or a car that feels different when starting. Record the exact symbol and message, colour and whether it is steady or flashing, then check the manual for the exact model. Do not open hybrid components. If there is loss of power, abnormal braking or a red safety warning, stop safely and arrange appropriate assistance. The Auto Surgeon can discuss a diagnostic first step for non-urgent symptoms.",
+      },
+      {
+        title:
+          "Mercedes A-Class, C-Class, E-Class and GLC: service messages and tyre alerts",
+        text: "A Mercedes service reminder is different from an active brake, oil-pressure, steering, overheating or tyre warning. Take a photo of the display and note the model, engine and year because Mercedes manuals are model-specific. Do not clear a warning without understanding why it appeared. The Auto Surgeon can assess common tyre, brake and diagnostic concerns, then explain when Mercedes-specific support is needed.",
+      },
+      {
+        title:
+          "BMW 1 Series and 3 Series: pulling, vibration and brake warnings",
+        text: "Drivers often search for BMW steering pull, vibration after a pothole, uneven tyre wear or a brake warning. Check tyre pressures and visible damage first. A steering wheel that is off-centre, feathered tread or vibration after an impact can justify a wheel, tyre and alignment inspection. A brake warning, soft pedal, grinding or pulling under braking should be treated as urgent rather than solved by an alignment alone.",
+      },
+      {
+        title:
+          "Volkswagen Golf and Polo: engine lights and tyre-pressure alerts",
+        text: "For a Volkswagen engine-management or tyre-pressure warning, record the exact message and whether the light is steady or flashing. A scan can identify stored information, but a code is a clue rather than proof that one part needs replacing. Check the handbook, avoid driving if the car is misfiring, overheating or braking abnormally, and ask The Auto Surgeon about a diagnostic assessment.",
+      },
+      {
+        title:
+          "Ford Fiesta and Focus: starting, warning-light and steering concerns",
+        text: "Common search terms include Ford starting problems, engine lights, steering pull and tyre wear. Note when the issue happens: cold start, acceleration, braking, after a kerb impact or at motorway speed. This detail helps separate a battery or engine symptom from a tyre, brake, suspension or alignment concern. Bring the registration and any dashboard message when requesting help.",
+      },
+      {
+        title: "What every make has in common",
+        text: "UK drivers should check tyres against the manufacturer's pressure specification. Cars must have at least 1.6 mm of tread across the central three-quarters around the full circumference, but that legal minimum is not a guarantee of good wet-weather performance. Warning displays should not be ignored; red warnings, overheating, oil-pressure concerns, abnormal braking, smoke or burning smells require a safe stop and the correct manual or recovery advice.",
+      },
+      {
+        title: "Give the workshop enough information",
+        text: "A useful enquiry includes the make, model, year, registration, exact warning message, mileage if relevant, recent repair or impact, and what the vehicle is doing now. Add a photo only when it is safe to take one. Contact The Auto Surgeon in Hayes for the appropriate next step: tyre and puncture inspection, wheel alignment, brake work, engine-oil service or diagnostics.",
+      },
+    ],
+  },
 ];

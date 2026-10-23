@@ -13,3 +13,11 @@ General vehicle maintenance guidance: https://www.nidirect.gov.uk/articles/maint
 Appointment dates and times are customer preferences, not live workshop availability. Submitted requests remain awaiting confirmation until the business explicitly updates their status. No customer email or text delivery is represented as implemented.
 
 Tyre tread-depth wording is supported by https://www.tyresafe.org/the-checks/tread-depth/, read 21 October 2026. The source confirms 1.6 mm across the central three-quarters and entire circumference.
+
+## Vehicle-specific guide sources (2026-10-22)
+
+- UK Highway Code, Annex 6: https://www.gov.uk/guidance/the-highway-code/annex-6-vehicle-maintenance-safety-and-security — tyre inflation, 1.6 mm legal tread minimum, warning displays, flat tyres, fluid levels, overheating and safety checks.
+- Tesla Model 3 Owner's Manual, Tire Care and Maintenance: https://www.tesla.com/ownersmanual/model3/en_us/GUID-94F63B13-EA2C-45D9-83AB-5DCA6295D587.html — cold pressure checks, TPMS interpretation, tyre damage, rotation and alignment guidance.
+- Toyota UK, Warning Signs and Sensors: https://www.toyota.co.uk/owners/vehicle-information/warning-signs-and-sensors — manufacturer warning-light guidance and owner-manual/dealer direction.
+- Mercedes-Benz UK, Owner's Manuals: https://www.mercedes-benz.co.uk/passengercars/services/manuals.html — model-specific manuals and warning/maintenance instructions.
+- AA, Dashboard warning lights: https://www.theaa.com/breakdown-cover/advice/dashboard-warning-lights — general UK red/amber warning-light response guidance.

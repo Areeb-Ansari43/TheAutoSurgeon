@@ -28,7 +28,12 @@ export function SiteHeader() {
   useEffect(() => {
     setOpen(false);
     setServicesOpen(false);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    const hash = window.location.hash.replace(/^#/, "");
+    requestAnimationFrame(() => {
+      if (hash)
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "instant" });
+    });
   }, [location]);
   useEffect(() => {
     const close = (event: KeyboardEvent) => {
@@ -76,15 +81,15 @@ export function SiteHeader() {
                   <Link href="/services" role="menuitem">
                     All services <ArrowRight size={14} />
                   </Link>
-                  <Link href="/services#tyres" role="menuitem">
+                  <a href="/services#tyres" role="menuitem">
                     Tyres & punctures <ArrowRight size={14} />
-                  </Link>
-                  <Link href="/services#pricing" role="menuitem">
+                  </a>
+                  <a href="/services#pricing" role="menuitem">
                     Pricing <ArrowRight size={14} />
-                  </Link>
-                  <Link href="/services#emergency" role="menuitem">
+                  </a>
+                  <a href="/services#emergency" role="menuitem">
                     Emergency repairs <ArrowRight size={14} />
-                  </Link>
+                  </a>
                 </div>
               )}
             </div>
@@ -137,15 +142,15 @@ export function SiteHeader() {
               <Link href="/services" className="island-link">
                 All services <ArrowRight size={15} />
               </Link>
-              <Link href="/services#tyres" className="island-link">
+              <a href="/services#tyres" className="island-link">
                 Tyres & punctures <ArrowRight size={15} />
-              </Link>
-              <Link href="/services#pricing" className="island-link">
+              </a>
+              <a href="/services#pricing" className="island-link">
                 Pricing <ArrowRight size={15} />
-              </Link>
-              <Link href="/services#emergency" className="island-link">
+              </a>
+              <a href="/services#emergency" className="island-link">
                 Emergency repairs <ArrowRight size={15} />
-              </Link>
+              </a>
             </div>
             {links.slice(1).map(([path, label]) => (
               <Link

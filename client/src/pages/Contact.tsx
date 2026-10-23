@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import {
   ArrowRight,
   Clock3,
@@ -27,8 +27,14 @@ export default function Contact() {
   const [requestKey] = useState(() => crypto.randomUUID());
   const [error, setError] = useState("");
   const [reference, setReference] = useState("");
+  const [, navigate] = useLocation();
   const mutation = trpc.inquiries.create.useMutation({
-    onSuccess: data => setReference(data.reference),
+    onSuccess: data => {
+      setReference(data.reference);
+      navigate(
+        `/thank-you?type=contact&reference=${encodeURIComponent(data.reference)}`
+      );
+    },
   });
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -249,7 +255,7 @@ export default function Contact() {
                   </div>
                 )}
                 <div className="form-actions">
-                  <p>Your message is saved for the workshop.</p>
+                  <p>We’ll email you a confirmation after sending.</p>
                   <button
                     className="btn btn-primary"
                     disabled={mutation.isPending}

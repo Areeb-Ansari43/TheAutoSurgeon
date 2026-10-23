@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import {
   ArrowRight,
   CalendarDays,
@@ -67,8 +67,9 @@ export function RequestConfirmation({
       </p>
       <span className="request-reference">{reference}</span>
       <p className="small">
-        Keep this reference when contacting the workshop. No automatic email or
-        text has been sent.
+        Keep this reference when contacting the workshop. We have emailed a
+        confirmation to the address you provided. Please check your inbox and
+        spam folder.
       </p>
       <div className="intro-buttons">
         <a href={business.tel} className="btn btn-primary">
@@ -120,12 +121,16 @@ export default function RequestPage({
   const [reference, setReference] = useState("");
   const [status, setStatus] = useState("requested");
   const [error, setError] = useState("");
+  const [, navigate] = useLocation();
   const utils = trpc.useUtils();
   const mutation = trpc.appointments.create.useMutation({
     onSuccess: data => {
       setReference(data.reference);
       setStatus(data.status);
       void utils.appointments.mine.invalidate();
+      navigate(
+        `/thank-you?type=${kind}&reference=${encodeURIComponent(data.reference)}`
+      );
       window.scrollTo({ top: 100, behavior: "smooth" });
     },
   });
@@ -505,9 +510,8 @@ export default function RequestPage({
                 <div className="info-note">
                   <CalendarDays size={20} />
                   <p>
-                    No automatic emails or texts are sent. Keep your reference
-                    and call if you need to confirm the workshop has reviewed
-                    your request.
+                    We’ll email a confirmation to you after this request is
+                    sent. Please check your inbox and spam folder.
                   </p>
                 </div>
               </aside>
