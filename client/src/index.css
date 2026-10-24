@@ -116,9 +116,12 @@ ul {
 }
 .container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1360px;
   padding: 0 48px;
   margin: 0 auto;
+}
+p {
+  max-width: 72ch;
 }
 .orange-text {
   color: var(--orange);
@@ -566,7 +569,7 @@ ul {
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 28px;
 }
 .service-card {
   border: 1px solid #303030;
@@ -1279,7 +1282,7 @@ ul {
 .guide-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 28px;
 }
 .guide-card {
   display: block;
