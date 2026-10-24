@@ -10,15 +10,6 @@ function queryValue(key: string) {
 
 export default function ThankYou() {
   const reference = queryValue("reference");
-  const type = queryValue("type");
-  const delivery = queryValue("delivery");
-  const staticEmail = delivery === "email";
-  const label =
-    type === "booking"
-      ? "inspection request"
-      : type === "quote"
-        ? "quote request"
-        : "enquiry";
   return (
     <>
       <PageIntro
@@ -27,14 +18,10 @@ export default function ThankYou() {
           <>
             Thank you.
             <br />
-            <span className="orange-text">We’re on it.</span>
+            <span className="orange-text">We received your request.</span>
           </>
         }
-        description={
-          staticEmail
-            ? `Your ${label} is ready in your email app. Send it to The Auto Surgeon in Hayes and we’ll get back to you within 24–48 hours.`
-            : `Your ${label} has been received by The Auto Surgeon in Hayes. We’ll review your details and get back to you within 24–48 hours.`
-        }
+        description="Thank you. We received your request. We respond back to you within 24–48 hours."
       />
       <section className="section section-alt thank-you-section">
         <div className="container thank-you-wrap">
@@ -42,29 +29,23 @@ export default function ThankYou() {
             <div className="thank-you-orbit">
               <CheckCircle2 size={42} />
             </div>
-            <div className="eyebrow">
-              {staticEmail ? "EMAIL DRAFT READY" : "CONFIRMATION SENT"}
-            </div>
-            <h2>
-              {staticEmail ? "Send your email draft." : "Check your inbox."}
-            </h2>
+            <div className="eyebrow">THANK YOU</div>
+            <h2>We received your request.</h2>
             <p className="thank-you-lead">
-              {staticEmail
-                ? "Your email app should now be open with your vehicle details already filled in. Press Send to deliver your enquiry to the workshop."
-                : "We have sent you a confirmation email of your inquiry. Your request is safely saved for the workshop team."}
+              Thank you. We received your request. We respond back to you within
+              24–48 hours.
             </p>
             {reference && <div className="request-reference">{reference}</div>}
             <div className="email-notice">
               <Mail size={21} />
               <p>
-                {staticEmail
-                  ? `Send the draft to ${business.email}. If your email app did not open, email the workshop directly and include your reference.`
-                  : "Any emails from theautosurgeon.co.uk? Please unblock this email and check your spam folder."}
+                If you have not received your confirmation email, please check
+                your junk and unblock any emails from @theautosurgeon.co.uk.
               </p>
             </div>
             <p className="small">
-              We aim to reply within 24–48 hours. If your vehicle is unsafe or
-              you need urgent help, do not wait for an email.
+              If your vehicle is unsafe or you need urgent help, do not wait for
+              an email. Call the workshop directly.
             </p>
             <div className="intro-buttons">
               <a href={business.tel} className="btn btn-primary">

@@ -167,8 +167,8 @@ function AboutPage() {
             </p>
             <p>
               Call <a href="tel:07767909397">07767 909397</a> or email{" "}
-              <a href="mailto:hello@theautosurgeon.co.uk">
-                hello@theautosurgeon.co.uk
+              <a href="mailto:admin@theautosurgeon.co.uk">
+                admin@theautosurgeon.co.uk
               </a>{" "}
               with the vehicle registration, the issue you have noticed and a
               convenient time to talk.
@@ -565,8 +565,8 @@ function FaqPage() {
           <p>
             General guidance is not a substitute for inspecting your vehicle.
             Call <a href="tel:07767909397">07767 909397</a> or email{" "}
-            <a href="mailto:hello@theautosurgeon.co.uk">
-              hello@theautosurgeon.co.uk
+            <a href="mailto:admin@theautosurgeon.co.uk">
+              admin@theautosurgeon.co.uk
             </a>{" "}
             with the vehicle details and symptoms.
           </p>
@@ -681,8 +681,8 @@ function PrivacyPage() {
             <p>
               To ask about access to, correction of or deletion of information
               you have provided, contact the business at{" "}
-              <a href="mailto:hello@theautosurgeon.co.uk">
-                hello@theautosurgeon.co.uk
+              <a href="mailto:admin@theautosurgeon.co.uk">
+                admin@theautosurgeon.co.uk
               </a>{" "}
               or call <a href="tel:07767909397">07767 909397</a>. Include enough
               detail for the business to locate the relevant enquiry or account.

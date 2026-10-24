@@ -16,7 +16,7 @@ import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
 import {
   isStaticCloudflareDeployment,
-  openStaticInquiryEmail,
+  submitStaticInquiry,
 } from "@/lib/staticInquiry";
 import { PageIntro } from "@/components/Site";
 
@@ -172,23 +172,27 @@ export default function RequestPage({
       return;
     }
     if (isStaticCloudflareDeployment()) {
-      const emailReference = openStaticInquiryEmail({
-        kind,
-        name: fields.name,
-        email: fields.email,
-        phone: fields.phone,
-        registration: fields.registration,
-        vehicle: fields.vehicle,
-        postcode: fields.postcode,
-        service: fields.service,
-        date: kind === "booking" ? fields.date : undefined,
-        time: kind === "booking" ? fields.time : undefined,
-        notes: fields.notes,
-      });
-      setReference(emailReference);
-      navigate(
-        `/thank-you?type=${kind}&reference=${encodeURIComponent(emailReference)}&delivery=email`
-      );
+      try {
+        const emailReference = await submitStaticInquiry({
+          kind,
+          name: fields.name,
+          email: fields.email,
+          phone: fields.phone,
+          registration: fields.registration,
+          vehicle: fields.vehicle,
+          postcode: fields.postcode,
+          service: fields.service,
+          date: kind === "booking" ? fields.date : undefined,
+          time: kind === "booking" ? fields.time : undefined,
+          notes: fields.notes,
+        });
+        setReference(emailReference);
+        navigate(
+          `/thank-you?type=${kind}&reference=${encodeURIComponent(emailReference)}`
+        );
+      } catch (err) {
+        setError(formError(err));
+      }
       return;
     }
     try {

@@ -5,7 +5,7 @@ import type {
 import { ENV } from "./_core/env";
 
 const OWNER_EMAIL = "admin@theautosurgeon.co.uk";
-const FROM_EMAIL = "The Auto Surgeon <admin@theautosurgeon.co.uk>";
+const FROM_EMAIL = "The Auto Surgeon <forms@theautosurgeon.co.uk>";
 const SITE_URL = "https://theautosurgeon.co.uk";
 const LOGO_URL = `${SITE_URL}/assets/brand/auto-surgeon-logo.png`;
 

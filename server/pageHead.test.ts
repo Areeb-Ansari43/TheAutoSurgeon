@@ -38,6 +38,6 @@ describe("form error messages", () => {
   it("handles an empty JSON response from a static deployment", () => {
     expect(
       formError(new SyntaxError("Unexpected end of JSON input"))
-    ).toContain("hello@theautosurgeon.co.uk");
+    ).toContain("admin@theautosurgeon.co.uk");
   });
 });

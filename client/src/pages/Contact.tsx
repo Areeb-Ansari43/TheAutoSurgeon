@@ -14,7 +14,7 @@ import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
 import {
   isStaticCloudflareDeployment,
-  openStaticInquiryEmail,
+  submitStaticInquiry,
 } from "@/lib/staticInquiry";
 import { PageIntro, SectionHead } from "@/components/Site";
 import { RequestConfirmation } from "./Request";
@@ -45,18 +45,22 @@ export default function Contact() {
     setError("");
     if (mutation.isPending) return;
     if (isStaticCloudflareDeployment()) {
-      const emailReference = openStaticInquiryEmail({
-        kind: "contact",
-        name: fields.name,
-        email: fields.email,
-        phone: fields.phone,
-        subject: fields.subject,
-        message: fields.message,
-      });
-      setReference(emailReference);
-      navigate(
-        `/thank-you?type=contact&reference=${encodeURIComponent(emailReference)}&delivery=email`
-      );
+      try {
+        const emailReference = await submitStaticInquiry({
+          kind: "contact",
+          name: fields.name,
+          email: fields.email,
+          phone: fields.phone,
+          subject: fields.subject,
+          message: fields.message,
+        });
+        setReference(emailReference);
+        navigate(
+          `/thank-you?type=contact&reference=${encodeURIComponent(emailReference)}`
+        );
+      } catch (err) {
+        setError(formError(err));
+      }
       return;
     }
     try {

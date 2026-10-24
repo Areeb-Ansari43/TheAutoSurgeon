@@ -10,7 +10,7 @@ export function isStaticCloudflareDeployment() {
   );
 }
 
-export function openStaticInquiryEmail(input: {
+type InquiryInput = {
   kind: "contact" | "booking" | "quote";
   name: string;
   email: string;
@@ -24,33 +24,28 @@ export function openStaticInquiryEmail(input: {
   time?: string;
   message?: string;
   notes?: string;
-}) {
-  const label =
-    input.kind === "booking"
-      ? "inspection request"
-      : input.kind === "quote"
-        ? "written quote request"
-        : "contact enquiry";
-  const subject = input.subject || `New ${label} — ${input.name}`;
-  const lines = [
-    `New ${label} from The Auto Surgeon website`,
-    "",
-    `Name: ${input.name}`,
-    `Email: ${input.email}`,
-    input.phone ? `Phone: ${input.phone}` : "",
-    input.registration ? `Vehicle registration: ${input.registration}` : "",
-    input.vehicle ? `Vehicle: ${input.vehicle}` : "",
-    input.postcode ? `Postcode: ${input.postcode}` : "",
-    input.service ? `Service: ${input.service}` : "",
-    input.date ? `Preferred date: ${input.date}` : "",
-    input.time ? `Preferred time: ${input.time}` : "",
-    "",
-    input.message ? `Message:\n${input.message}` : "",
-    input.notes ? `Notes:\n${input.notes}` : "",
-    "",
-    `Reply to: ${input.email}`,
-  ].filter(Boolean);
-  const mailto = `mailto:${business.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-  window.location.href = mailto;
-  return `EMAIL-${Date.now().toString(36).toUpperCase()}`;
+};
+
+export async function submitStaticInquiry(input: InquiryInput) {
+  const response = await fetch("/api/inquiry", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  const text = await response.text();
+  let data: { reference?: string; error?: string } = {};
+  try {
+    data = text ? (JSON.parse(text) as typeof data) : {};
+  } catch {
+    throw new Error(
+      `The enquiry service returned an invalid response. Please email ${business.email} directly.`
+    );
+  }
+  if (!response.ok || !data.reference) {
+    throw new Error(
+      data.error ||
+        `We could not send your enquiry. Please email ${business.email} directly.`
+    );
+  }
+  return data.reference;
 }

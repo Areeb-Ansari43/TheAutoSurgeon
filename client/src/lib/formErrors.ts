@@ -43,7 +43,7 @@ export function formError(error: unknown): string {
       error.message
     )
   )
-    return "The online form is temporarily unavailable. Check your connection and try again, or email hello@theautosurgeon.co.uk or call 07767 909397 for direct help.";
+    return "The online form is temporarily unavailable. Check your connection and try again, or email admin@theautosurgeon.co.uk or call 07767 909397 for direct help.";
   if (error.message.trim().startsWith("[")) {
     try {
       const issues = JSON.parse(error.message) as { message?: string }[];

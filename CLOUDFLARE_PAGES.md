@@ -1,8 +1,10 @@
-## Inquiry email delivery
+## Resend inquiry delivery
 
-The full-stack server now sends two branded emails through Resend after a new Contact, quote or inspection submission is saved:
+The Cloudflare Pages deployment now uses `functions/api/inquiry.ts` for Contact, inspection and quote forms. The function sends two emails through Resend after a successful submission:
 
-- An owner notification to `admin@theautosurgeon.co.uk`, with the customer details and a reply-to address.
-- A confirmation to the customer’s submitted email address, including the reference, 24–48 hour response window, inbox guidance and spam-folder guidance.
+- Owner notification: `forms@theautosurgeon.co.uk` → `admin@theautosurgeon.co.uk`, with the customer details and reply-to address.
+- Customer confirmation: `forms@theautosurgeon.co.uk` → the customer’s submitted email, confirming receipt and the 24–48 hour response window.
 
-The server reads `RESEND_API_KEY` at runtime. Keep this value in protected production environment configuration; never commit it to GitHub. The sending domain/address must be verified in Resend before production delivery. The static Cloudflare Pages build can display the forms and thank-you pages, but it cannot execute the database or email mutation by itself. To keep submissions and email delivery live, deploy the server/database build or proxy `/api/*` to the full-stack runtime.
+In Cloudflare Pages, add `RESEND_API_KEY` as an encrypted production environment variable. The Resend domain `theautosurgeon.co.uk` must be verified, and `forms@theautosurgeon.co.uk` must be an allowed sender. Do not put the key in GitHub or browser code.
+
+The frontend waits for `/api/inquiry` to return a successful reference before redirecting to `/thank-you`. If Resend rejects the message, the customer stays on the form and receives a clear retry/contact message instead of a false success page.
