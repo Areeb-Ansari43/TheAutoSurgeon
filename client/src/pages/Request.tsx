@@ -14,6 +14,10 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { business, bookingServices, preferredTimes } from "@shared/catalog";
 import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
+import {
+  isStaticCloudflareDeployment,
+  openStaticInquiryEmail,
+} from "@/lib/staticInquiry";
 import { PageIntro } from "@/components/Site";
 
 export function londonDate() {
@@ -164,6 +168,26 @@ export default function RequestPage({
     ) {
       setError(
         "Sunday visits are by direct arrangement only. Please choose Monday–Saturday or call the workshop."
+      );
+      return;
+    }
+    if (isStaticCloudflareDeployment()) {
+      const emailReference = openStaticInquiryEmail({
+        kind,
+        name: fields.name,
+        email: fields.email,
+        phone: fields.phone,
+        registration: fields.registration,
+        vehicle: fields.vehicle,
+        postcode: fields.postcode,
+        service: fields.service,
+        date: kind === "booking" ? fields.date : undefined,
+        time: kind === "booking" ? fields.time : undefined,
+        notes: fields.notes,
+      });
+      setReference(emailReference);
+      navigate(
+        `/thank-you?type=${kind}&reference=${encodeURIComponent(emailReference)}&delivery=email`
       );
       return;
     }

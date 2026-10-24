@@ -12,6 +12,10 @@ import {
 import { business } from "@shared/catalog";
 import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
+import {
+  isStaticCloudflareDeployment,
+  openStaticInquiryEmail,
+} from "@/lib/staticInquiry";
 import { PageIntro, SectionHead } from "@/components/Site";
 import { RequestConfirmation } from "./Request";
 
@@ -40,6 +44,21 @@ export default function Contact() {
     e.preventDefault();
     setError("");
     if (mutation.isPending) return;
+    if (isStaticCloudflareDeployment()) {
+      const emailReference = openStaticInquiryEmail({
+        kind: "contact",
+        name: fields.name,
+        email: fields.email,
+        phone: fields.phone,
+        subject: fields.subject,
+        message: fields.message,
+      });
+      setReference(emailReference);
+      navigate(
+        `/thank-you?type=contact&reference=${encodeURIComponent(emailReference)}&delivery=email`
+      );
+      return;
+    }
     try {
       await mutation.mutateAsync({ ...fields, consent: true, requestKey });
     } catch (err) {
