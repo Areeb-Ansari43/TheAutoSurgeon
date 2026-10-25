@@ -1,5 +1,6 @@
 import { getPageMeta, publicPaths } from "../shared/routes";
 import { business, services } from "../shared/catalog";
+import { guides } from "../shared/guides";
 const logo =
   "https://files.manuscdn.com/user_upload_by_module/session_file/310519664037278955/PNfFIWOvLpgultzE.png";
 export function escapeHtml(value: string) {
@@ -34,14 +35,16 @@ export function pageHead(path: string) {
   const pageUrl = origin && meta ? `${origin}${meta.path}` : undefined;
   const robots = !meta || meta.private ? "noindex, nofollow" : "index, follow";
   const service = services.find(item => path === `/services/${item.slug}`);
+  const guide = guides.find(item => path === `/guides/${item.slug}`);
+
   const structuredEntities: Record<string, unknown>[] = [
     {
       "@type": "AutoRepair",
-      "@id": origin ? `${origin}/#business` : undefined,
+      "@id": origin ? `${origin}/#business` : "https://theautosurgeon.co.uk/#business",
       name: business.name,
       description,
       telephone: "+447767909397",
-      url: origin,
+      url: origin || "https://theautosurgeon.co.uk",
       image,
       address: {
         "@type": "PostalAddress",
@@ -50,10 +53,17 @@ export function pageHead(path: string) {
         postalCode: "UB3 4RZ",
         addressCountry: "GB",
       },
-      areaServed: ["Hayes", "UB3", "West London"],
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 51.5038,
+        longitude: -0.4208,
+      },
+      areaServed: ["Hayes", "UB3", "West London", "Hillingdon"],
       openingHours: "Mo-Sa 09:00-18:00",
+      hasMap: business.maps,
     },
   ];
+
   if (service) {
     structuredEntities.push({
       "@type": "Service",
@@ -61,7 +71,7 @@ export function pageHead(path: string) {
       serviceType: service.name,
       description: service.short,
       provider: {
-        "@id": origin ? `${origin}/#business` : undefined,
+        "@id": origin ? `${origin}/#business` : "https://theautosurgeon.co.uk/#business",
         "@type": "AutoRepair",
         name: business.name,
       },
@@ -77,6 +87,43 @@ export function pageHead(path: string) {
         availability: "https://schema.org/InStock",
       },
     });
+  }
+
+  if (guide) {
+    structuredEntities.push({
+      "@type": "Article",
+      headline: guide.title,
+      description: guide.summary,
+      image: origin ? `${origin}${guide.image}` : undefined,
+      author: {
+        "@type": "Organization",
+        name: "The Auto Surgeon",
+        url: origin || "https://theautosurgeon.co.uk",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "The Auto Surgeon",
+        logo: {
+          "@type": "ImageObject",
+          url: logo,
+        },
+      },
+      mainEntityOfPage: pageUrl,
+    });
+
+    if (guide.faqs && guide.faqs.length > 0) {
+      structuredEntities.push({
+        "@type": "FAQPage",
+        mainEntity: guide.faqs.map(faq => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      });
+    }
   }
   const structuredData =
     meta && !meta.private

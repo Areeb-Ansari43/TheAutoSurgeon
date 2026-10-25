@@ -761,6 +761,7 @@ function GuideArticle({
   const quoteHref = relatedService
     ? `/quote?service=${encodeURIComponent(relatedService.bookingName)}`
     : "/quote";
+
   return (
     <>
       <PageIntro
@@ -771,26 +772,86 @@ function GuideArticle({
       <section className="section">
         <div className="container article-layout">
           <article className="article-content">
-            <div className="guide-meta">
+            <div className="guide-meta" style={{ marginBottom: "20px" }}>
               <span className="badge">{guide.category}</span>
-              <span>{guide.readTime}</span>
+              <span style={{ color: "#4b5563", fontSize: "12px" }}>{guide.readTime}</span>
             </div>
-            <img className="wide-photo" src={guide.image} alt="" />
-            {guide.sections.map(section => (
-              <section className="article-section" key={section.title}>
-                <h2>{section.title}</h2>
-                <p>{section.text}</p>
+            <img className="wide-photo" src={guide.image} alt={guide.title} style={{ marginBottom: "32px" }} />
+
+            {/* Table of Contents for Article Navigation */}
+            <nav className="info-card" style={{ marginBottom: "36px", padding: "20px 24px" }} aria-label="Table of Contents">
+              <strong className="eyebrow" style={{ marginBottom: "12px" }}>IN THIS GUIDE</strong>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
+                {guide.sections.map((section, idx) => (
+                  <li key={section.title}>
+                    <a
+                      href={`#section-${idx + 1}`}
+                      className="text-link"
+                      style={{ fontSize: "14px", textTransform: "none", fontWeight: 600 }}
+                    >
+                      {section.title}
+                    </a>
+                  </li>
+                ))}
+                {guide.faqs && guide.faqs.length > 0 && (
+                  <li>
+                    <a
+                      href="#frequently-asked-questions"
+                      className="text-link"
+                      style={{ fontSize: "14px", textTransform: "none", fontWeight: 600 }}
+                    >
+                      Frequently Asked Questions
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </nav>
+
+            {guide.sections.map((section, idx) => (
+              <section className="article-section" id={`section-${idx + 1}`} key={section.title} style={{ marginBottom: "36px" }}>
+                <h2 style={{ fontSize: "26px", color: "#111", marginBottom: "16px" }}>{section.title}</h2>
+                <p style={{ fontSize: "15px", lineHeight: "1.8", color: "#2d3748" }}>{section.text}</p>
+
+                {section.subsections && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "20px" }}>
+                    {section.subsections.map(sub => (
+                      <div key={sub.title} className="info-card" style={{ padding: "20px 24px" }}>
+                        <h3 style={{ fontSize: "19px", color: "#111", marginBottom: "8px" }}>{sub.title}</h3>
+                        <p style={{ fontSize: "14px", lineHeight: "1.75", color: "#374151" }}>{sub.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </section>
             ))}
-            <section className="article-section">
-              <h2>Further reading</h2>
-              <p>
+
+            {guide.faqs && guide.faqs.length > 0 && (
+              <section className="article-section" id="frequently-asked-questions" style={{ marginTop: "40px", marginBottom: "36px" }}>
+                <h2 style={{ fontSize: "26px", color: "#111", marginBottom: "20px" }}>Frequently Asked Questions</h2>
+                <div className="faq-list">
+                  {guide.faqs.map((faq, index) => (
+                    <details className="faq-item" key={faq.question}>
+                      <summary>
+                        <span className="faq-number">0{index + 1}</span>
+                        {faq.question}
+                        <span className="faq-plus">+</span>
+                      </summary>
+                      <p>{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section className="article-section" style={{ borderTop: "1px solid #e5e7eb", paddingTop: "28px" }}>
+              <h2>Further Official Guidance</h2>
+              <p style={{ fontSize: "14px", color: "#374151" }}>
                 <a
-                  href="https://www.nidirect.gov.uk/articles/maintaining-your-vehicle"
+                  href="https://www.gov.uk/check-vehicle-safe"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Official vehicle maintenance guidance
+                  GOV.UK Official Vehicle Safety & Maintenance Guidance
                 </a>
                 {guide.slug === "tyre-safety-checks" && (
                   <>
@@ -801,7 +862,7 @@ function GuideArticle({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      TyreSafe tread-depth advice
+                      TyreSafe Official Tread Depth Guidance
                     </a>
                   </>
                 )}
@@ -814,7 +875,7 @@ function GuideArticle({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Tesla tyre-care manual
+                      Tesla Model 3 Owner's Manual
                     </a>
                   </>
                 )}
@@ -827,7 +888,7 @@ function GuideArticle({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Toyota warning-sign guide
+                      Toyota UK Warning Signs & Indicators
                     </a>
                   </>
                 )}
@@ -840,54 +901,48 @@ function GuideArticle({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Mercedes owner manuals
+                      Mercedes-Benz UK Digital Manuals
                     </a>
                   </>
                 )}
               </p>
             </section>
-            <section className="article-section">
-              <h2>When in doubt, arrange an inspection</h2>
-              <p>
-                These notes are general vehicle-care guidance. If a fault
-                affects safe driving, a tyre is visibly damaged, braking feels
-                abnormal or the vehicle is behaving unexpectedly, do not rely on
-                this guide alone—contact a workshop or seek appropriate
-                assistance.
-              </p>
-            </section>
           </article>
 
           <aside className="article-sidebar">
-            <p className="eyebrow">Related service</p>
-            <h2>{guide.relatedService}</h2>
-            <p>
-              Discuss the symptoms, vehicle details and the most useful next
-              check with the workshop.
+            <p className="eyebrow">RECOMMENDED SERVICE</p>
+            <h2 style={{ fontSize: "24px", color: "#111", marginBottom: "12px" }}>{guide.relatedService}</h2>
+            <p style={{ fontSize: "13px", color: "#4b5563", marginBottom: "20px" }}>
+              Speak with our Hayes workshop technicians about symptoms, diagnostic codes, or replacement options.
             </p>
-            <Link href={relatedServiceHref} className="btn btn-primary">
-              {relatedService
-                ? `See ${relatedService.name}`
-                : "View workshop services"}
-            </Link>
-            <Link href={quoteHref} className="btn btn-ghost">
-              Request a quote
-            </Link>
-            <p className="eyebrow">More guides</p>
-            {relatedGuides.map(relatedGuide => (
-              <p key={relatedGuide.slug}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" }}>
+              <Link href={relatedServiceHref} className="btn btn-primary full-width">
+                {relatedService
+                  ? `View ${relatedService.name}`
+                  : "View Garage Services"}
+              </Link>
+              <Link href={quoteHref} className="btn btn-ghost full-width">
+                Request Written Quote
+              </Link>
+            </div>
+
+            <p className="eyebrow" style={{ marginTop: "24px" }}>MORE GARAGE GUIDES</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {relatedGuides.slice(0, 5).map(relatedGuide => (
                 <Link
+                  key={relatedGuide.slug}
                   href={`/guides/${relatedGuide.slug}`}
                   className="text-link"
+                  style={{ fontSize: "13px", textTransform: "none", lineHeight: "1.4" }}
                 >
                   {relatedGuide.title}
                 </Link>
-              </p>
-            ))}
+              ))}
+            </div>
           </aside>
         </div>
       </section>
-      <BookingBanner title="Need a vehicle-specific check?" />
+      <BookingBanner title="Need professional advice on your vehicle?" />
     </>
   );
 }

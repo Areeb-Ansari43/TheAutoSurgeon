@@ -2,12 +2,18 @@ import { useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import {
   ArrowRight,
+  Bus,
+  Car,
   Clock3,
+  Footprints,
   Loader2,
   Mail,
   MapPin,
   MessageCircle,
+  Navigation,
+  ParkingCircle,
   Phone,
+  Train,
 } from "lucide-react";
 import { business } from "@shared/catalog";
 import { trpc } from "@/lib/trpc";
@@ -154,20 +160,68 @@ export default function Contact() {
             <div className="map-frame-wrap">
               <iframe
                 className="contact-map"
-                title="The Auto Surgeon car repair workshop in Hayes"
-                src="https://maps.google.com/maps?q=Unit%203%20Squirrels%20Trading%20Estate%20Viveash%20Close%20Hayes%20UB3%204RZ&t=m&z=15&output=embed"
+                title="The Auto Surgeon car repair workshop in Hayes UB3 4RZ"
+                src="https://maps.google.com/maps?q=The%20Auto%20Surgeon%20Unit%203%20Squirrels%20Trading%20Estate%20Viveash%20Close%20Hayes%20UB3%204RZ&t=m&z=16&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-            <a
-              href={business.maps}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link"
-            >
-              Open directions in Google Maps <ArrowRight size={16} />
-            </a>
+            <div style={{ marginTop: "16px", marginBottom: "32px" }}>
+              <a
+                href={business.maps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary full-width"
+              >
+                <Navigation size={17} /> Open Directions in Google Maps
+              </a>
+            </div>
+
+            <div className="article-section" style={{ marginTop: "36px" }}>
+              <div className="eyebrow">HOW TO REACH US</div>
+              <h2>Getting to the Workshop</h2>
+              <div className="symptom-grid" style={{ gridTemplateColumns: "1fr", gap: "14px", marginTop: "18px" }}>
+                <div>
+                  <Train size={20} />
+                  <div>
+                    <strong style={{ color: "#111", display: "block", marginBottom: "3px" }}>By Train (Elizabeth Line / National Rail)</strong>
+                    <span>Hayes & Harlington Station is approximately 0.6 miles (12–15 minute walk or short bus ride) from our workshop. Exit onto Station Road and head north toward Clayton Road.</span>
+                  </div>
+                </div>
+
+                <div>
+                  <Bus size={20} />
+                  <div>
+                    <strong style={{ color: "#111", display: "block", marginBottom: "3px" }}>By Bus</strong>
+                    <span>Local routes 195, 278, 350, U4 and H98 stop along Station Road, Clayton Road and Dawley Road, all within short walking distance of Viveash Close.</span>
+                  </div>
+                </div>
+
+                <div>
+                  <Car size={20} />
+                  <div>
+                    <strong style={{ color: "#111", display: "block", marginBottom: "3px" }}>By Car</strong>
+                    <span>Easily accessible from the A4020 (Uxbridge Road) or A312 (The Parkway). Turn onto Nestles Avenue or Clayton Road, then onto Viveash Close. Drive into Squirrels Trading Estate to Unit 3.</span>
+                  </div>
+                </div>
+
+                <div>
+                  <Footprints size={20} />
+                  <div>
+                    <strong style={{ color: "#111", display: "block", marginBottom: "3px" }}>Walking Directions</strong>
+                    <span>From Hayes Town Centre or Hayes & Harlington Station, head north along Station Road, turn right onto Clayton Road, then left onto Viveash Close. Squirrels Trading Estate is at the end of the road.</span>
+                  </div>
+                </div>
+
+                <div>
+                  <ParkingCircle size={20} />
+                  <div>
+                    <strong style={{ color: "#111", display: "block", marginBottom: "3px" }}>Customer Parking</strong>
+                    <span>Dedicated customer parking spaces are available directly outside Unit 3 in front of our workshop bays within Squirrels Trading Estate.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="contact-form-panel">
             {reference ? (

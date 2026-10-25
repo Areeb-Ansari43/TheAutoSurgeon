@@ -90,7 +90,7 @@ p {
   margin: 0;
 }
 p {
-  color: #a4a4a4;
+  color: #2b2b2b;
   line-height: 1.85;
 }
 h2,
@@ -2837,7 +2837,7 @@ p {
 .hero-description,
 .hero-bottom-line span,
 .hero-bottom-line a {
-  color: #555;
+  color: #2d3748;
 }
 .hero-title {
   color: #111;
@@ -2971,7 +2971,7 @@ p {
 .info-card p,
 .tyre-option p,
 .form-card p {
-  color: #5d5d5d;
+  color: #2d3748;
 }
 .section-heading,
 .page-title,
@@ -2980,7 +2980,7 @@ p {
 .service-card h3,
 .info-card h3,
 .pricing-row h3 {
-  color: #111;
+  color: #111111;
 }
 .btn-primary {
   box-shadow:
@@ -3061,10 +3061,10 @@ p {
 .article-sidebar p,
 .process-card p,
 .request-card p {
-  color: #555;
+  color: #2d3748;
 }
 .guide-meta {
-  color: #555;
+  color: #374151;
 }
 .badge {
   background: #fff0e3;

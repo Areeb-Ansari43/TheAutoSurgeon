@@ -116,30 +116,49 @@ interface MapViewProps {
 
 export function MapView({
   className,
-  initialCenter = { lat: 37.7749, lng: -122.4194 },
-  initialZoom = 12,
+  initialCenter = { lat: 51.5038, lng: -0.4208 }, // Verified Hayes UB3 4RZ coordinates
+  initialZoom = 16,
   onMapReady,
 }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map | null>(null);
 
   const init = usePersistFn(async () => {
-    await loadMapScript();
-    if (!mapContainer.current) {
-      console.error("Map container not found");
-      return;
-    }
-    map.current = new window.google.maps.Map(mapContainer.current, {
-      zoom: initialZoom,
-      center: initialCenter,
-      mapTypeControl: true,
-      fullscreenControl: true,
-      zoomControl: true,
-      streetViewControl: true,
-      mapId: "DEMO_MAP_ID",
-    });
-    if (onMapReady) {
-      onMapReady(map.current);
+    try {
+      await loadMapScript();
+      if (!mapContainer.current) {
+        console.error("Map container not found");
+        return;
+      }
+      map.current = new window.google.maps.Map(mapContainer.current, {
+        zoom: initialZoom,
+        center: initialCenter,
+        mapTypeControl: true,
+        fullscreenControl: true,
+        zoomControl: true,
+        streetViewControl: true,
+        mapId: "DEMO_MAP_ID",
+      });
+
+      if (window.google?.maps?.marker?.AdvancedMarkerElement) {
+        new window.google.maps.marker.AdvancedMarkerElement({
+          map: map.current,
+          position: initialCenter,
+          title: "The Auto Surgeon — Hayes, UB3 4RZ",
+        });
+      } else if (window.google?.maps?.Marker) {
+        new window.google.maps.Marker({
+          map: map.current,
+          position: initialCenter,
+          title: "The Auto Surgeon — Hayes, UB3 4RZ",
+        });
+      }
+
+      if (onMapReady) {
+        onMapReady(map.current);
+      }
+    } catch (e) {
+      console.warn("Google Maps JS API load failed, falling back to embedded view", e);
     }
   });
 
@@ -148,6 +167,14 @@ export function MapView({
   }, [init]);
 
   return (
-    <div ref={mapContainer} className={cn("w-full h-[500px]", className)} />
+    <div ref={mapContainer} className={cn("w-full h-[420px] rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-zinc-800", className)}>
+      <iframe
+        className="w-full h-full border-0"
+        title="The Auto Surgeon car repair workshop in Hayes"
+        src="https://maps.google.com/maps?q=The%20Auto%20Surgeon%20Unit%203%20Squirrels%20Trading%20Estate%20Viveash%20Close%20Hayes%20UB3%204RZ&t=m&z=16&output=embed"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    </div>
   );
 }
