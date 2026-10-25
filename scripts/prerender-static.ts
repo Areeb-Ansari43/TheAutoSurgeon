@@ -26,10 +26,12 @@ function htmlFor(route: string) {
     .replace("<!--page-head-->", head)
     .replace("<!--app-html-->", body);
 }
+
 function fileFor(route: string) {
   if (route === "/") return path.join(dist, "index.html");
   return path.join(dist, route.replace(/^\//, ""), "index.html");
 }
+
 const routes = [
   ...pageRouteManifest.routes
     .map(route => route.path)
@@ -37,29 +39,39 @@ const routes = [
   ...services.map(service => `/services/${service.slug}`),
   ...guides.map(guide => `/guides/${guide.slug}`),
 ];
+
 for (const route of [...new Set(routes)]) {
   const target = fileFor(route);
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, htmlFor(route), "utf8");
 }
+
 await fs.writeFile(
   path.join(dist, "404.html"),
   htmlFor("/missing-page"),
   "utf8"
 );
+
+const today = new Date().toISOString().split("T")[0];
 const urls = publicPaths
-  .map(route => `  <url><loc>${siteUrl}${route}</loc></url>`)
+  .map(
+    route =>
+      `  <url>\n    <loc>${siteUrl}${route}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
+  )
   .join("\n");
+
 await fs.writeFile(
   path.join(dist, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
   "utf8"
 );
+
 await fs.writeFile(
   path.join(dist, "robots.txt"),
   `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /account\nDisallow: /manage\nDisallow: /book\nDisallow: /quote\nDisallow: /login\nDisallow: /register\nSitemap: ${siteUrl}/sitemap.xml\n`,
   "utf8"
 );
+
 console.log(
   `Prerendered ${new Set(routes).size} routes with SITE_URL=${siteUrl}`
 );
