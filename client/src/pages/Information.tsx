@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { guides, type Guide } from "@shared/guides";
 import { services as catalogServices } from "@shared/catalog";
+import { WorkshopGallery } from "@/components/Site";
 
 type InformationProps = {
   page: string;
@@ -95,6 +96,13 @@ function AboutPage() {
               deciding whether a vehicle needs parts, adjustment or further
               specialist support.
             </p>
+            <p>
+              We are especially focused on Mercedes tappets, rockers and
+              engines. If your Mercedes has a ticking noise, uneven running,
+              loss of power or an engine warning, we can inspect the symptoms,
+              check the relevant systems and explain the repair options before
+              work begins.
+            </p>
             <Link href="/workshop" className="text-link">
               Explore workshop services
             </Link>
@@ -118,32 +126,7 @@ function AboutPage() {
               show the practical care behind the service.
             </p>
           </div>
-          <div className="workshop-gallery workshop-gallery-about">
-            <figure className="workshop-gallery-card workshop-gallery-card-wide">
-              <img
-                src="/assets/photos/workshop-lift.webp"
-                alt="Vehicle raised on a lift inside The Auto Surgeon workshop in Hayes"
-                loading="lazy"
-              />
-              <figcaption>Vehicle repair and inspection in Hayes</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card">
-              <img
-                src="/assets/photos/workshop-mercedes.webp"
-                alt="Mercedes undergoing engine-bay work at The Auto Surgeon in Hayes"
-                loading="lazy"
-              />
-              <figcaption>Mercedes specialist work</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card workshop-gallery-card-portrait">
-              <img
-                src="/assets/photos/workshop-engine.webp"
-                alt="Technician working carefully inside a vehicle engine bay in Hayes"
-                loading="lazy"
-              />
-              <figcaption>Hands-on engine care</figcaption>
-            </figure>
-          </div>
+          <WorkshopGallery />
         </div>
       </section>
 

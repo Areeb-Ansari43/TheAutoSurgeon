@@ -15,7 +15,9 @@ import {
   FAQs,
   SectionHead,
   ServiceCard,
+  SocialsSection,
   TrustPoints,
+  WorkshopGallery,
 } from "@/components/Site";
 
 export default function Home() {
@@ -198,34 +200,30 @@ export default function Home() {
             link="/about"
             label="Meet the workshop"
           />
-          <div className="workshop-gallery">
-            <figure className="workshop-gallery-card workshop-gallery-card-wide">
-              <img
-                src="/assets/photos/workshop-lift.webp"
-                alt="Vehicle raised on a workshop lift while a mechanic carries out repairs"
-                loading="lazy"
-              />
-              <figcaption>Vehicle repairs on the lift</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card">
-              <img
-                src="/assets/photos/workshop-mercedes.webp"
-                alt="Mercedes vehicle with its bonnet open during engine-bay work"
-                loading="lazy"
-              />
-              <figcaption>Mercedes engine-bay work</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card workshop-gallery-card-portrait">
-              <img
-                src="/assets/photos/workshop-engine.webp"
-                alt="Mechanic working inside a vehicle engine bay"
-                loading="lazy"
-              />
-              <figcaption>Hands-on engine repair</figcaption>
-            </figure>
-          </div>
+          <WorkshopGallery />
         </div>
       </section>
+      <section className="container specialist-banner" aria-labelledby="mercedes-specialist-heading">
+        <img
+          src="/assets/photos/workshop-mercedes.webp"
+          alt="Mercedes engine-bay repair work at The Auto Surgeon in Hayes"
+          loading="lazy"
+        />
+        <div className="specialist-banner-copy">
+          <p className="eyebrow">MERCEDES SPECIALIST WORK</p>
+          <h2 id="mercedes-specialist-heading">Tappets, rockers and engines.</h2>
+          <p>
+            Clear diagnosis and careful hands-on work for Mercedes engines,
+            including tappet and rocker concerns. Tell us what the vehicle is
+            doing and we’ll explain the right next check.
+          </p>
+          <Link href="/quote?service=Vehicle%20Diagnostics" className="btn btn-primary">
+            Ask about Mercedes work
+            <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+      <SocialsSection />
       <section className="section section-alt">
         <div className="container">
           <SectionHead

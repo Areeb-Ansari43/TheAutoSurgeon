@@ -13,6 +13,7 @@ import {
   PageIntro,
   SectionHead,
   ServiceCard,
+  WorkshopGallery,
 } from "@/components/Site";
 
 export function ServicesHub() {
@@ -36,32 +37,7 @@ export function ServicesHub() {
             title="The work behind the service"
             description="Our workshop team works on the vehicle in front of us, from lift-based repairs to engine-bay checks and Mercedes servicing."
           />
-          <div className="workshop-gallery workshop-gallery-services">
-            <figure className="workshop-gallery-card workshop-gallery-card-wide">
-              <img
-                src="/assets/photos/workshop-lift.webp"
-                alt="Mechanic working on a vehicle raised on a workshop lift"
-                loading="lazy"
-              />
-              <figcaption>Repairs carried out on the lift</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card">
-              <img
-                src="/assets/photos/workshop-mercedes.webp"
-                alt="Mercedes with bonnet open in the Auto Surgeon workshop"
-                loading="lazy"
-              />
-              <figcaption>Mercedes checks and repairs</figcaption>
-            </figure>
-            <figure className="workshop-gallery-card workshop-gallery-card-portrait">
-              <img
-                src="/assets/photos/workshop-engine.webp"
-                alt="Technician carrying out hands-on engine-bay work"
-                loading="lazy"
-              />
-              <figcaption>Engine-bay diagnosis and repair</figcaption>
-            </figure>
-          </div>
+          <WorkshopGallery />
         </div>
       </section>
       <section className="section section-alt">

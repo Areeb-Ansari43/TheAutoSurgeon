@@ -13,6 +13,30 @@ import {
 } from "lucide-react";
 import { business, type Service } from "@shared/catalog";
 
+const facebookUrl =
+  "https://www.facebook.com/profile.php?id=61595972917406";
+
+const workshopPhotos = [
+  {
+    src: "/assets/photos/workshop-lift.webp",
+    alt: "Vehicle raised on a lift while a mechanic carries out repairs at The Auto Surgeon in Hayes",
+    caption: "Vehicle repairs on the lift",
+    className: "workshop-gallery-card-wide",
+  },
+  {
+    src: "/assets/photos/workshop-mercedes.webp",
+    alt: "Mercedes with its bonnet open during engine, tappet and rocker inspection at The Auto Surgeon Hayes",
+    caption: "Mercedes engine-bay work",
+    className: "",
+  },
+  {
+    src: "/assets/photos/workshop-engine.webp",
+    alt: "Mechanic working inside a vehicle engine bay at The Auto Surgeon in Hayes",
+    caption: "Hands-on engine repair",
+    className: "workshop-gallery-card-portrait",
+  },
+];
+
 const links = [
   ["/services", "Services"],
   ["/about", "About"],
@@ -236,6 +260,93 @@ export function SectionHead({
     </div>
   );
 }
+
+export function WorkshopGallery() {
+  const [selected, setSelected] = useState<(typeof workshopPhotos)[number] | null>(null);
+
+  return (
+    <>
+      <div className="workshop-gallery">
+        {workshopPhotos.map(photo => (
+          <button
+            type="button"
+            className={`workshop-gallery-card ${photo.className}`}
+            key={photo.src}
+            onClick={() => setSelected(photo)}
+            aria-label={`Zoom in: ${photo.caption}`}
+          >
+            <img src={photo.src} alt={photo.alt} loading="lazy" />
+            <span className="workshop-gallery-zoom" aria-hidden="true">
+              +
+            </span>
+            <span className="workshop-gallery-caption">{photo.caption}</span>
+          </button>
+        ))}
+      </div>
+      {selected && (
+        <div
+          className="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selected.caption}
+          onClick={() => setSelected(null)}
+        >
+          <button
+            type="button"
+            className="image-lightbox-close"
+            onClick={() => setSelected(null)}
+            aria-label="Close enlarged workshop photo"
+          >
+            ×
+          </button>
+          <img
+            src={selected.src}
+            alt={selected.alt}
+            onClick={event => event.stopPropagation()}
+          />
+          <p>{selected.caption}</p>
+        </div>
+      )}
+    </>
+  );
+}
+
+export function SocialsSection() {
+  return (
+    <section className="section social-section" aria-labelledby="social-heading">
+      <div className="container social-panel">
+        <div>
+          <div className="eyebrow">
+            <span className="orange-line" />FOLLOW THE WORKSHOP
+          </div>
+          <h2 id="social-heading" className="section-heading">
+            See what we’re working on.
+          </h2>
+          <p>
+            Follow The Auto Surgeon for workshop updates, Mercedes specialist
+            work and practical car-care news from Hayes. More social channels
+            will be added here soon.
+          </p>
+        </div>
+        <a
+          className="social-link social-link-facebook"
+          href={facebookUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Visit The Auto Surgeon on Facebook"
+        >
+          <span className="social-mark" aria-hidden="true">f</span>
+          <span>
+            <strong>Facebook</strong>
+            <small>Visit our page</small>
+          </span>
+          <ArrowRight size={18} />
+        </a>
+      </div>
+    </section>
+  );
+}
+
 export function ServiceCard({
   service,
   index = 0,
@@ -388,6 +499,14 @@ export function SiteFooter() {
               Sunday by appointment
             </p>
             <a href={`mailto:${business.email}`}>{business.email}</a>
+            <a
+              href={facebookUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="The Auto Surgeon Facebook page"
+            >
+              Facebook · follow the workshop
+            </a>
             <Link href="/contact" className="footer-directions">
               Get directions
               <ArrowRight size={14} />
