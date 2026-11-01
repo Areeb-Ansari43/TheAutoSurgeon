@@ -54,7 +54,12 @@ export function pageHead(path: string) {
       description,
       telephone: "+447767909397",
       url: origin,
-      image,
+      image: [
+        image,
+        `${origin}/assets/photos/workshop-lift.webp`,
+        `${origin}/assets/photos/workshop-mercedes.webp`,
+        `${origin}/assets/photos/workshop-engine.webp`,
+      ],
       address: {
         "@type": "PostalAddress",
         streetAddress: "Unit 3 Squirrels Trading Estate, Viveash Close",
@@ -94,7 +99,8 @@ export function pageHead(path: string) {
       "@id": `${origin}/#website`,
       url: origin,
       name: business.name,
-      description: "Precision Car Care, Tyres, Wheel Alignment & Diagnostics in Hayes",
+      description:
+        "Precision Car Care, Tyres, Wheel Alignment & Diagnostics in Hayes",
       publisher: {
         "@id": `${origin}/#business`,
       },

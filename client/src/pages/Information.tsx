@@ -106,6 +106,46 @@ function AboutPage() {
           />
         </div>
       </section>
+      <section className="section section-alt workshop-gallery-section">
+        <div className="container">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">INSIDE THE WORKSHOP</p>
+              <h2 className="section-heading">Work you can see.</h2>
+            </div>
+            <p className="muted">
+              From Mercedes engine-bay work to lift-based repairs, our photos
+              show the practical care behind the service.
+            </p>
+          </div>
+          <div className="workshop-gallery workshop-gallery-about">
+            <figure className="workshop-gallery-card workshop-gallery-card-wide">
+              <img
+                src="/assets/photos/workshop-lift.webp"
+                alt="Vehicle raised on a lift inside The Auto Surgeon workshop in Hayes"
+                loading="lazy"
+              />
+              <figcaption>Vehicle repair and inspection in Hayes</figcaption>
+            </figure>
+            <figure className="workshop-gallery-card">
+              <img
+                src="/assets/photos/workshop-mercedes.webp"
+                alt="Mercedes undergoing engine-bay work at The Auto Surgeon in Hayes"
+                loading="lazy"
+              />
+              <figcaption>Mercedes specialist work</figcaption>
+            </figure>
+            <figure className="workshop-gallery-card workshop-gallery-card-portrait">
+              <img
+                src="/assets/photos/workshop-engine.webp"
+                alt="Technician working carefully inside a vehicle engine bay in Hayes"
+                loading="lazy"
+              />
+              <figcaption>Hands-on engine care</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
 
       <section className="section section-alt">
         <div className="container">
@@ -785,7 +825,15 @@ function GuideArticle({
                 <p>{section.text}</p>
                 {section.subsections?.map(sub => (
                   <div key={sub.title} style={{ marginTop: "16px" }}>
-                    <h3 style={{ fontSize: "20px", marginBottom: "8px", color: "var(--orange)" }}>{sub.title}</h3>
+                    <h3
+                      style={{
+                        fontSize: "20px",
+                        marginBottom: "8px",
+                        color: "var(--orange)",
+                      }}
+                    >
+                      {sub.title}
+                    </h3>
                     <p>{sub.text}</p>
                   </div>
                 ))}
@@ -796,7 +844,9 @@ function GuideArticle({
             {guide.steps && guide.steps.length > 0 && (
               <section className="article-section">
                 <h2>Practical Step-by-Step Instructions</h2>
-                <div style={{ display: "grid", gap: "16px", marginTop: "16px" }}>
+                <div
+                  style={{ display: "grid", gap: "16px", marginTop: "16px" }}
+                >
                   {guide.steps.map(step => (
                     <div
                       key={step.stepNumber}
@@ -808,7 +858,13 @@ function GuideArticle({
                         boxShadow: "var(--shadow-glass)",
                       }}
                     >
-                      <h3 style={{ fontSize: "18px", color: "var(--orange)", marginBottom: "8px" }}>
+                      <h3
+                        style={{
+                          fontSize: "18px",
+                          color: "var(--orange)",
+                          marginBottom: "8px",
+                        }}
+                      >
                         Step {step.stepNumber}: {step.title}
                       </h3>
                       <p style={{ margin: 0, fontSize: "13px" }}>{step.text}</p>
@@ -822,7 +878,9 @@ function GuideArticle({
             {guide.troubleshooting && guide.troubleshooting.length > 0 && (
               <section className="article-section">
                 <h2>Common Problems & Troubleshooting</h2>
-                <div style={{ display: "grid", gap: "16px", marginTop: "16px" }}>
+                <div
+                  style={{ display: "grid", gap: "16px", marginTop: "16px" }}
+                >
                   {guide.troubleshooting.map((item, idx) => (
                     <div
                       key={idx}
@@ -833,10 +891,22 @@ function GuideArticle({
                         padding: "20px",
                       }}
                     >
-                      <h3 style={{ fontSize: "17px", color: "#b84d00", marginBottom: "6px" }}>
+                      <h3
+                        style={{
+                          fontSize: "17px",
+                          color: "#b84d00",
+                          marginBottom: "6px",
+                        }}
+                      >
                         Problem: {item.problem}
                       </h3>
-                      <p style={{ margin: "4px 0 8px", fontSize: "13px", color: "#666" }}>
+                      <p
+                        style={{
+                          margin: "4px 0 8px",
+                          fontSize: "13px",
+                          color: "#666",
+                        }}
+                      >
                         <strong>Common Mistake:</strong> {item.mistake}
                       </p>
                       <p style={{ margin: 0, fontSize: "13px", color: "#111" }}>
@@ -860,7 +930,14 @@ function GuideArticle({
                     padding: "22px",
                   }}
                 >
-                  <p style={{ margin: 0, fontSize: "13px", lineHeight: "1.8", color: "#222" }}>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "13px",
+                      lineHeight: "1.8",
+                      color: "#222",
+                    }}
+                  >
                     {guide.safetyAndUkLaw}
                   </p>
                 </div>
@@ -890,7 +967,14 @@ function GuideArticle({
             {guide.internalLinks && guide.internalLinks.length > 0 && (
               <section className="article-section">
                 <h2>Relevant Services & Related Pages</h2>
-                <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: "10px" }}>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    display: "grid",
+                    gap: "10px",
+                  }}
+                >
                   {guide.internalLinks.map(link => (
                     <li key={link.href}>
                       <Link href={link.href} className="text-link">
@@ -906,7 +990,14 @@ function GuideArticle({
             <section className="article-section">
               <h2>Conclusion & Next Steps</h2>
               <p>{guide.conclusion}</p>
-              <div style={{ marginTop: "20px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  gap: "12px",
+                  flexWrap: "wrap",
+                }}
+              >
                 <Link href={quoteHref} className="btn btn-primary">
                   Request a Written Quote
                 </Link>
@@ -924,12 +1015,20 @@ function GuideArticle({
               Discuss the symptoms, vehicle details and the most useful next
               check with the workshop.
             </p>
-            <Link href={relatedServiceHref} className="btn btn-primary" style={{ marginBottom: "10px", width: "100%" }}>
+            <Link
+              href={relatedServiceHref}
+              className="btn btn-primary"
+              style={{ marginBottom: "10px", width: "100%" }}
+            >
               {relatedService
                 ? `See ${relatedService.name}`
                 : "View workshop services"}
             </Link>
-            <Link href={quoteHref} className="btn btn-ghost" style={{ marginBottom: "20px", width: "100%" }}>
+            <Link
+              href={quoteHref}
+              className="btn btn-ghost"
+              style={{ marginBottom: "20px", width: "100%" }}
+            >
               Request a quote
             </Link>
 

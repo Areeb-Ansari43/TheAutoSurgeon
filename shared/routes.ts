@@ -13,12 +13,14 @@ export const staticPages: PageMeta[] = [
     title: "The Auto Surgeon — Precision Car Care in Hayes",
     description:
       "Car repairs, emergency vehicle help, tyres, brakes, wheel alignment and diagnostics in Hayes UB3. Call The Auto Surgeon for fast, quality car care.",
+    image: "/assets/photos/workshop-lift.webp",
   },
   {
     path: "/services",
     title: "Car Repairs, Tyres & Pricing in Hayes — The Auto Surgeon",
     description:
       "Compare car repair services, tyre fitting, puncture repairs and transparent labour pricing in one Hayes workshop hub. Call for urgent repair help.",
+    image: "/assets/photos/workshop-lift.webp",
   },
   {
     path: "/tyres",
@@ -37,12 +39,14 @@ export const staticPages: PageMeta[] = [
     title: "Quality Car Care in Hayes — About The Auto Surgeon",
     description:
       "The Auto Surgeon is a Hayes car-care workshop delivering quality repairs, honest advice and careful workmanship after a year serving local drivers.",
+    image: "/assets/photos/workshop-mercedes.webp",
   },
   {
     path: "/workshop",
     title: "Inside Our Workshop & Process — The Auto Surgeon",
     description:
       "Understand what happens at your visit, from first inspection and vehicle-specific checks to agreed repairs and the final check.",
+    image: "/assets/photos/workshop-engine.webp",
   },
   {
     path: "/reviews",

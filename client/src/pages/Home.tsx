@@ -189,6 +189,43 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="section section-alt workshop-gallery-section">
+        <div className="container">
+          <SectionHead
+            eyebrow="OUR WORKSHOP"
+            title="Real cars. Real work."
+            description="A look inside The Auto Surgeon in Hayes, from vehicle lifts and engine-bay repairs to careful hands-on servicing."
+            link="/about"
+            label="Meet the workshop"
+          />
+          <div className="workshop-gallery">
+            <figure className="workshop-gallery-card workshop-gallery-card-wide">
+              <img
+                src="/assets/photos/workshop-lift.webp"
+                alt="Vehicle raised on a workshop lift while a mechanic carries out repairs"
+                loading="lazy"
+              />
+              <figcaption>Vehicle repairs on the lift</figcaption>
+            </figure>
+            <figure className="workshop-gallery-card">
+              <img
+                src="/assets/photos/workshop-mercedes.webp"
+                alt="Mercedes vehicle with its bonnet open during engine-bay work"
+                loading="lazy"
+              />
+              <figcaption>Mercedes engine-bay work</figcaption>
+            </figure>
+            <figure className="workshop-gallery-card workshop-gallery-card-portrait">
+              <img
+                src="/assets/photos/workshop-engine.webp"
+                alt="Mechanic working inside a vehicle engine bay"
+                loading="lazy"
+              />
+              <figcaption>Hands-on engine repair</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
       <section className="section section-alt">
         <div className="container">
           <SectionHead
