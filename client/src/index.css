@@ -294,6 +294,39 @@ p {
   color: var(--orange);
   background: #f26a0010;
 }
+.island-facebook {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 4px;
+  padding: 9px 12px 9px 9px;
+  border: 1px solid rgba(24, 119, 242, 0.5);
+  border-radius: 999px;
+  background: rgba(24, 119, 242, 0.14);
+  color: #8fc2ff;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.2s, background 0.2s, color 0.2s;
+}
+.island-facebook > span:first-child {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 8px;
+  background: #1877f2;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+.island-facebook:hover {
+  transform: translateY(-1px);
+  background: #1877f2;
+  color: #fff;
+}
 .island-actions {
   display: flex;
   align-items: center;
@@ -335,6 +368,13 @@ p {
   padding: 12px 15px;
   justify-content: space-between;
 }
+.mobile-island .mobile-facebook {
+  justify-content: flex-start;
+  width: 100%;
+  margin: 7px 0 2px;
+  padding: 10px 15px;
+}
+.mobile-island .mobile-facebook svg { margin-left: auto; }
 .mobile-phone {
   display: flex;
   gap: 10px;

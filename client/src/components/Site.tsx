@@ -127,6 +127,16 @@ export function SiteHeader() {
                 {label}
               </Link>
             ))}
+            <a
+              href={facebookUrl}
+              className="island-facebook"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit The Auto Surgeon on Facebook"
+            >
+              <span aria-hidden="true">f</span>
+              Facebook
+            </a>
           </nav>
           <div className="island-actions">
             <a
@@ -153,7 +163,7 @@ export function SiteHeader() {
           </div>
         </div>
         {open && (
-          <nav
+            <nav
             id="mobile-navigation"
             className="mobile-island"
             aria-label="Mobile navigation"
@@ -187,6 +197,17 @@ export function SiteHeader() {
                 <ArrowRight size={15} />
               </Link>
             ))}
+            <a
+              href={facebookUrl}
+              className="island-facebook mobile-facebook"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit The Auto Surgeon on Facebook"
+            >
+              <span aria-hidden="true">f</span>
+              Facebook
+              <ArrowRight size={15} />
+            </a>
             <a href={business.tel} className="mobile-phone">
               <Phone size={15} />
               {business.phone}
