@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -20,7 +21,6 @@ import {
   WorkshopGallery,
   GuideCard,
 } from "@/components/Site";
-import { ScrollWords } from "@/components/Motion";
 
 const steps = [
   {
@@ -56,21 +56,35 @@ const stats = [
 export default function Home() {
   return (
     <>
-      {/* ── Hero: headline, then the photo grows to full-bleed as you scroll ── */}
-      <section className="hx" data-scroll="pin" aria-labelledby="home-title">
-        <div className="hx-sticky">
-          <div className="hx-copy container">
-            <p className="hx-kicker" data-reveal="fade">
+      {/* ── Hero: full-screen photo, entrance on load, gentle parallax on scroll ── */}
+      <section className="hero2" data-scroll="exit" aria-labelledby="home-title">
+        <div className="hero2-media" aria-hidden="true">
+          <img
+            src="/assets/photos/hero-orange-caliper.webp"
+            alt=""
+            fetchPriority="high"
+            width={1600}
+            height={1067}
+          />
+        </div>
+        <div className="container hero2-inner">
+          <div className="hero2-copy">
+            <p className="hx-kicker hero2-in" style={{ "--in": 0 } as CSSProperties}>
               <span className="status-dot" /> Independent workshop · Hayes, UB3
             </p>
-            <h1 id="home-title" className="hx-title" data-reveal="up">
-              Precision car repairs <span>in Hayes.</span>
+            <h1 id="home-title" className="hero2-title">
+              <span className="hero2-line hero2-in" style={{ "--in": 1 } as CSSProperties}>
+                Precision car repairs
+              </span>
+              <span className="hero2-line hero2-in is-accent" style={{ "--in": 2 } as CSSProperties}>
+                in Hayes.
+              </span>
             </h1>
-            <p className="hx-lead" data-reveal="up">
-              Tyres, wheel alignment, brakes, oil and diagnostics. We inspect
-              first, explain clearly and agree the price before we start.
+            <p className="hero2-lead hero2-in" style={{ "--in": 3 } as CSSProperties}>
+              Tyres, wheel alignment, brakes, oil and diagnostics. Your car
+              deserves a surgeon: expert hands, honest prices, no guesswork.
             </p>
-            <div className="hx-actions" data-reveal="up">
+            <div className="hx-actions hero2-actions hero2-in" style={{ "--in": 4 } as CSSProperties}>
               <Link href="/book" className="btn btn-primary btn-lg">
                 <CalendarDays size={18} />
                 Book an inspection
@@ -81,19 +95,26 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="hx-media">
-            <img
-              src="/assets/photos/hero-orange-caliper.webp"
-              alt="Orange performance brake caliper behind a black alloy wheel"
-              fetchPriority="high"
-              width={1600}
-              height={1067}
-            />
-            <div className="hx-media-caption">
-              <strong>Your car deserves a surgeon.</strong>
-              <span>Expert hands. No guesswork.</span>
-            </div>
-          </div>
+          <ul className="hero2-tiles hero2-in" style={{ "--in": 5 } as CSSProperties}>
+            <li>
+              <Clock3 size={18} />
+              <span>
+                <strong>Open Mon–Sat</strong>9 AM–6 PM · walk-ins welcome
+              </span>
+            </li>
+            <li>
+              <Wrench size={18} />
+              <span>
+                <strong>Punctures from £10</strong>Alignment from £50
+              </span>
+            </li>
+            <li>
+              <ShieldCheck size={18} />
+              <span>
+                <strong>Tesla alignment £60</strong>EV-aware workshop care
+              </span>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -114,16 +135,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Statement: words light up as you scroll ── */}
-      <section className="statement" data-scroll="pin" aria-label="Our promise">
-        <div className="statement-sticky container">
-          <p className="eyebrow">
-            <span className="orange-line" />A different kind of workshop
+      {/* ── Promises: each lights up as it scrolls into view ── */}
+      <section className="promise" aria-labelledby="promise-heading">
+        <div className="container promise-grid">
+          <div className="promise-intro" data-reveal="up">
+            <p className="eyebrow">
+              <span className="orange-line" />A different kind of workshop
+            </p>
+            <h2 id="promise-heading" className="section-heading">
+              How every job works.
+            </h2>
+            <p>
+              Three promises on every car that comes through our doors, from a
+              £10 puncture to a Mercedes engine.
+            </p>
+          </div>
+          <ol className="promise-list">
+            {[
+              ["We inspect first.", "Every job starts with a proper look at the car, not a guess over the phone."],
+              ["We explain what we find.", "We show you the problem in plain English, and photos when it helps."],
+              ["We agree the price.", "You approve the quote before a single bolt turns. Nothing is added without asking."],
+            ].map(([title, text], index) => (
+              <li className="promise-item" data-scroll key={title}>
+                <span className="promise-num">0{index + 1}</span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="container">
+          <p className="promise-close" data-reveal="up">
+            No upsell. <span>No guesswork.</span> Just the right repair, done
+            properly.
           </p>
-          <ScrollWords
-            text="We inspect first, explain what we find and agree the price before a single bolt turns. No upsell. No guesswork. Just the right repair, done properly."
-            accent={["No", "upsell", "guesswork", "properly"]}
-          />
         </div>
       </section>
 

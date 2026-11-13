@@ -11,7 +11,9 @@ import { useLocation } from "wouter";
  *                           upper third of the viewport: sets data-active="<index>"
  *                           on the container and aria-current on its #id link.
  *  [data-scroll]            receives --p (0 → 1) as the element travels through
- *                           the viewport. data-scroll="pin" measures progress
+ *                           the viewport. data-scroll="exit" goes 0 → 1 as an
+ *                           element at the top of the page scrolls away.
+ *                           data-scroll="pin" measures progress
  *                           across a tall container whose child is position: sticky.
  *
  * Everything is visible without JavaScript (server HTML, crawlers, reduced
@@ -117,7 +119,10 @@ export function ScrollMotion() {
         const rect = el.getBoundingClientRect();
         if (rect.bottom < -vh || rect.top > vh * 2) continue;
         let p: number;
-        if (el.dataset.scroll === "pin") {
+        if (el.dataset.scroll === "exit") {
+          // 0 while the element's top is at the viewport top, 1 once it has scrolled away.
+          p = -rect.top / Math.max(1, rect.height);
+        } else if (el.dataset.scroll === "pin") {
           const distance = rect.height - vh;
           p = distance > 0 ? -rect.top / distance : 1;
         } else {

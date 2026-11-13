@@ -38,6 +38,34 @@ const workshopPhotos = [
   },
 ];
 
+function FacebookMark() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z"
+      />
+    </svg>
+  );
+}
+
+function WhatsAppMark() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2Zm0 16a7.2 7.2 0 0 1-3.7-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 1 1 12 19.2Zm4-5.4c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a5.9 5.9 0 0 1-2.9-2.6c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.3c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1l-.6-.4Z"
+      />
+    </svg>
+  );
+}
+
+const navLinks = [
+  ["/guides", "Car care guides"],
+  ["/about", "About"],
+  ["/contact", "Contact"],
+];
+
 const links = [
   ["/services", "Services"],
   ["/about", "About"],
@@ -95,7 +123,6 @@ export function SiteHeader() {
               height={60}
             />
           </Link>
-          <div className="nav-divider" />
           <nav className="desktop-nav" aria-label="Main navigation">
             <div className="nav-menu-wrap">
               <button
@@ -108,7 +135,7 @@ export function SiteHeader() {
                 aria-expanded={servicesOpen}
                 aria-haspopup="menu"
               >
-                Services <ChevronDown size={12} />
+                Services <ChevronDown size={14} />
               </button>
               {servicesOpen && (
                 <div className="nav-dropdown" role="menu">
@@ -127,7 +154,7 @@ export function SiteHeader() {
                 </div>
               )}
             </div>
-            {links.slice(1).map(([path, label]) => (
+            {navLinks.map(([path, label]) => (
               <Link
                 key={path}
                 href={path}
@@ -137,29 +164,36 @@ export function SiteHeader() {
                 {label}
               </Link>
             ))}
-            <a
-              href={facebookUrl}
-              className="island-facebook"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Visit The Auto Surgeon on Facebook"
-            >
-              <span aria-hidden="true">f</span>
-              Facebook
-            </a>
           </nav>
           <div className="island-actions">
+            <a
+              href={facebookUrl}
+              className="nav-icon nav-icon-facebook"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="The Auto Surgeon on Facebook"
+              title="Facebook"
+            >
+              <FacebookMark />
+            </a>
+            <Link
+              href="/whatsapp"
+              className="nav-icon nav-icon-whatsapp"
+              aria-label="Message us on WhatsApp"
+              title="WhatsApp"
+            >
+              <WhatsAppMark />
+            </Link>
             <a
               href={business.tel}
               className="header-phone"
               aria-label={`Call The Auto Surgeon on ${business.phone}`}
             >
-              <Phone size={16} />
+              <Phone size={15} />
               <span>{business.phone}</span>
             </a>
             <Link href="/book" className="btn btn-primary nav-book">
-              <CalendarDays size={15} />
-              <span>Book inspection</span>
+              Book inspection
             </Link>
             <button
               className="mobile-toggle"
