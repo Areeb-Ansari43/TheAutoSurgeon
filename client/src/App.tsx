@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { SiteHeader, SiteFooter } from "./components/Site";
+import { ScrollMotion } from "./components/Motion";
 import Home from "./pages/Home";
 import Information, { GuideDetail } from "./pages/Information";
 import {
@@ -75,12 +76,17 @@ function RouteEffects() {
       .querySelector('meta[name="robots"]')
       ?.setAttribute(
         "content",
-        meta?.private || !meta ? "noindex, nofollow" : "index, follow"
+        meta?.private || !meta
+          ? "noindex, follow"
+          : "index, follow, max-image-preview:large, max-snippet:-1"
       );
     for (const attr of ["og:title", "twitter:title"])
       document
         .querySelector(`[property="${attr}"],[name="${attr}"]`)
         ?.setAttribute("content", meta?.title || "The Auto Surgeon");
+    const canonicalUrl = `${window.location.origin}${meta?.canonical || meta?.path || "/"}`;
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", canonicalUrl);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", canonicalUrl);
     for (const attr of ["og:description", "twitter:description"])
       document
         .querySelector(`[property="${attr}"],[name="${attr}"]`)
@@ -105,6 +111,7 @@ export default function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <RouteEffects />
+          <ScrollMotion />
           <SiteHeader />
           <main id="main-content" tabIndex={-1}>
             <Router />

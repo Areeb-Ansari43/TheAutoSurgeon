@@ -439,6 +439,7 @@ export function Pricing() {
       <section className="section section-alt">
         <div className="container pricing-layout">
           <div className="pricing-table">
+            <h2 className="visually-hidden">Labour price list</h2>
             <div className="pricing-header">
               <span>SERVICE / WORK</span>
               <span>LABOUR PRICE</span>

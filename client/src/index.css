@@ -131,11 +131,11 @@ p {
   color: #888;
 }
 .small {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.17em;
   color: var(--orange);
@@ -305,7 +305,7 @@ p {
   background: rgba(24, 119, 242, 0.14);
   color: #8fc2ff;
   font-family: var(--font-heading);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
   transition: transform 0.2s, background 0.2s, color 0.2s;
@@ -343,7 +343,7 @@ p {
 }
 .nav-book {
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   min-height: 45px;
   padding: 12px 19px;
 }
@@ -380,7 +380,7 @@ p {
   gap: 10px;
   padding: 18px 15px 10px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--orange);
 }
 /* Original automotive hero: split composition, technical type, warm orange, original caliper photo. */
@@ -409,7 +409,7 @@ p {
 .hero-location {
   font-family: var(--font-mono);
   color: #a1a1a1;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   display: flex;
   gap: 9px;
@@ -438,7 +438,7 @@ p {
   color: var(--orange);
 }
 .hero-description {
-  font-size: 13px;
+  font-size: 14px;
   margin-top: 24px;
   max-width: 480px;
   line-height: 1.9;
@@ -455,7 +455,7 @@ p {
   flex-wrap: wrap;
   margin-top: 23px;
   color: #999;
-  font-size: 10px;
+  font-size: 12.5px;
 }
 .trust-points span {
   display: flex;
@@ -497,13 +497,13 @@ p {
 }
 .visual-coordinate {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   color: #aaa;
 }
 .visual-service {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.13em;
   color: var(--orange);
 }
@@ -526,7 +526,7 @@ p {
 }
 .hero-image-bottom span:not(.hero-photo-arrow) {
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 12px;
   color: #939393;
   letter-spacing: 0.09em;
 }
@@ -547,7 +547,7 @@ p {
   left: 24px;
   font-family: var(--font-mono);
   letter-spacing: 0.16em;
-  font-size: 7px;
+  font-size: 12px;
   color: #777;
 }
 .hero-bottom-line {
@@ -568,7 +568,7 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 10px;
+  font-size: 12.5px;
   color: #909090;
 }
 .hero-bottom-line svg {
@@ -604,7 +604,7 @@ p {
 }
 .section-description {
   margin-top: 15px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .service-grid {
   display: grid;
@@ -651,7 +651,7 @@ p {
   top: 15px;
   left: 17px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12.5px;
   color: #ddd;
   background: #1118;
   border: 1px solid #ffffff25;
@@ -663,7 +663,7 @@ p {
   bottom: 15px;
   left: 19px;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--orange);
 }
@@ -688,7 +688,7 @@ p {
 }
 .service-body > p {
   margin-top: 12px;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.8;
   min-height: 40px;
 }
@@ -706,7 +706,7 @@ p {
   text-transform: uppercase;
   font-family: var(--font-mono);
   letter-spacing: 0.04em;
-  font-size: 8px;
+  font-size: 12px;
   color: #8e8e8e;
   margin-bottom: 5px;
 }
@@ -717,12 +717,12 @@ p {
 }
 .service-detail-link {
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 13.5px;
   color: #aaa;
   text-transform: uppercase;
 }
 .price-disclaimer {
-  font-size: 10px;
+  font-size: 12.5px;
   margin-top: 21px;
   color: #777;
 }
@@ -760,14 +760,14 @@ p {
   border-radius: 5px;
   backdrop-filter: blur(10px);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.08em;
 }
 .content-copy > .section-heading {
   margin-bottom: 23px;
 }
 .content-copy > p {
-  font-size: 13px;
+  font-size: 14px;
   margin: 15px 0 25px;
 }
 .content-copy > .text-link {
@@ -795,7 +795,7 @@ p {
   font-size: 21px;
 }
 .value-row p {
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 7px;
 }
 .process-grid {
@@ -819,7 +819,7 @@ p {
   margin-bottom: 13px;
 }
 .process-card p {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .faq-list {
   border-top: 1px solid #333;
@@ -842,7 +842,7 @@ p {
 }
 .faq-number {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12.5px;
   color: #707070;
 }
 .faq-plus {
@@ -857,7 +857,7 @@ p {
 }
 .faq-item > p {
   padding: 0 42px 24px;
-  font-size: 13px;
+  font-size: 14px;
   max-width: 950px;
 }
 .cta-banner {
@@ -875,7 +875,7 @@ p {
   flex-shrink: 0;
 }
 .cta-banner .eyebrow {
-  font-size: 8px;
+  font-size: 12px;
   margin-bottom: 8px;
 }
 .cta-banner h2 {
@@ -883,7 +883,7 @@ p {
   font-size: 33px;
 }
 .cta-banner p {
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 8px;
   max-width: 520px;
 }
@@ -905,7 +905,7 @@ p {
   font-size: 21px;
 }
 .visit-strip p {
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 6px;
 }
 .visit-strip > .text-link {
@@ -920,7 +920,7 @@ p {
   gap: 13px;
   margin-bottom: 29px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #676767;
@@ -970,7 +970,7 @@ p {
   margin-bottom: 17px;
 }
 .article-section p {
-  font-size: 13px;
+  font-size: 14px;
 }
 .symptom-grid {
   display: grid;
@@ -981,7 +981,7 @@ p {
   display: flex;
   align-items: flex-start;
   gap: 11px;
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.7;
   color: #c0c0c0;
   padding: 15px;
@@ -1002,7 +1002,7 @@ p {
 .detail-step > span {
   font-family: var(--font-mono);
   color: var(--orange);
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 4px;
 }
 .detail-sidebar {
@@ -1042,7 +1042,7 @@ p {
   border-top: 1px solid #373737;
   border-bottom: 1px solid #373737;
   color: #bbb;
-  font-size: 11px;
+  font-size: 13px;
 }
 .timing svg {
   color: var(--orange);
@@ -1057,7 +1057,7 @@ p {
   align-items: flex-start;
   gap: 9px;
   color: #aaa;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.7;
   margin: 12px 0;
 }
@@ -1071,7 +1071,7 @@ p {
 }
 .booking-summary > .small {
   margin-top: 15px;
-  font-size: 10px;
+  font-size: 12.5px;
 }
 .info-note {
   margin-top: 20px;
@@ -1086,7 +1086,7 @@ p {
   flex-shrink: 0;
 }
 .info-note p {
-  font-size: 10px;
+  font-size: 12.5px;
 }
 .service-help {
   display: flex;
@@ -1107,7 +1107,7 @@ p {
 }
 .service-help p {
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .service-help > .text-link {
   margin-left: auto;
@@ -1128,7 +1128,7 @@ p {
 }
 .tyre-feature p {
   margin: 23px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .tyre-options {
   display: grid;
@@ -1154,7 +1154,7 @@ p {
   margin-bottom: 25px;
 }
 .tyre-option .eyebrow {
-  font-size: 8px;
+  font-size: 12px;
   margin-bottom: 8px;
 }
 .tyre-option h3 {
@@ -1162,12 +1162,12 @@ p {
   text-transform: uppercase;
 }
 .tyre-option p {
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 16px;
 }
 .tyre-option > .text-link {
   margin-top: 25px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .tier-bars {
   display: flex;
@@ -1199,7 +1199,7 @@ p {
   background: #0c0c0c;
   color: #888;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   padding: 21px 25px;
   border-bottom: 1px solid #333;
@@ -1218,7 +1218,7 @@ p {
   font-weight: 600;
 }
 .pricing-row p {
-  font-size: 9px;
+  font-size: 12px;
   margin-top: 6px;
 }
 .price-actions {
@@ -1241,7 +1241,7 @@ p {
 }
 .inspection-price {
   color: #aaa;
-  font-size: 10px;
+  font-size: 12.5px;
 }
 .pricing-foot {
   display: flex;
@@ -1254,7 +1254,7 @@ p {
   flex-shrink: 0;
 }
 .pricing-foot p {
-  font-size: 10px;
+  font-size: 12.5px;
 }
 /* Information pages. */
 .feature-grid {
@@ -1275,7 +1275,7 @@ p {
   margin-bottom: 12px;
 }
 .info-card p {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .wide-photo {
   width: 100%;
@@ -1311,12 +1311,12 @@ p {
   padding-top: 20px;
   border-top: 1px solid #333;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13.5px;
   color: #eee;
 }
 .review-author p {
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 12.5px;
   margin-top: 6px;
 }
 .guide-grid {
@@ -1346,7 +1346,7 @@ p {
 .guide-meta {
   color: var(--orange);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -1358,7 +1358,7 @@ p {
   margin-bottom: 12px;
 }
 .guide-body p {
-  font-size: 11px;
+  font-size: 13px;
 }
 .guide-body > .text-link {
   margin-top: 23px;
@@ -1378,7 +1378,7 @@ p {
 }
 .article-content p {
   margin: 15px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .article-content ul {
   padding-left: 20px;
@@ -1401,7 +1401,7 @@ p {
   margin-bottom: 16px;
 }
 .article-sidebar p {
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 22px;
 }
 .badge {
@@ -1412,7 +1412,7 @@ p {
   padding: 6px 10px;
   border-radius: 20px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
 }
 /* Forms, account screens and real server states. */
 .form-layout {
@@ -1433,7 +1433,7 @@ p {
   text-transform: uppercase;
 }
 .form-lead {
-  font-size: 12px;
+  font-size: 13.5px;
   margin-bottom: 24px;
 }
 .form-grid {
@@ -1451,7 +1451,7 @@ p {
 }
 .field label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   color: #b4b4b4;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -1470,7 +1470,7 @@ p {
   width: 100%;
   outline: none;
   min-height: 46px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .field input:focus,
 .field textarea:focus,
@@ -1511,7 +1511,7 @@ p {
   margin-top: 6px;
   border-top: 1px solid #333;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.12em;
 }
 .checkbox-field {
@@ -1519,7 +1519,7 @@ p {
   align-items: flex-start;
   gap: 11px;
   margin-top: 26px;
-  font-size: 11px;
+  font-size: 13px;
   color: #aaa;
   line-height: 1.7;
 }
@@ -1544,7 +1544,7 @@ p {
   gap: 16px;
 }
 .form-actions p {
-  font-size: 10px;
+  font-size: 12.5px;
 }
 .form-error {
   margin-top: 20px;
@@ -1553,19 +1553,19 @@ p {
   color: #f7a0a0;
   padding: 15px;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.7;
 }
 .form-success {
   margin-top: 20px;
   padding: 13px;
   color: #8bc69b;
-  font-size: 12px;
+  font-size: 13.5px;
   border: 1px solid #34c75940;
   border-radius: 5px;
 }
 .form-notice {
-  font-size: 11px;
+  font-size: 13px;
   padding: 17px;
   margin-bottom: 22px;
   background: #f26a000b;
@@ -1603,7 +1603,7 @@ p {
   text-transform: uppercase;
 }
 .confirmation-card > p {
-  font-size: 13px;
+  font-size: 14px;
 }
 .request-reference {
   display: block;
@@ -1638,7 +1638,7 @@ p {
 }
 .contact-row p,
 .contact-row a {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.8;
 }
 .contact-row a:hover {
@@ -1672,7 +1672,7 @@ p {
   margin-bottom: 12px;
 }
 .map-consent p {
-  font-size: 12px;
+  font-size: 13.5px;
   margin-bottom: 24px;
 }
 .contact-map-links {
@@ -1727,7 +1727,7 @@ p {
 }
 .signin-copy p {
   margin-bottom: 25px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .signin-copy img {
   width: 180px;
@@ -1757,7 +1757,7 @@ p {
   font-size: 25px;
 }
 .request-card p {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .request-meta {
   display: flex;
@@ -1765,7 +1765,7 @@ p {
   gap: 20px;
   font-family: var(--font-mono);
   color: #8b8b8b;
-  font-size: 10px;
+  font-size: 12.5px;
   margin: 13px 0;
 }
 .status-badge {
@@ -1775,7 +1775,7 @@ p {
   color: var(--orange);
   background: #f26a0009;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   text-transform: uppercase;
   border-radius: 20px;
   white-space: nowrap;
@@ -1806,7 +1806,7 @@ p {
   margin-bottom: 12px;
 }
 .empty-state p {
-  font-size: 12px;
+  font-size: 13.5px;
   margin-bottom: 24px;
 }
 .loading-state {
@@ -1816,7 +1816,7 @@ p {
   gap: 12px;
   color: #aaa;
   padding: 80px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .spinner {
   animation: spin 1s linear infinite;
@@ -1833,7 +1833,7 @@ p {
   padding: 9px;
   border-radius: 4px;
   margin-top: 15px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 /* Footer. */
 .site-footer {
@@ -1855,7 +1855,7 @@ p {
 }
 .footer-main h3 {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.12em;
   color: var(--orange);
@@ -1864,7 +1864,7 @@ p {
 .footer-main a:not(.footer-phone) {
   display: block;
   color: #929292;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.9;
   margin: 9px 0;
 }
@@ -1872,7 +1872,7 @@ p {
   color: var(--orange);
 }
 .footer-main p {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 2;
   margin: 10px 0;
 }
@@ -1882,7 +1882,7 @@ p {
   gap: 10px;
   margin-top: 22px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   color: #ccc;
 }
 .footer-phone svg {
@@ -1903,7 +1903,7 @@ p {
   border-top: 1px solid #202020;
   padding: 23px 0;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.05em;
   color: #707070;
   gap: 20px;
@@ -1983,11 +1983,11 @@ p {
     height: 575px;
   }
   .hero-buttons .btn {
-    font-size: 12px;
+    font-size: 13.5px;
     padding: 14px;
   }
   .hero-location {
-    font-size: 8px;
+    font-size: 12px;
   }
   .detail-layout {
     gap: 30px;
@@ -2023,7 +2023,7 @@ p {
   }
   .trust-points {
     gap: 10px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .hero-buttons {
     flex-direction: column;
@@ -2102,7 +2102,7 @@ p {
   }
   .nav-book {
     min-height: 39px;
-    font-size: 11px;
+    font-size: 13px;
     padding: 10px 13px;
     gap: 7px;
   }
@@ -2131,17 +2131,17 @@ p {
     max-width: 560px;
   }
   .hero-description {
-    font-size: 13px;
+    font-size: 14px;
   }
   .hero-buttons {
     flex-direction: row;
   }
   .hero-buttons .btn {
     padding: 14px 16px;
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .hero-location {
-    font-size: 8px;
+    font-size: 12px;
     margin-bottom: 20px;
   }
   .hero-visual {
@@ -2152,7 +2152,7 @@ p {
     left: 21px;
   }
   .trust-points {
-    font-size: 9px;
+    font-size: 12px;
     gap: 13px;
   }
   .hero-bottom-line .container {
@@ -2167,7 +2167,7 @@ p {
   }
   .hero-bottom-line span,
   .hero-bottom-line a {
-    font-size: 9px;
+    font-size: 12px;
   }
   .section {
     padding: 55px 0;
@@ -2179,7 +2179,7 @@ p {
     margin-bottom: 28px;
   }
   .section-head > .text-link {
-    font-size: 12px;
+    font-size: 13.5px;
     margin: 0;
   }
   .section-heading {
@@ -2224,7 +2224,7 @@ p {
     font-size: 25px;
   }
   .process-card p {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .faq-item summary {
     font-size: 21px;
@@ -2233,7 +2233,7 @@ p {
   .faq-item > p {
     padding-left: 27px;
     padding-right: 10px;
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .cta-banner {
     flex-direction: column;
@@ -2248,7 +2248,7 @@ p {
     font-size: 31px;
   }
   .cta-banner p {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .visit-strip {
     flex-wrap: wrap;
@@ -2258,10 +2258,10 @@ p {
   }
   .visit-strip > .text-link {
     margin-left: 37px;
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .visit-strip p {
-    font-size: 10px;
+    font-size: 12.5px;
   }
   .page-intro {
     padding: 115px 0 40px;
@@ -2270,7 +2270,7 @@ p {
     font-size: 34px;
   }
   .page-lead {
-    font-size: 13px;
+    font-size: 14px;
   }
   .breadcrumb {
     margin-bottom: 22px;
@@ -2323,7 +2323,7 @@ p {
   }
   .service-help > .text-link {
     margin-left: 40px;
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .tyre-feature {
     grid-template-columns: 1fr;
@@ -2343,7 +2343,7 @@ p {
     padding: 23px;
   }
   .tyre-option p {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .review-grid,
   .guide-grid {
@@ -2361,7 +2361,7 @@ p {
     font-size: 24px;
   }
   .guide-body p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .guide-meta {
     flex-direction: column;
@@ -2404,7 +2404,7 @@ p {
   }
   .footer-main a:not(.footer-phone),
   .footer-main p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .footer-bottom {
     align-items: flex-start;
@@ -2470,7 +2470,7 @@ p {
     gap: 9px;
   }
   .hero-buttons .btn {
-    font-size: 11px;
+    font-size: 13px;
     padding: 13px;
   }
   .hero-buttons .btn-primary {
@@ -2484,7 +2484,7 @@ p {
   }
   .trust-points {
     gap: 10px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .service-grid {
     grid-template-columns: 1fr;
@@ -2497,7 +2497,7 @@ p {
   }
   .service-body > p {
     min-height: 0;
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .service-name-row h3 {
     font-size: 26px;
@@ -2537,7 +2537,7 @@ p {
     gap: 10px;
   }
   .inspection-price {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 75px;
     line-height: 1.5;
     text-align: right;
@@ -2588,7 +2588,7 @@ p {
 
 @media (max-width: 480px) {
   .request-reference {
-    font-size: 13px;
+    font-size: 14px;
     overflow-wrap: anywhere;
   }
 }
@@ -2622,7 +2622,7 @@ p {
   padding: 11px 12px;
   color: var(--text);
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .nav-dropdown a:hover,
 .nav-dropdown a:focus-visible {
@@ -2635,7 +2635,7 @@ p {
   gap: 7px;
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .header-phone:hover {
@@ -3444,7 +3444,7 @@ p {
   background: rgba(17, 17, 17, 0.7);
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12.5px;
   letter-spacing: 0.09em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -3507,7 +3507,7 @@ p {
   margin: 0;
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
@@ -3584,7 +3584,7 @@ p {
 .social-link:hover { transform: translateY(-4px); color: #111; box-shadow: 0 18px 36px rgba(242, 106, 0, 0.18); }
 .social-link > span:nth-child(2) { display: grid; gap: 4px; flex: 1; }
 .social-link strong { font-size: 16px; }
-.social-link small { color: #777; font-size: 12px; }
+.social-link small { color: #777; font-size: 13.5px; }
 .social-mark { display: grid; width: 45px; height: 45px; place-items: center; border-radius: 15px; background: #1877f2; color: #fff; font-family: Arial, sans-serif; font-size: 31px; font-weight: 700; }
 @media (max-width: 900px) {
   .workshop-gallery {

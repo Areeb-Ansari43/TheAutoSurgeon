@@ -16,9 +16,28 @@ describe("public page metadata", () => {
   it("identifies missing and private pages without inventing a public origin", () => {
     expect(getPageMeta("/missing-page")).toBeUndefined();
     expect(pageHead("/missing-page")).toContain("Page Not Found");
-    expect(pageHead("/account")).toContain("noindex, nofollow");
+    expect(pageHead("/account")).toContain("noindex, follow");
+    expect(pageHead("/missing-page")).not.toContain('rel="canonical"');
     expect(publicPaths).not.toContain("/manage");
     expect(pageRouteManifest.routes).toHaveLength(22);
+  });
+  it("gives guides a unique title, canonical URL and article schema", () => {
+    const head = pageHead("/guides/tyre-safety-checks");
+    expect(head).toContain(
+      "<title>Simple Tyre Safety Checks for Everyday Driving in Hayes</title>"
+    );
+    expect(head).toContain(
+      '<link rel="canonical" href="https://theautosurgeon.co.uk/guides/tyre-safety-checks" />'
+    );
+    expect(head).toContain('"@type":"Article"');
+    expect(head).toContain('"@type":"HowTo"');
+    expect(head).toContain('property="og:type" content="article"');
+  });
+  it("points the legacy WhatsApp URL at the real page and keeps it out of the sitemap", () => {
+    expect(pageHead("/whatspp")).toContain(
+      'href="https://theautosurgeon.co.uk/whatsapp"'
+    );
+    expect(publicPaths).not.toContain("/whatspp");
   });
 });
 describe("form error messages", () => {

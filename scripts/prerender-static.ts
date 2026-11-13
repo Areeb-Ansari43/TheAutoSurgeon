@@ -1,17 +1,19 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { renderApp } from "../client/src/entry-server";
-import { pageHead } from "../server/pageHead";
-import { getPageMeta, pageRouteManifest, publicPaths } from "../shared/routes";
+import { pageHead, robotsDocument, sitemapDocument } from "../server/pageHead";
+import { pageRouteManifest } from "../shared/routes";
 import { guides } from "../shared/guides";
 import { services } from "../shared/catalog";
 
 const root = path.resolve(import.meta.dirname, "..");
 const dist = path.join(root, "dist", "public");
-const template = await fs.readFile(
-  path.join(root, "client", "index.html"),
-  "utf8"
-);
+// Use the Vite-built template so the compiled /assets/app.js and
+// /assets/app.css are referenced (never the /src/main.tsx dev entry).
+const template = await fs.readFile(path.join(dist, "index.html"), "utf8");
+if (!template.includes("<!--app-html-->")) {
+  throw new Error("dist/public/index.html is missing the <!--app-html--> slot");
+}
 const siteUrl = (
   process.env.SITE_URL ||
   process.env.PUBLIC_SITE_URL ||
@@ -27,9 +29,12 @@ function htmlFor(route: string) {
     .replace("<!--app-html-->", body);
 }
 
+// Cloudflare Pages serves `/guides` from `guides.html` with a 200 and redirects
+// `/guides/` to it. Writing flat files keeps every served URL identical to the
+// canonical URL (no trailing slash), so Google never sees a redirecting canonical.
 function fileFor(route: string) {
   if (route === "/") return path.join(dist, "index.html");
-  return path.join(dist, route.replace(/^\//, ""), "index.html");
+  return path.join(dist, `${route.replace(/^\//, "")}.html`);
 }
 
 const routes = [
@@ -46,32 +51,8 @@ for (const route of [...new Set(routes)]) {
   await fs.writeFile(target, htmlFor(route), "utf8");
 }
 
-await fs.writeFile(
-  path.join(dist, "404.html"),
-  htmlFor("/missing-page"),
-  "utf8"
-);
+await fs.writeFile(path.join(dist, "404.html"), htmlFor("/missing-page"), "utf8");
+await fs.writeFile(path.join(dist, "sitemap.xml"), sitemapDocument(), "utf8");
+await fs.writeFile(path.join(dist, "robots.txt"), robotsDocument(), "utf8");
 
-const today = new Date().toISOString().split("T")[0];
-const urls = publicPaths
-  .map(
-    route =>
-      `  <url>\n    <loc>${siteUrl}${route}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
-  )
-  .join("\n");
-
-await fs.writeFile(
-  path.join(dist, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
-  "utf8"
-);
-
-await fs.writeFile(
-  path.join(dist, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /account\nDisallow: /manage\nDisallow: /book\nDisallow: /quote\nDisallow: /login\nDisallow: /register\nSitemap: ${siteUrl}/sitemap.xml\n`,
-  "utf8"
-);
-
-console.log(
-  `Prerendered ${new Set(routes).size} routes with SITE_URL=${siteUrl}`
-);
+console.log(`Prerendered ${new Set(routes).size} routes with SITE_URL=${siteUrl}`);

@@ -39,3 +39,10 @@ Customer email/SMS/automatic notifications were not selected and are not impleme
 Configure `PUBLIC_SITE_URL` to the actual HTTPS production origin to enable absolute canonical/social URL tags and the application sitemap. No internal or guessed domain is used. `/manus-routes.json` lists the 19 source routes, including service/guide patterns. Account, manager and request pages are not indexed.
 
 Optimized PNG/WebP copies preserve the supplied artwork; original SVG/JPG assets remain intact. Customer quotes were supplied on the original website, not independently verified or presented as an aggregate Google rating. Opening hours follow the original contact section: Monday–Saturday 9 AM–6 PM, Sunday by direct appointment. The old footer's conflicting Sunday text was corrected. Published prices are labour only except the £60 TPMS sensor change, which includes the part.
+
+## Design, motion and SEO (November 2026 refresh)
+
+- `client/index.html` loads `/src/main.tsx`, so every build compiles the current React source. Vite emits stable `/assets/app.js` and `/assets/app.css` names for Cloudflare Pages. Do not commit prebuilt bundles to `client/public/assets`.
+- `client/src/styles/polish.css` is the design layer (Archivo + Inter, tokens, components). `client/src/components/Motion.tsx` drives Apple-style scroll motion through `data-reveal`, `data-stagger`, `data-scroll` (`--p` progress) and `data-spy` attributes. All content is visible without JavaScript and with reduced motion.
+- `scripts/prerender-static.ts` writes flat `route.html` files so Cloudflare serves `/guides` (no trailing slash) with a 200, matching the canonical URL. It also writes `sitemap.xml` (with lastmod and images) and `robots.txt`.
+- Guides carry `published`/`updated` dates (`shared/guides.ts`) used for Article, HowTo, FAQ and Breadcrumb structured data. Bump `guidesLastReviewed` when guides are reviewed.

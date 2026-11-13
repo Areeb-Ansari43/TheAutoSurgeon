@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { business, type Service } from "@shared/catalog";
+import type { Guide } from "@shared/guides";
 
 const facebookUrl =
   "https://www.facebook.com/profile.php?id=61595972917406";
@@ -42,13 +43,20 @@ const links = [
   ["/about", "About"],
   ["/guides", "Car care"],
   ["/contact", "Contact"],
-  ["/whatspp", "WhatsApp"],
+  ["/whatsapp", "WhatsApp"],
 ];
 
 export function SiteHeader() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   useEffect(() => {
     setOpen(false);
     setServicesOpen(false);
@@ -73,7 +81,7 @@ export function SiteHeader() {
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <header className="island-shell">
+      <header className={scrolled ? "island-shell is-scrolled" : "island-shell"}>
         <div className="nav-island">
           <Link
             href="/"
@@ -83,6 +91,8 @@ export function SiteHeader() {
             <img
               src="/assets/brand/auto-surgeon-logo.png"
               alt="The Auto Surgeon"
+              width={160}
+              height={60}
             />
           </Link>
           <div className="nav-divider" />
@@ -223,27 +233,43 @@ export function PageIntro({
   eyebrow,
   title,
   description,
+  crumbs,
+  image,
   children,
 }: {
   eyebrow: string;
   title: ReactNode;
   description: string;
+  /** Extra breadcrumb levels between Home and the current page. */
+  crumbs?: { href: string; label: string }[];
+  image?: string;
   children?: ReactNode;
 }) {
   return (
-    <section className="page-intro">
+    <section className={image ? "page-intro has-image" : "page-intro"}>
+      {image && <img className="page-intro-bg" src={image} alt="" />}
       <div className="container">
-        <div className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link href="/">Home</Link>
-          <span>/</span>
-          <span>{eyebrow}</span>
-        </div>
-        <div className="eyebrow">
+          {crumbs?.map(crumb => (
+            <span key={crumb.href}>
+              <span aria-hidden="true">/</span>
+              <Link href={crumb.href}>{crumb.label}</Link>
+            </span>
+          ))}
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{eyebrow}</span>
+        </nav>
+        <p className="eyebrow" data-reveal="fade">
           <span className="orange-line" />
           {eyebrow}
-        </div>
-        <h1 className="page-title">{title}</h1>
-        <p className="page-lead">{description}</p>
+        </p>
+        <h1 className="page-title" data-reveal="up">
+          {title}
+        </h1>
+        <p className="page-lead" data-reveal="up">
+          {description}
+        </p>
         {children}
       </div>
     </section>
@@ -263,7 +289,7 @@ export function SectionHead({
   label?: string;
 }) {
   return (
-    <div className="section-head">
+    <div className="section-head" data-reveal="up">
       <div>
         <div className="eyebrow">
           <span className="orange-line" />
@@ -287,18 +313,21 @@ export function WorkshopGallery() {
 
   return (
     <>
-      <div className="workshop-gallery">
+      <div className="workshop-gallery" data-stagger>
         {workshopPhotos.map(photo => (
           <button
+            data-reveal="up"
             type="button"
             className={`workshop-gallery-card ${photo.className}`}
             key={photo.src}
             onClick={() => setSelected(photo)}
             aria-label={`Zoom in: ${photo.caption}`}
           >
-            <img src={photo.src} alt={photo.alt} loading="lazy" />
-            <span className="workshop-gallery-zoom" aria-hidden="true">
-              +
+            <span className="workshop-gallery-frame">
+              <img src={photo.src} alt={photo.alt} loading="lazy" />
+              <span className="workshop-gallery-zoom" aria-hidden="true">
+                +
+              </span>
             </span>
             <span className="workshop-gallery-caption">{photo.caption}</span>
           </button>
@@ -376,18 +405,22 @@ export function ServiceCard({
   index?: number;
 }) {
   return (
-    <Link className="service-card" href={`/services/${service.slug}`}>
+    <Link
+      className="service-card"
+      href={`/services/${service.slug}`}
+      data-reveal="up"
+    >
       <div className="service-photo">
         <img
           src={`/assets/photos/${service.image}.webp`}
-          alt={service.name}
+          alt={`${service.name} at The Auto Surgeon in Hayes`}
           loading="lazy"
         />
-        <div className="service-photo-veil" />
-        <span className="service-number">0{index + 1}</span>
-        <span className="service-photo-tag">{service.tag}</span>
       </div>
       <div className="service-body">
+        <span className="service-kicker">
+          {String(index + 1).padStart(2, "0")} · {service.tag.toLowerCase()}
+        </span>
         <div className="service-name-row">
           <h3>{service.name}</h3>
           <ArrowRight className="service-arrow" size={21} />
@@ -398,12 +431,43 @@ export function ServiceCard({
             <span className="price-caption">{service.priceLabel}</span>
             <strong>£{service.price}</strong>
           </div>
-          <span className="service-detail-link">Discover service</span>
+          <span className="service-detail-link">View service</span>
         </div>
       </div>
     </Link>
   );
 }
+
+export function GuideCard({ guide }: { guide: Guide }) {
+  return (
+    <Link
+      href={`/guides/${guide.slug}`}
+      className="guide-card"
+      data-reveal="up"
+    >
+      <div className="guide-card-photo">
+        <img
+          className="guide-image"
+          src={guide.image}
+          alt={guide.title}
+          loading="lazy"
+        />
+      </div>
+      <div className="guide-body">
+        <div className="guide-meta">
+          <span className="badge">{guide.category}</span>
+          <span>{guide.readTime}</span>
+        </div>
+        <h3>{guide.title}</h3>
+        <p>{guide.summary}</p>
+        <span className="text-link">
+          Read the guide <ArrowRight size={16} />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 export function CTA({
   title = "Your car deserves a surgeon.",
   description = "Tell us what your vehicle needs. We’ll inspect it, explain it and quote before we work.",
@@ -413,7 +477,7 @@ export function CTA({
 }) {
   return (
     <section className="container">
-      <div className="cta-banner">
+      <div className="cta-banner" data-reveal="scale">
         <div className="cta-symbol">
           <CircleDot size={52} strokeWidth={1} />
         </div>
@@ -436,9 +500,9 @@ export function FAQs({
   items: { question: string; answer: string }[];
 }) {
   return (
-    <div className="faq-list">
+    <div className="faq-list" data-stagger>
       {items.map((item, index) => (
-        <details className="faq-item" key={item.question}>
+        <details className="faq-item" key={item.question} data-reveal="up">
           <summary>
             <span className="faq-number">0{index + 1}</span>
             {item.question}
@@ -492,7 +556,7 @@ export function SiteFooter() {
             </a>
           </div>
           <div>
-            <h3>THE WORKSHOP</h3>
+            <h2 className="footer-heading">The workshop</h2>
             <Link href="/services">Our services</Link>
             <Link href="/tyres">Tyres for every budget</Link>
             <Link href="/pricing">Labour price list</Link>
@@ -500,7 +564,7 @@ export function SiteFooter() {
             <Link href="/about">About us</Link>
           </div>
           <div>
-            <h3>GOOD TO KNOW</h3>
+            <h2 className="footer-heading">Good to know</h2>
             <Link href="/guides">Vehicle-care guides</Link>
             <Link href="/faq">Your questions, answered</Link>
             <Link href="/reviews">Customer stories</Link>
@@ -508,7 +572,7 @@ export function SiteFooter() {
             <Link href="/account">Your account</Link>
           </div>
           <div>
-            <h3>FIND US IN HAYES</h3>
+            <h2 className="footer-heading">Find us in Hayes</h2>
             <Link href="/contact">
               Unit 3 Squirrels Trading Estate
               <br />

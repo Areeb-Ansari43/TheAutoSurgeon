@@ -87,7 +87,7 @@ export default function Contact() {
         description="Use this form for a quote or to ask whether we can fix your car. For emergencies, sudden faults or urgent repair questions, contact The Auto Surgeon through WhatsApp."
       >
         <div className="intro-buttons">
-          <a href="/whatspp" className="btn btn-primary">
+          <a href="/whatsapp" className="btn btn-primary">
             <MessageCircle size={16} /> Contact us on WhatsApp
           </a>
           <Link href="/services#emergency" className="btn btn-ghost">

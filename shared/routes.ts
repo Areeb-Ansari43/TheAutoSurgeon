@@ -6,6 +6,8 @@ export type PageMeta = {
   description: string;
   private?: boolean;
   image?: string;
+  /** Canonical path when this URL duplicates another page. */
+  canonical?: string;
 };
 export const staticPages: PageMeta[] = [
   {
@@ -62,9 +64,10 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/guides",
-    title: "Car Repair & Emergency Care Guides in Hayes",
+    title: "Car Care Guides for Hayes Drivers — The Auto Surgeon",
     description:
-      "Find practical guides on tyres, warning lights, emergency car repairs, maintenance, pothole damage and wheel alignment from The Auto Surgeon in Hayes.",
+      "Free, mechanic-written guides on tyre safety, dashboard warning lights, wheel alignment, pothole damage, maintenance and Tesla, Toyota and Mercedes care in Hayes.",
+    image: "/assets/photos/diagnostics-tablet.webp",
   },
   {
     path: "/contact",
@@ -84,6 +87,9 @@ export const staticPages: PageMeta[] = [
     title: "WhatsApp Car Repair Enquiry in Hayes — The Auto Surgeon",
     description:
       "Send The Auto Surgeon a pre-filled WhatsApp enquiry about a car repair, quote or emergency vehicle problem in Hayes.",
+    // Legacy misspelt URL: kept working, 301-redirected on Cloudflare, never indexed.
+    private: true,
+    canonical: "/whatsapp",
   },
   {
     path: "/whatsapp",
@@ -156,7 +162,10 @@ export function getPageMeta(path: string): PageMeta | undefined {
   if (guide)
     return {
       path: clean,
-      title: `${guide.category} Guide in Hayes — The Auto Surgeon`,
+      title:
+        guide.title.length > 44
+          ? guide.title
+          : `${guide.title} | The Auto Surgeon`,
       description: guide.summary,
       image: guide.image,
     };
