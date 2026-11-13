@@ -8,7 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { pageRouteManifest } from "../../shared/routes";
-import { robotsDocument, sitemapDocument } from "../pageHead";
+import { llmsText, robotsDocument, sitemapDocument } from "../pageHead";
 
 async function startServer() {
   const app = express();
@@ -25,6 +25,9 @@ async function startServer() {
   app.get("/manus-routes.json", (_req, res) => res.json(pageRouteManifest));
   app.get("/robots.txt", (_req, res) =>
     res.type("text").send(robotsDocument())
+  );
+  app.get("/llms.txt", (_req, res) =>
+    res.type("text/plain; charset=utf-8").send(llmsText())
   );
   app.get("/sitemap.xml", (_req, res, next) => {
     const doc = sitemapDocument();

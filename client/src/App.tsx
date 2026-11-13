@@ -4,7 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { SiteHeader, SiteFooter } from "./components/Site";
+import { SiteHeader, SiteFooter, MobileActionBar } from "./components/Site";
+import { MotionLayer } from "./components/Motion";
 import Home from "./pages/Home";
 import Information, { GuideDetail } from "./pages/Information";
 import {
@@ -88,6 +89,12 @@ function RouteEffects() {
           "content",
           meta?.description || "Expert vehicle care in Hayes."
         );
+    // Keep canonical and og:url in step with client-side navigation.
+    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const origin = canonical ? new URL(canonical.href).origin : window.location.origin;
+    const pageUrl = meta ? `${origin}${meta.path}` : "";
+    if (canonical && pageUrl) canonical.href = pageUrl;
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", pageUrl || origin + "/");
   }, [location]);
   useEffect(() => {
     if (!user || location !== "/") return;
@@ -105,11 +112,13 @@ export default function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <RouteEffects />
+          <MotionLayer />
           <SiteHeader />
           <main id="main-content" tabIndex={-1}>
             <Router />
           </main>
           <SiteFooter />
+          <MobileActionBar />
           <Toaster theme="dark" />
         </TooltipProvider>
       </ThemeProvider>

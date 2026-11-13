@@ -1,3 +1,4 @@
+import type React from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -19,36 +20,47 @@ import {
   TrustPoints,
   WorkshopGallery,
 } from "@/components/Site";
+import { ScrollStatement } from "@/components/Motion";
+import { homeFaqs } from "@shared/faqs";
+
+const heroLines = ["Precision", "repairs.", "Expert service."];
+const heroAccent = ["Your car", "deserves", "a surgeon."];
 
 export default function Home() {
   return (
     <>
-      <section className="home-hero">
+      <section className="home-hero" data-hero>
         <div className="hero-grain" />
         <div className="container hero-layout">
           <div className="hero-copy">
-            <div className="hero-location">
-              <span className="status-dot" />
-              YOUR LOCAL SPECIALIST<span className="location-separator">/</span>
-              HAYES, UB3
-            </div>
             <h1 className="hero-title">
-              PRECISION
-              <br />
-              REPAIRS.
-              <br />
-              EXPERT SERVICE.
-              <br />
-              <span>
-                YOUR CAR
-                <br />
-                DESERVES
-                <br />A SURGEON.
+              <span className="hero-location">
+                <span className="status-dot" aria-hidden="true" />
+                Car repairs, tyres &amp; wheel alignment
+                <span className="location-separator" aria-hidden="true">/</span>
+                Hayes, UB3
+              </span>
+              <span className="sr-only">: </span>
+              {heroLines.map((line, index) => (
+                <span className="hero-line" key={line} style={{ "--line": index } as React.CSSProperties}>
+                  <span>{line}</span>{" "}
+                </span>
+              ))}
+              <span className="hero-accent">
+                {heroAccent.map((line, index) => (
+                  <span
+                    className="hero-line"
+                    key={line}
+                    style={{ "--line": index + heroLines.length } as React.CSSProperties}
+                  >
+                    <span>{line}</span>{" "}
+                  </span>
+                ))}
               </span>
             </h1>
             <p className="hero-description">
               Tyres, wheel alignment, brakes and diagnostics.
-              <br className="desktop-break" />
+              {" "}<br className="desktop-break" />
               Expert care for your car. Honest advice for you.
             </p>
             <div className="hero-buttons">
@@ -64,12 +76,15 @@ export default function Home() {
             </div>
             <TrustPoints />
           </div>
-          <div className="hero-visual">
+          <div className="hero-visual" data-parallax-frame>
             <img
               className="hero-photo"
               src="/assets/photos/hero-orange-caliper.webp"
-              alt="Orange performance brake caliper and wheel — The Auto Surgeon"
+              alt="Orange performance brake caliper and alloy wheel serviced at The Auto Surgeon in Hayes"
+              width={1600}
+              height={1067}
               fetchPriority="high"
+              decoding="async"
             />
             <div className="hero-image-shade" />
             <div className="hero-image-top">
@@ -109,7 +124,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="section section-alt" id="services">
+      <section className="section section-alt home-services" id="services">
         <div className="container">
           <SectionHead
             eyebrow="WHAT WE DO"
@@ -134,13 +149,21 @@ export default function Home() {
           </p>
         </div>
       </section>
+      <ScrollStatement
+        eyebrow="HOW WE WORK"
+        text="We inspect it. We explain it. We agree the price. Only then do we pick up the tools."
+        highlight={["inspect", "explain", "price.", "tools."]}
+      />
       <section className="section">
         <div className="container split-section">
-          <div className="workshop-photo">
+          <div className="workshop-photo" data-wipe>
             <img
               src="/assets/photos/diagnostics-tablet.webp"
-              alt="Diagnostic equipment used to investigate vehicle faults"
+              alt="Mechanic using a diagnostic tablet to read vehicle fault codes in Hayes"
+              width={1600}
+              height={1067}
               loading="lazy"
+              decoding="async"
             />
             <div className="photo-note">
               <Wrench size={19} />
@@ -203,11 +226,14 @@ export default function Home() {
           <WorkshopGallery />
         </div>
       </section>
-      <section className="container specialist-banner" aria-labelledby="mercedes-specialist-heading">
+      <section className="container specialist-banner" data-wipe aria-labelledby="mercedes-specialist-heading">
         <img
           src="/assets/photos/workshop-mercedes.webp"
           alt="Mercedes engine-bay repair work at The Auto Surgeon in Hayes"
+          width={1800}
+          height={1013}
           loading="lazy"
+          decoding="async"
         />
         <div className="specialist-banner-copy">
           <p className="eyebrow">MERCEDES SPECIALIST WORK</p>
@@ -259,7 +285,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="section">
+      <section className="section home-reviews">
         <div className="container">
           <SectionHead
             eyebrow="CUSTOMER STORIES"
@@ -309,32 +335,66 @@ export default function Home() {
             link="/faq"
             label="All frequently asked questions"
           />
-          <FAQs
-            items={[
-              {
-                question: "Can I visit without an appointment?",
-                answer:
-                  "Walk-ins are welcome Monday to Saturday, 9 AM to 6 PM. Calling ahead helps us check capacity and any parts or tyre specifications you need.",
-              },
-              {
-                question: "Are the prices for parts and labour?",
-                answer:
-                  "Published prices are labour only unless noted. The £60 TPMS sensor change includes the part. We confirm parts and the full quote before work starts.",
-              },
-              {
-                question: "Does an online request confirm my appointment?",
-                answer:
-                  "No. Your date and time are preferences. We save your request and the workshop must confirm availability before you travel.",
-              },
-            ]}
+          <FAQs items={homeFaqs} />
+        </div>
+      </section>
+      <section className="section glance-section" aria-labelledby="glance-heading">
+        <div className="container">
+          <SectionHead
+            eyebrow="AT A GLANCE"
+            title={<span id="glance-heading">The Auto Surgeon, Hayes — the facts.</span>}
+            description="Everything you need before you visit, in one place."
           />
+          <dl className="glance-grid">
+            <div className="glance-item">
+              <dt>What we do</dt>
+              <dd>
+                Car repairs, tyre fitting, puncture repairs, wheel alignment,
+                brake servicing, engine oil servicing, diagnostics and Tesla
+                wheel alignment.
+              </dd>
+            </div>
+            <div className="glance-item">
+              <dt>Where</dt>
+              <dd>
+                Unit 3 Squirrels Trading Estate, Viveash Close, Hayes, UB3 4RZ
+                — serving Hayes and West London.
+              </dd>
+            </div>
+            <div className="glance-item">
+              <dt>Opening hours</dt>
+              <dd>Monday to Saturday, 9 AM–6 PM. Sunday by appointment.</dd>
+            </div>
+            <div className="glance-item">
+              <dt>Prices from</dt>
+              <dd>
+                Puncture repair £10 · Brakes, oil service &amp; diagnostics £30 ·
+                Wheel alignment £50 · Tesla alignment £60 (labour only; parts quoted separately).
+              </dd>
+            </div>
+            <div className="glance-item">
+              <dt>Walk-ins</dt>
+              <dd>
+                Welcome during opening hours. Calling ahead on{" "}
+                <a href={business.tel}>{business.phone}</a> helps us check
+                capacity.
+              </dd>
+            </div>
+            <div className="glance-item">
+              <dt>Specialist work</dt>
+              <dd>
+                Tesla wheel alignment and Mercedes engine work, including
+                tappet and rocker concerns.
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
       <CTA />
       <section className="visit-strip container">
         <MapPin size={22} />
         <div>
-          <h3>Right here in Hayes.</h3>
+          <h2 className="visit-strip-title">Right here in Hayes.</h2>
           <p>Unit 3 Squirrels Trading Estate, Viveash Close, UB3 4RZ</p>
         </div>
         <Link href="/contact" className="text-link">

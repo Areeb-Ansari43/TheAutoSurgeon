@@ -30,6 +30,7 @@ export default function WhatsApp() {
     <>
       <PageIntro
         eyebrow="WHATSAPP THE WORKSHOP"
+        kicker="WhatsApp car repair enquiries in Hayes"
         title={
           <>
             Car trouble?

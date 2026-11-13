@@ -77,6 +77,7 @@ export default function Contact() {
     <>
       <PageIntro
         eyebrow="QUOTE & REPAIR ENQUIRIES"
+        kicker="Contact The Auto Surgeon, Hayes UB3"
         title={
           <>
             Car help.

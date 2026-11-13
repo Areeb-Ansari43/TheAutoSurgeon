@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import {
   ArrowRight,
@@ -7,6 +7,7 @@ import {
   ChevronDown,
   CircleDot,
   Menu,
+  MessageCircle,
   Phone,
   ShieldCheck,
   X,
@@ -22,18 +23,24 @@ const workshopPhotos = [
     alt: "Vehicle raised on a lift while a mechanic carries out repairs at The Auto Surgeon in Hayes",
     caption: "Vehicle repairs on the lift",
     className: "workshop-gallery-card-wide",
+    width: 1800,
+    height: 1013,
   },
   {
     src: "/assets/photos/workshop-mercedes.webp",
     alt: "Mercedes with its bonnet open during engine, tappet and rocker inspection at The Auto Surgeon Hayes",
     caption: "Mercedes engine-bay work",
     className: "",
+    width: 1800,
+    height: 1013,
   },
   {
     src: "/assets/photos/workshop-engine.webp",
     alt: "Mechanic working inside a vehicle engine bay at The Auto Surgeon in Hayes",
     caption: "Hands-on engine repair",
     className: "workshop-gallery-card-portrait",
+    width: 1012,
+    height: 1800,
   },
 ];
 
@@ -49,6 +56,30 @@ export function SiteHeader() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [tucked, setTucked] = useState(false);
+  const lastY = useRef(0);
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 12);
+        // Tuck the island away while reading downwards; bring it back on any upward scroll.
+        if (Math.abs(y - lastY.current) > 6) {
+          setTucked(y > 420 && y > lastY.current);
+          lastY.current = y;
+        }
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
   useEffect(() => {
     setOpen(false);
     setServicesOpen(false);
@@ -73,7 +104,15 @@ export function SiteHeader() {
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <header className="island-shell">
+      <header
+        className={[
+          "island-shell",
+          scrolled ? "is-scrolled" : "",
+          tucked && !open && !servicesOpen ? "is-tucked" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <div className="nav-island">
           <Link
             href="/"
@@ -83,6 +122,8 @@ export function SiteHeader() {
             <img
               src="/assets/brand/auto-surgeon-logo.png"
               alt="The Auto Surgeon"
+              width={823}
+              height={335}
             />
           </Link>
           <div className="nav-divider" />
@@ -221,11 +262,14 @@ export function SiteHeader() {
 
 export function PageIntro({
   eyebrow,
+  kicker,
   title,
   description,
   children,
 }: {
   eyebrow: string;
+  /** Keyword-led line rendered inside the H1, above the display title. */
+  kicker?: string;
   title: ReactNode;
   description: string;
   children?: ReactNode;
@@ -242,13 +286,26 @@ export function PageIntro({
           <span className="orange-line" />
           {eyebrow}
         </div>
-        <h1 className="page-title">{title}</h1>
+        <h1 className="page-title">
+          {kicker && <H1Kicker text={kicker} />}
+          {title}
+        </h1>
         <p className="page-lead">{description}</p>
         {children}
       </div>
     </section>
   );
 }
+/** Small, keyword-rich lead-in that sits inside an H1 and reads as "kicker: title". */
+export function H1Kicker({ text }: { text: string }) {
+  return (
+    <>
+      <span className="h1-kicker">{text}</span>
+      <span className="sr-only">: </span>
+    </>
+  );
+}
+
 export function SectionHead({
   eyebrow,
   title,
@@ -296,7 +353,14 @@ export function WorkshopGallery() {
             onClick={() => setSelected(photo)}
             aria-label={`Zoom in: ${photo.caption}`}
           >
-            <img src={photo.src} alt={photo.alt} loading="lazy" />
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading="lazy"
+              decoding="async"
+            />
             <span className="workshop-gallery-zoom" aria-hidden="true">
               +
             </span>
@@ -380,8 +444,11 @@ export function ServiceCard({
       <div className="service-photo">
         <img
           src={`/assets/photos/${service.image}.webp`}
-          alt={service.name}
+          alt={`${service.name} at The Auto Surgeon, Hayes`}
+          width={800}
+          height={600}
           loading="lazy"
+          decoding="async"
         />
         <div className="service-photo-veil" />
         <span className="service-number">0{index + 1}</span>
@@ -441,8 +508,7 @@ export function FAQs({
         <details className="faq-item" key={item.question}>
           <summary>
             <span className="faq-number">0{index + 1}</span>
-            {item.question}
-            <span className="faq-plus">+</span>
+            <span className="faq-question">{item.question}</span>
           </summary>
           <p>{item.answer}</p>
         </details>
@@ -478,6 +544,8 @@ export function SiteFooter() {
               <img
                 src="/assets/brand/auto-surgeon-logo.png"
                 alt="The Auto Surgeon"
+                width={823}
+                height={335}
                 loading="lazy"
               />
             </Link>
@@ -492,7 +560,7 @@ export function SiteFooter() {
             </a>
           </div>
           <div>
-            <h3>THE WORKSHOP</h3>
+            <p className="footer-heading">THE WORKSHOP</p>
             <Link href="/services">Our services</Link>
             <Link href="/tyres">Tyres for every budget</Link>
             <Link href="/pricing">Labour price list</Link>
@@ -500,7 +568,7 @@ export function SiteFooter() {
             <Link href="/about">About us</Link>
           </div>
           <div>
-            <h3>GOOD TO KNOW</h3>
+            <p className="footer-heading">GOOD TO KNOW</p>
             <Link href="/guides">Vehicle-care guides</Link>
             <Link href="/faq">Your questions, answered</Link>
             <Link href="/reviews">Customer stories</Link>
@@ -508,7 +576,7 @@ export function SiteFooter() {
             <Link href="/account">Your account</Link>
           </div>
           <div>
-            <h3>FIND US IN HAYES</h3>
+            <p className="footer-heading">FIND US IN HAYES</p>
             <Link href="/contact">
               Unit 3 Squirrels Trading Estate
               <br />
@@ -546,5 +614,43 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/** Thumb-reach actions on phones: appears once the visitor scrolls past the hero. */
+export function MobileActionBar() {
+  const [location] = useLocation();
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 520);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  if (["/book", "/quote", "/account", "/login", "/register", "/manage"].includes(location))
+    return null;
+  return (
+    <nav
+      className={visible ? "mobile-action-bar is-visible" : "mobile-action-bar"}
+      aria-label="Quick contact"
+    >
+      <a href={business.tel} className="mobile-action">
+        <Phone size={18} />
+        <span>Call</span>
+      </a>
+      <a
+        href={business.whatsapp}
+        className="mobile-action"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <MessageCircle size={18} />
+        <span>WhatsApp</span>
+      </a>
+      <Link href="/book" className="mobile-action mobile-action-primary">
+        <CalendarDays size={18} />
+        <span>Book</span>
+      </Link>
+    </nav>
   );
 }

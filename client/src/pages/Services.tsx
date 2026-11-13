@@ -21,6 +21,7 @@ export function ServicesHub() {
     <>
       <PageIntro
         eyebrow="OUR SERVICES"
+        kicker="Car repairs, tyres & servicing in Hayes"
         title={
           <>
             Expert care.
@@ -152,7 +153,11 @@ export function ServiceDetail({ slug }: { slug: string }) {
     <>
       <PageIntro
         eyebrow="SPECIALIST SERVICES"
-        title={service.name}
+        title={
+          <>
+            {service.name} <span className="title-place">in Hayes</span>
+          </>
+        }
         description={service.short}
       >
         <div className="intro-buttons">
@@ -311,6 +316,7 @@ export function Tyres() {
     <>
       <PageIntro
         eyebrow="TYRES, FITTED RIGHT"
+        kicker="Tyre fitting & puncture repair in Hayes"
         title={
           <>
             Every tyre.
@@ -427,6 +433,7 @@ export function Pricing() {
     <>
       <PageIntro
         eyebrow="NO GUESSWORK"
+        kicker="Car repair labour prices in Hayes"
         title={
           <>
             Honest labour.

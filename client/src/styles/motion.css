@@ -1,0 +1,226 @@
+/*
+ * Motion layer.
+ * Every rule that hides or moves content is scoped to html.motion-ok, which an
+ * inline script sets only when the visitor has not requested reduced motion.
+ * Without it (no script, reduced motion, print) the page stands at rest.
+ * Only transform/translate/scale, opacity, clip-path and colour animate.
+ */
+:root {
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ── Scroll progress ──────────────────────────────────────────────── */
+.scroll-progress {
+  display: none;
+}
+.motion-ok .scroll-progress {
+  display: block;
+  position: fixed;
+  z-index: 70;
+  inset: 0 0 auto;
+  height: 3px;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #f26a00, #ff9a3c);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* ── Header: tuck away while reading down, return on scroll up ────── */
+.motion-ok .island-shell {
+  transition: transform 380ms var(--ease-enter);
+}
+.motion-ok .island-shell.is-tucked {
+  transform: translate(-50%, calc(-100% - 32px));
+}
+.motion-ok .mobile-island {
+  transform-origin: 50% 0;
+  animation: menu-drop 220ms var(--ease-ui) both;
+}
+@keyframes menu-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+.motion-ok .nav-dropdown {
+  transform-origin: 20% 0;
+  animation: menu-drop 200ms var(--ease-ui) both;
+}
+
+/* ── Hero entrance (once per visit, on first paint) ───────────────── */
+.motion-ok:not(.hero-entered) [data-hero] .hero-line {
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-line > span {
+  animation: hero-rise 760ms var(--ease-enter) both;
+  animation-delay: calc(140ms + var(--line, 0) * 70ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-location,
+.motion-ok:not(.hero-entered) [data-hero] .hero-description,
+.motion-ok:not(.hero-entered) [data-hero] .hero-buttons,
+.motion-ok:not(.hero-entered) [data-hero] .trust-points,
+.motion-ok:not(.hero-entered) [data-hero] .hero-bottom-line {
+  animation: fade-up 560ms var(--ease-enter) both;
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-location {
+  animation-delay: calc(60ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-description {
+  animation-delay: calc(560ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-buttons {
+  animation-delay: calc(640ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .trust-points {
+  animation-delay: calc(720ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-bottom-line {
+  animation-delay: calc(820ms + var(--hero-t, 0ms));
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-photo {
+  animation: photo-settle 1200ms var(--ease-enter) both;
+  animation-delay: var(--hero-t, 0ms);
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-image-bottom {
+  animation: fade-up 600ms var(--ease-enter) both;
+  animation-delay: calc(700ms + var(--hero-t, 0ms));
+}
+@keyframes hero-rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes photo-settle {
+  from {
+    scale: 1.06;
+  }
+}
+
+/* Hero photo drifts slower than the page (photo only, never text). */
+.motion-ok [data-parallax-frame] .hero-photo {
+  translate: 0 var(--parallax, 0);
+  scale: 1.12;
+  will-change: translate;
+}
+.motion-ok:not(.hero-entered) [data-hero] .hero-photo {
+  animation-name: photo-settle-parallax;
+}
+@keyframes photo-settle-parallax {
+  from {
+    scale: 1.2;
+  }
+}
+
+/* ── Reveal on scroll ─────────────────────────────────────────────── */
+.motion-ok [data-motion="reveal"] {
+  --reveal-delay: calc(var(--reveal-i, 0) * 75ms);
+  transition:
+    opacity 620ms var(--ease-enter) var(--reveal-delay),
+    translate 760ms var(--ease-enter) var(--reveal-delay),
+    transform 240ms var(--ease-ui),
+    box-shadow 240ms var(--ease-ui),
+    border-color 240ms var(--ease-ui),
+    background 180ms var(--ease-ui);
+}
+.motion-ok [data-motion="reveal"]:not(.is-revealed) {
+  opacity: 0;
+  translate: 0 26px;
+}
+/* Cards in a phone swipe row stay visible so the next one can peek in. */
+@media (max-width: 760px) {
+  .motion-ok .home-services .service-card[data-motion],
+  .motion-ok .home-reviews .review-card[data-motion] {
+    opacity: 1;
+    translate: none;
+  }
+}
+.motion-ok .no-transition,
+.motion-ok .no-transition * {
+  transition: none !important;
+}
+
+/* Eyebrow rule draws in once its heading arrives. */
+.motion-ok [data-motion] .orange-line {
+  transform-origin: 0 50%;
+  transition: transform 700ms var(--ease-enter) 180ms;
+}
+.motion-ok [data-motion]:not(.is-revealed) .orange-line {
+  transform: scaleX(0);
+}
+
+/* ── Photo wipe: the picture uncovers upwards, then settles ───────── */
+.motion-ok [data-motion="wipe"] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1100ms var(--ease-enter);
+}
+.motion-ok [data-motion="wipe"]:not(.is-revealed) {
+  clip-path: inset(100% 0 0 0);
+}
+.motion-ok [data-motion="wipe"] img {
+  transition: scale 1400ms var(--ease-enter);
+}
+.motion-ok [data-motion="wipe"]:not(.is-revealed) img {
+  scale: 1.14;
+}
+
+/* ── Scroll statement: words light as it passes through ───────────── */
+.statement-section.is-live .sw-word {
+  color: rgba(255, 255, 255, 0.16);
+  transition: color 280ms var(--ease-ui);
+}
+.statement-section.is-live .sw-word.is-lit {
+  color: #fff;
+}
+.statement-section.is-live .sw-accent.is-lit {
+  color: var(--orange);
+}
+
+/* ── Hover layer (fine pointers only) ─────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .service-photo img,
+  .workshop-gallery-card img,
+  .guide-card img {
+    transition: scale 600ms var(--ease-ui);
+  }
+  .service-card:hover .service-photo img,
+  .workshop-gallery-card:hover img,
+  .guide-card:hover img {
+    scale: 1.04;
+  }
+  .text-link svg,
+  .btn svg:last-child,
+  .service-arrow {
+    transition: translate 160ms var(--ease-ui);
+  }
+  .text-link:hover svg,
+  .btn:hover svg:last-child,
+  .service-card:hover .service-arrow {
+    translate: 3px 0;
+  }
+}
+.btn:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none !important;
+  }
+  .island-shell.is-tucked {
+    transform: translateX(-50%);
+  }
+}

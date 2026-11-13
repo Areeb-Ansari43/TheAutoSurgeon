@@ -1,7 +1,8 @@
 import { Link } from "wouter";
 import { guides, type Guide } from "@shared/guides";
 import { services as catalogServices } from "@shared/catalog";
-import { WorkshopGallery } from "@/components/Site";
+import { WorkshopGallery, H1Kicker } from "@/components/Site";
+import { siteFaqs as faqs } from "@shared/faqs";
 
 type InformationProps = {
   page: string;
@@ -9,18 +10,22 @@ type InformationProps = {
 
 type PageIntroProps = {
   eyebrow: string;
+  kicker?: string;
   title: string;
   lead: string;
 };
 
 const address = "Unit 3 Squirrels Trading Estate, Viveash Close, Hayes UB3 4RZ";
 
-function PageIntro({ eyebrow, title, lead }: PageIntroProps) {
+function PageIntro({ eyebrow, kicker, title, lead }: PageIntroProps) {
   return (
     <header className="page-intro">
       <div className="container">
         <p className="eyebrow">{eyebrow}</p>
-        <h1 className="page-title">{title}</h1>
+        <h1 className="page-title">
+          {kicker && <H1Kicker text={kicker} />}
+          {title}
+        </h1>
         <p className="page-lead">{lead}</p>
       </div>
     </header>
@@ -64,6 +69,7 @@ function AboutPage() {
     <>
       <PageIntro
         eyebrow="About The Auto Surgeon"
+        kicker="About our Hayes car repair workshop"
         title="Quality car care, based in Hayes."
         lead="The Auto Surgeon is a Hayes workshop delivering careful, high-quality car care, repairs and vehicle advice for drivers who want a clear answer and a proper fix."
       />
@@ -292,6 +298,7 @@ function WorkshopPage() {
     <>
       <PageIntro
         eyebrow="Workshop services"
+        kicker="How our Hayes car workshop works"
         title="The checks behind the fix"
         lead="From tyres and brakes to diagnostics and Tesla wheel alignment, each service starts with the vehicle symptoms and the work that is actually needed."
       />
@@ -454,6 +461,7 @@ function ReviewsPage() {
     <>
       <PageIntro
         eyebrow="Customer feedback"
+        kicker="The Auto Surgeon customer reviews"
         title="Trusted in Hayes."
         lead="Real vehicle concerns. Straightforward workshop conversations. Customer stories shared on our original website."
       />
@@ -518,54 +526,13 @@ function ReviewsPage() {
   );
 }
 
-const faqs = [
-  {
-    question: "Does sending a booking request confirm my appointment?",
-    answer:
-      "No. A booking request gives the workshop the details needed to check availability. Your appointment is only confirmed when the workshop confirms it with you.",
-  },
-  {
-    question: "What are your opening hours?",
-    answer:
-      "The workshop is open Monday to Saturday, 9:00–18:00. Sunday is by appointment only. Do not make an online booking request for Sunday; contact the workshop first to discuss availability.",
-  },
-  {
-    question: "Are the displayed prices inclusive of parts?",
-    answer:
-      "No, listed prices are labour only unless specifically stated otherwise. The TPMS service is £60 including the part. Tyres, fluids, vehicle-specific parts and additional work are not included in the labour prices shown.",
-  },
-  {
-    question: "Can you help with a puncture or a tyre losing pressure?",
-    answer:
-      "Yes, contact the workshop for a tyre or puncture inspection. Whether a tyre can be repaired depends on the location and nature of the damage and the condition of the tyre. A bulge, exposed cords or serious damage needs professional assessment.",
-  },
-  {
-    question: "Do you work on Tesla vehicles?",
-    answer:
-      "Tesla wheel alignment is offered at £60 labour. This is wheel-alignment work, not Tesla battery servicing, battery diagnosis or high-voltage repair.",
-  },
-  {
-    question: "My dashboard light has come on. Should I keep driving?",
-    answer:
-      "Check the vehicle handbook for the specific symbol. If the warning is red, flashing, linked with overheating, low oil pressure, abnormal braking, smoke or a burning smell, stop safely and follow the handbook advice. For other warnings, contact the workshop to discuss diagnostics as soon as practical.",
-  },
-  {
-    question: "Do you carry out MOTs?",
-    answer:
-      "MOT enquiries are welcome. Contact the business to discuss what you need. This website does not make an online MOT booking or state that the workshop is an authorised MOT test centre.",
-  },
-  {
-    question: "What should I include when I contact the workshop?",
-    answer:
-      "Include your vehicle registration, make and model, the service you are interested in, when the problem began and any symptoms or dashboard messages you have noticed. Photos of obvious tyre damage can also be useful, but do not drive a vehicle you believe is unsafe simply to take a photo.",
-  },
-];
 
 function FaqPage() {
   return (
     <>
       <PageIntro
         eyebrow="Frequently asked questions"
+        kicker="Car repair FAQs — Hayes, UB3"
         title="Answers before you request a booking"
         lead="Practical guidance on availability, prices, tyres, diagnostics, Tesla alignment and MOT-related enquiries."
       />
@@ -604,6 +571,7 @@ function GuidesPage() {
     <>
       <PageIntro
         eyebrow="Vehicle care guides"
+        kicker="Car care guides for Hayes drivers"
         title="Know what to look for"
         lead="Short, safety-minded guides to help you recognise common tyre, warning-light and alignment concerns before you contact the workshop."
       />

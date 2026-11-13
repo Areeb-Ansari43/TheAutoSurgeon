@@ -1,9 +1,27 @@
 import { getPageMeta, publicPaths } from "../shared/routes";
 import { business, services } from "../shared/catalog";
 import { guides } from "../shared/guides";
+import { homeFaqs, siteFaqs, type Faq } from "../shared/faqs";
 
-const logo =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519664037278955/PNfFIWOvLpgultzE.png";
+const logoPath = "/assets/brand/auto-surgeon-logo.png";
+const facebookUrl = "https://www.facebook.com/profile.php?id=61595972917406";
+const geo = { latitude: 51.503, longitude: -0.421 };
+
+// JSON-LD is embedded in a <script>; keep "</" sequences from closing it early.
+const safeJson = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, "\\u003c");
+
+function faqPage(faqs: Faq[], url: string) {
+  return {
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    mainEntity: faqs.map(faq => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+}
 
 export function escapeHtml(value: string) {
   return value.replace(
@@ -38,8 +56,9 @@ export function pageHead(path: string) {
     meta?.description ||
     "The page you requested could not be found. Return to The Auto Surgeon homepage or explore our Hayes workshop services.";
 
-  const image = origin && meta?.image ? `${origin}${meta.image}` : logo;
-  const pageUrl = origin && meta ? `${origin}${meta.path}` : `${origin}/`;
+  const logo = `${origin}${logoPath}`;
+  const image = meta?.image ? `${origin}${meta.image}` : logo;
+  const pageUrl = meta ? `${origin}${meta.path}` : `${origin}/`;
   const robots = !meta || meta.private ? "noindex, nofollow" : "index, follow";
 
   const service = services.find(item => path === `/services/${item.slug}`);
@@ -51,9 +70,53 @@ export function pageHead(path: string) {
       "@type": "AutoRepair",
       "@id": `${origin}/#business`,
       name: business.name,
-      description,
+      alternateName: "Auto Surgeon Hayes",
+      description:
+        "Independent car repair workshop in Hayes (UB3), West London, offering tyre fitting, puncture repair, wheel alignment, brake servicing, engine oil servicing, vehicle diagnostics, Tesla wheel alignment and Mercedes engine work.",
+      slogan: "Precision repairs. Expert service. Your car deserves a surgeon.",
       telephone: "+447767909397",
-      url: origin,
+      email: business.email,
+      url: `${origin}/`,
+      logo: { "@type": "ImageObject", url: logo, width: 823, height: 335 },
+      hasMap: business.maps,
+      sameAs: [facebookUrl],
+      currenciesAccepted: "GBP",
+      knowsAbout: [
+        "Car repair",
+        "Tyre fitting",
+        "Puncture repair",
+        "Wheel alignment",
+        "Tesla wheel alignment",
+        "Brake pads and discs",
+        "Engine oil service",
+        "Vehicle diagnostics",
+        "Dashboard warning lights",
+        "Mercedes tappet and rocker repairs",
+        "TPMS sensors",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+447767909397",
+        email: business.email,
+        contactType: "customer service",
+        areaServed: "GB",
+        availableLanguage: ["English"],
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Car repair and tyre services",
+        itemListElement: services.map(item => ({
+          "@type": "Offer",
+          priceCurrency: "GBP",
+          price: item.price,
+          url: `${origin}/services/${item.slug}`,
+          itemOffered: {
+            "@type": "Service",
+            name: item.name,
+            description: item.short,
+          },
+        })),
+      },
       image: [
         image,
         `${origin}/assets/photos/workshop-lift.webp`,
@@ -69,8 +132,8 @@ export function pageHead(path: string) {
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 51.503,
-        longitude: -0.421,
+        latitude: geo.latitude,
+        longitude: geo.longitude,
       },
       areaServed: [
         { "@type": "AdministrativeArea", name: "Hayes" },
@@ -97,8 +160,9 @@ export function pageHead(path: string) {
     {
       "@type": "WebSite",
       "@id": `${origin}/#website`,
-      url: origin,
+      url: `${origin}/`,
       name: business.name,
+      inLanguage: "en-GB",
       description:
         "Precision Car Care, Tyres, Wheel Alignment & Diagnostics in Hayes",
       publisher: {
@@ -106,6 +170,22 @@ export function pageHead(path: string) {
       },
     },
   ];
+
+  if (meta) {
+    structuredEntities.push({
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: title,
+      description,
+      inLanguage: "en-GB",
+      isPartOf: { "@id": `${origin}/#website` },
+      about: { "@id": `${origin}/#business` },
+      primaryImageOfPage: { "@type": "ImageObject", url: image },
+    });
+  }
+  if (meta?.path === "/") structuredEntities.push(faqPage(homeFaqs, pageUrl));
+  if (meta?.path === "/faq") structuredEntities.push(faqPage(siteFaqs, pageUrl));
 
   // Breadcrumbs
   if (meta && meta.path !== "/") {
@@ -153,13 +233,18 @@ export function pageHead(path: string) {
   if (service) {
     structuredEntities.push({
       "@type": "Service",
+      "@id": `${pageUrl}#service`,
+      url: pageUrl,
       name: service.name,
       serviceType: service.name,
       description: service.short,
       provider: {
         "@id": `${origin}/#business`,
       },
-      areaServed: "Hayes",
+      areaServed: [
+        { "@type": "City", name: "Hayes" },
+        { "@type": "AdministrativeArea", name: "West London" },
+      ],
       image: `${origin}/assets/photos/${service.image}.webp`,
       offers: {
         "@type": "Offer",
@@ -170,59 +255,67 @@ export function pageHead(path: string) {
       },
     });
 
-    if (service.faqs && service.faqs.length > 0) {
-      structuredEntities.push({
-        "@type": "FAQPage",
-        mainEntity: service.faqs.map(faq => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-      });
-    }
+    if (service.faqs && service.faqs.length > 0)
+      structuredEntities.push(faqPage(service.faqs, pageUrl));
   }
 
   // Guide FAQ Schema
-  if (guide && guide.faqs && guide.faqs.length > 0) {
+  if (guide) {
     structuredEntities.push({
-      "@type": "FAQPage",
-      mainEntity: guide.faqs.map(faq => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.answer,
-        },
-      })),
+      "@type": "Article",
+      "@id": `${pageUrl}#article`,
+      headline: guide.title,
+      description: guide.summary,
+      image,
+      inLanguage: "en-GB",
+      mainEntityOfPage: { "@id": `${pageUrl}#webpage` },
+      author: { "@id": `${origin}/#business` },
+      publisher: { "@id": `${origin}/#business` },
     });
+    if (guide.faqs && guide.faqs.length > 0)
+      structuredEntities.push(faqPage(guide.faqs, pageUrl));
   }
 
   const structuredData =
     meta && !meta.private
-      ? `<script type="application/ld+json">${JSON.stringify({
+      ? `<script type="application/ld+json">${safeJson({
           "@context": "https://schema.org",
           "@graph": structuredEntities,
         })}</script>`
       : "";
 
+  const canonicalTags =
+    meta && !meta.private
+      ? `<link rel="canonical" href="${escapeHtml(pageUrl)}" />
+<link rel="alternate" hreflang="en-GB" href="${escapeHtml(pageUrl)}" />
+<link rel="alternate" hreflang="x-default" href="${escapeHtml(pageUrl)}" />`
+      : "";
+  const preload =
+    meta?.path === "/"
+      ? `<link rel="preload" as="image" href="/assets/photos/hero-orange-caliper.webp" fetchpriority="high" />\n`
+      : "";
+
   return `<title>${escapeHtml(title)}</title>
-<meta name="description" content="${escapeHtml(description)}" />
-<meta name="robots" content="${robots}" />
+${preload}<meta name="description" content="${escapeHtml(description)}" />
+<meta name="robots" content="${robots}${robots.startsWith("index") ? ", max-image-preview:large, max-snippet:-1" : ""}" />
+<meta name="geo.region" content="GB-HIL" />
+<meta name="geo.placename" content="Hayes, London" />
+<meta name="geo.position" content="${geo.latitude};${geo.longitude}" />
+<meta name="ICBM" content="${geo.latitude}, ${geo.longitude}" />
 <meta name="keywords" content="car repair Hayes, emergency car repairs Hayes, tyre fitting Hayes, wheel alignment Hayes, brake repair Hayes, vehicle diagnostics Hayes, puncture repair Hayes, Tesla wheel alignment Hayes" />
-<meta property="og:type" content="website" />
+<meta property="og:type" content="${guide ? "article" : "website"}" />
+<meta property="og:locale" content="en_GB" />
 <meta property="og:site_name" content="The Auto Surgeon" />
 <meta property="og:title" content="${escapeHtml(title)}" />
 <meta property="og:description" content="${escapeHtml(description)}" />
 <meta property="og:image" content="${escapeHtml(image)}" />
+<meta property="og:image:alt" content="${escapeHtml(title)}" />
 <meta property="og:url" content="${escapeHtml(pageUrl)}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${escapeHtml(title)}" />
 <meta name="twitter:description" content="${escapeHtml(description)}" />
 <meta name="twitter:image" content="${escapeHtml(image)}" />
-<link rel="canonical" href="${escapeHtml(pageUrl)}" />
+${canonicalTags}
 ${structuredData}`;
 }
 
@@ -233,5 +326,54 @@ export function sitemapDocument() {
 
 export function robotsDocument() {
   const origin = publicOrigin();
-  return `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /account\nDisallow: /manage\nDisallow: /book\nDisallow: /quote\nDisallow: /login\nDisallow: /register\nSitemap: ${origin}/sitemap.xml\n`;
+  return robotsText(origin);
+}
+
+const privatePaths = ["/api/", "/account", "/manage", "/book", "/quote", "/login", "/register", "/thank-you"];
+// Answer engines and AI assistants are welcome to read the public pages.
+const aiCrawlers = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-User", "Claude-SearchBot", "PerplexityBot", "Google-Extended", "Applebot-Extended", "Bingbot"];
+
+export function robotsText(origin: string) {
+  const rules = ["Allow: /", ...privatePaths.map(path => `Disallow: ${path}`)].join("\n");
+  const groups = ["*", ...aiCrawlers].map(agent => `User-agent: ${agent}\n${rules}`);
+  return `${groups.join("\n\n")}\n\nSitemap: ${origin}/sitemap.xml\n`;
+}
+
+/** Plain-text summary for AI assistants (https://llmstxt.org). */
+export function llmsText() {
+  const origin = publicOrigin();
+  const serviceLines = services
+    .map(item => `- [${item.name}](${origin}/services/${item.slug}): ${item.short} ${item.priceLabel} £${item.price}.`)
+    .join("\n");
+  const guideLines = guides
+    .map(item => `- [${item.title}](${origin}/guides/${item.slug}): ${item.summary}`)
+    .join("\n");
+  return `# ${business.name}
+
+> Independent car repair workshop in Hayes (UB3), West London. Tyre fitting, puncture repair, wheel alignment, brakes, engine oil servicing, diagnostics, Tesla wheel alignment and Mercedes engine work. Walk-ins welcome Monday–Saturday, 9 AM–6 PM; Sunday by appointment.
+
+- Address: ${business.address}
+- Phone: ${business.phone} (+44 7767 909397)
+- Email: ${business.email}
+- WhatsApp: ${business.whatsapp}
+- Facebook: ${facebookUrl}
+- Prices are labour only unless noted; parts are quoted separately and agreed before work starts. Online requests are not confirmed appointments until the workshop confirms them.
+
+## Services
+
+${serviceLines}
+
+## Key pages
+
+- [Services and pricing](${origin}/services)
+- [Labour price list](${origin}/pricing)
+- [Tyres](${origin}/tyres)
+- [About the workshop](${origin}/about)
+- [Frequently asked questions](${origin}/faq)
+- [Contact and directions](${origin}/contact)
+
+## Car care guides
+
+${guideLines}
+`;
 }

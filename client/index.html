@@ -2,11 +2,18 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=yes" />
     <meta name="theme-color" content="#f26a00" />
     <meta name="application-name" content="The Auto Surgeon" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      try {
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+          document.documentElement.classList.add("motion-ok");
+      } catch (e) {}
+    </script>
     <!--page-head-->
     <link rel="icon" href="/assets/brand/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/assets/brand/favicon.png" />

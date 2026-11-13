@@ -1853,7 +1853,7 @@ p {
   object-position: left;
   margin-bottom: 20px;
 }
-.footer-main h3 {
+.footer-main .footer-heading {
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 500;

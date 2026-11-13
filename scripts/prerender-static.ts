@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { renderApp } from "../client/src/entry-server";
-import { pageHead } from "../server/pageHead";
+import { llmsText, pageHead, robotsText } from "../server/pageHead";
 import { getPageMeta, pageRouteManifest, publicPaths } from "../shared/routes";
 import { guides } from "../shared/guides";
 import { services } from "../shared/catalog";
@@ -66,11 +66,8 @@ await fs.writeFile(
   "utf8"
 );
 
-await fs.writeFile(
-  path.join(dist, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /account\nDisallow: /manage\nDisallow: /book\nDisallow: /quote\nDisallow: /login\nDisallow: /register\nSitemap: ${siteUrl}/sitemap.xml\n`,
-  "utf8"
-);
+await fs.writeFile(path.join(dist, "robots.txt"), robotsText(siteUrl), "utf8");
+await fs.writeFile(path.join(dist, "llms.txt"), llmsText(), "utf8");
 
 console.log(
   `Prerendered ${new Set(routes).size} routes with SITE_URL=${siteUrl}`

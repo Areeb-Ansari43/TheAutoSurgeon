@@ -7,6 +7,8 @@ import superjson from "superjson";
 import App from "./App";
 import { startLogin } from "./const";
 import "./index.css";
+import "./styles/polish.css";
+import "./styles/motion.css";
 
 const queryClient = new QueryClient();
 
@@ -71,6 +73,21 @@ const trpcClient = trpc.createClient({
     }),
   ],
 });
+
+// The prerendered hero starts its entrance at first paint. React re-creates the
+// DOM below, so offset the new nodes' animations by the time already elapsed:
+// the entrance continues seamlessly instead of restarting or snapping.
+{
+  const root = document.documentElement;
+  const paint = performance.getEntriesByName("first-contentful-paint")[0];
+  const elapsed = paint ? performance.now() - paint.startTime : 0;
+  if (elapsed > 1600) root.classList.add("hero-entered");
+  else {
+    root.style.setProperty("--hero-t", `-${Math.round(elapsed)}ms`);
+    // Later in-app visits to the homepage replay the entrance from the start.
+    setTimeout(() => root.style.removeProperty("--hero-t"), 1700);
+  }
+}
 
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
