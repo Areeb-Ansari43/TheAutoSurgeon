@@ -13,6 +13,7 @@ import { guides, guideCategories, type Guide } from "@shared/guides";
 import { services as catalogServices, business } from "@shared/catalog";
 import { WorkshopGallery, PageIntro, GuideCard, FAQs } from "@/components/Site";
 import { SocialLinks } from "@/components/Social";
+import NotFound404 from "./NotFound404";
 
 type InformationProps = {
   page: string;
@@ -779,33 +780,7 @@ function PrivacyPage() {
   );
 }
 
-function InformationNotFound() {
-  return (
-    <>
-      <PageIntro
-        eyebrow="Information"
-        title="Page not found"
-        description="The information page you requested is not available."
-      />
-      <section className="section">
-        <div className="container content-copy">
-          <p>
-            Use the links below to return to the workshop information, practical
-            guides or frequently asked questions.
-          </p>
-          <p>
-            <Link href="/workshop" className="btn btn-primary">
-              Workshop services
-            </Link>
-            <Link href="/guides" className="btn btn-ghost">
-              Vehicle care guides
-            </Link>
-          </p>
-        </div>
-      </section>
-    </>
-  );
-}
+const InformationNotFound = NotFound404;
 
 export function GuideDetail({ slug }: { slug: string }) {
   const guide = guides.find(item => item.slug === slug);

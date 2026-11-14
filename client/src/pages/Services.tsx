@@ -1,3 +1,4 @@
+import NotFound404 from "./NotFound404";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -508,26 +509,4 @@ export function Pricing() {
     </>
   );
 }
-export function NotFound() {
-  return (
-    <section className="not-found container">
-      <span className="error-code">404</span>
-      <div className="eyebrow">THIS ROAD DOESN’T GO ANYWHERE</div>
-      <h1>
-        Let’s get you
-        <br />
-        back on track.
-      </h1>
-      <p>The page you’re looking for doesn’t exist or may have moved.</p>
-      <div className="intro-buttons">
-        <Link href="/" className="btn btn-primary">
-          Back to the homepage
-          <ArrowRight size={16} />
-        </Link>
-        <Link href="/services" className="btn btn-ghost">
-          Find a service
-        </Link>
-      </div>
-    </section>
-  );
-}
+export const NotFound = NotFound404;
