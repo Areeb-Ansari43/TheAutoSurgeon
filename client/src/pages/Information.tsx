@@ -858,9 +858,6 @@ function GuideArticle({
 
   return (
     <>
-      <div className="read-progress" data-page-progress aria-hidden="true">
-        <span />
-      </div>
       <header className="guide-hero">
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -874,7 +871,7 @@ function GuideArticle({
             <span className="orange-line" />
             {guide.category}
           </p>
-          <h1 className="guide-title" data-reveal="up">
+          <h1 className="guide-title" data-reveal="rise">
             {guide.title}
           </h1>
           <p className="guide-lead" data-reveal="up">

@@ -549,7 +549,7 @@ h3 {
 .stat:nth-child(odd) strong {
   color: var(--orange);
 }
-.stat span {
+.stat > span {
   color: #b9b9c0;
   font-size: 16px;
 }
@@ -2958,4 +2958,179 @@ img.wide-photo {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 700;
+}
+
+/* ═══════════════ Motion v2: site-wide scroll effects ═══════════════ */
+:root {
+  --par: 9%; /* parallax travel inside photo frames */
+}
+@media (max-width: 760px) {
+  :root {
+    --par: 5%;
+  }
+}
+
+/* Headings rise out of an invisible mask, like a line of type sliding up. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em);
+    clip-path: inset(0 0 100% 0);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(0 0 -25% 0);
+  }
+}
+.motion-ready [data-reveal="rise"].is-in {
+  animation-name: reveal-rise;
+  animation-duration: 1.05s;
+}
+
+/* Photos are unveiled from the bottom while the image settles from a zoom. */
+@keyframes reveal-clip {
+  from {
+    clip-path: inset(18% 0 0 0 round 28px);
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+@keyframes reveal-clip-img {
+  from {
+    transform: scale(1.22);
+  }
+}
+.motion-ready [data-reveal="clip"].is-in {
+  animation-name: reveal-clip;
+  animation-duration: 1.25s;
+}
+.motion-ready [data-reveal="clip"].is-in img,
+.motion-ready img[data-reveal="clip"].is-in {
+  animation: reveal-clip-img 1.6s var(--ease-out) var(--reveal-delay, 0ms) backwards;
+}
+.motion-ready img[data-reveal="clip"].is-in {
+  animation:
+    reveal-clip 1.25s var(--ease-out) var(--reveal-delay, 0ms) backwards;
+}
+
+/* Gentle parallax: images drift inside their frames as the page scrolls. */
+.has-parallax {
+  overflow: hidden;
+  overflow: clip;
+}
+.has-parallax > img,
+.has-parallax > span > img {
+  scale: 1.14;
+  translate: 0 calc((var(--p, 0.5) - 0.5) * var(--par) * -2);
+  will-change: translate;
+}
+.chapters-media.has-parallax > img {
+  scale: 1.1;
+}
+
+/* Inner-page intros: background drifts and the copy lifts away on scroll. */
+.intro-exit .page-intro-bg {
+  translate: 0 calc(var(--p, 0) * 30%);
+  scale: calc(1.06 + var(--p, 0) * 0.08);
+}
+.intro-exit > .container {
+  opacity: calc(1 - var(--p, 0) * 1.3);
+  translate: 0 calc(var(--p, 0) * -50px);
+}
+
+/* Cards get a slightly deeper entrance than plain text. */
+@keyframes reveal-card {
+  from {
+    opacity: 0;
+    transform: translateY(48px) scale(0.97);
+  }
+}
+.motion-ready .service-card[data-reveal].is-in,
+.motion-ready .guide-card[data-reveal].is-in,
+.motion-ready .review-card[data-reveal].is-in,
+.motion-ready .social-card[data-reveal].is-in,
+.motion-ready .info-card[data-reveal].is-in,
+.motion-ready .process-card[data-reveal].is-in,
+.motion-ready .tyre-option[data-reveal].is-in,
+.motion-ready .stat[data-reveal].is-in {
+  animation-name: reveal-card;
+  animation-duration: 1s;
+}
+/* Rows slide in from the side. */
+.motion-ready .pricing-row[data-reveal].is-in,
+.motion-ready .faq-item[data-reveal].is-in,
+.motion-ready .contact-row[data-reveal].is-in,
+.motion-ready .guide-links li[data-reveal].is-in,
+.motion-ready .check-list li[data-reveal].is-in {
+  animation-name: reveal-left;
+  animation-duration: 0.8s;
+}
+
+/* ───────────── Scroll marquee (above the footer on every page) ───────────── */
+.marquee {
+  overflow: hidden;
+  overflow: clip;
+  padding-block: clamp(40px, 7vw, 80px);
+  background: var(--ink);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.marquee-row {
+  display: flex;
+  width: max-content;
+  gap: 0;
+  white-space: nowrap;
+  font-family: var(--font-head);
+  font-stretch: 115%;
+  font-size: clamp(40px, 7vw, 104px);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #fff;
+  translate: calc((var(--p, 0.5) - 0.5) * -40%) 0;
+  will-change: translate;
+}
+.marquee-row.is-outline {
+  margin-left: -30%;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
+  translate: calc((var(--p, 0.5) - 0.5) * 40%) 0;
+}
+.marquee-row span {
+  display: inline-flex;
+  align-items: center;
+}
+.marquee-row i {
+  display: inline-block;
+  width: 0.28em;
+  height: 0.28em;
+  margin: 0 0.45em;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.marquee-row.is-outline i {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+}
+/* The CTA banner sits right above it on many pages: no double gap. */
+main > section:last-child .cta-banner,
+main > .container:last-child .cta-banner {
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-parallax > img,
+  .has-parallax > span > img,
+  .intro-exit .page-intro-bg,
+  .intro-exit > .container,
+  .marquee-row,
+  .marquee-row.is-outline {
+    translate: none;
+    scale: none;
+    opacity: 1;
+  }
 }

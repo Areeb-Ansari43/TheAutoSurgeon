@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { SiteHeader, SiteFooter } from "./components/Site";
-import { ScrollMotion } from "./components/Motion";
+import { PageProgress, ScrollMarquee, ScrollMotion } from "./components/Motion";
 import Home from "./pages/Home";
 import Information, { GuideDetail } from "./pages/Information";
 import {
@@ -112,10 +112,12 @@ export default function App() {
         <TooltipProvider>
           <RouteEffects />
           <ScrollMotion />
+          <PageProgress />
           <SiteHeader />
           <main id="main-content" tabIndex={-1}>
             <Router />
           </main>
+          <ScrollMarquee />
           <SiteFooter />
           <Toaster theme="dark" />
         </TooltipProvider>

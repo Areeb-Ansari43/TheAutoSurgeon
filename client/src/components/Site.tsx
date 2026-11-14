@@ -259,7 +259,7 @@ export function PageIntro({
           <span className="orange-line" />
           {eyebrow}
         </p>
-        <h1 className="page-title" data-reveal="up">
+        <h1 className="page-title" data-reveal="rise">
           {title}
         </h1>
         <p className="page-lead" data-reveal="up">
@@ -284,17 +284,23 @@ export function SectionHead({
   label?: string;
 }) {
   return (
-    <div className="section-head" data-reveal="up">
+    <div className="section-head" data-stagger>
       <div>
-        <div className="eyebrow">
+        <div className="eyebrow" data-reveal="fade">
           <span className="orange-line" />
           {eyebrow}
         </div>
-        <h2 className="section-heading">{title}</h2>
-        {description && <p className="section-description">{description}</p>}
+        <h2 className="section-heading" data-reveal="rise">
+          {title}
+        </h2>
+        {description && (
+          <p className="section-description" data-reveal="up">
+            {description}
+          </p>
+        )}
       </div>
       {link && (
-        <Link className="text-link" href={link}>
+        <Link className="text-link" href={link} data-reveal="fade">
           {label}
           <ArrowRight size={17} />
         </Link>
@@ -360,16 +366,16 @@ export function SocialsSection() {
   return (
     <section className="section social-section" aria-labelledby="social-heading">
       <div className="container">
-        <div className="section-head" data-reveal="up">
+        <div className="section-head" data-stagger>
           <div>
-            <p className="eyebrow">
+            <p className="eyebrow" data-reveal="fade">
               <span className="orange-line" />
               Follow the workshop
             </p>
-            <h2 id="social-heading" className="section-heading">
+            <h2 id="social-heading" className="section-heading" data-reveal="rise">
               Watch us work.
             </h2>
-            <p className="section-description">
+            <p className="section-description" data-reveal="up">
               Repair videos, quick car-care tips and the cars in our Hayes
               workshop this week. Follow us on TikTok, Instagram and Facebook.
             </p>

@@ -10,6 +10,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { services, business } from "@shared/catalog";
+import { CountUp } from "@/components/Motion";
 import { guides } from "@shared/guides";
 import {
   CTA,
@@ -46,11 +47,11 @@ const steps = [
   },
 ];
 
-const stats = [
-  ["£10", "Puncture repairs from"],
-  ["£50", "Wheel alignment labour"],
-  ["6", "Days a week, Mon–Sat"],
-  ["£60", "Tesla wheel alignment"],
+const stats: [number, string, string][] = [
+  [10, "£", "Puncture repairs from"],
+  [50, "£", "Wheel alignment labour"],
+  [6, "", "Days a week, Mon–Sat"],
+  [60, "£", "Tesla wheel alignment"],
 ];
 
 export default function Home() {
@@ -199,9 +200,11 @@ export default function Home() {
       {/* ── Stats band ── */}
       <section className="stat-band" aria-label="Prices at a glance">
         <div className="container stat-grid" data-stagger>
-          {stats.map(([value, label]) => (
+          {stats.map(([value, prefix, label]) => (
             <div className="stat" key={label} data-reveal="up">
-              <strong>{value}</strong>
+              <strong>
+                <CountUp value={value} prefix={prefix} />
+              </strong>
               <span>{label}</span>
             </div>
           ))}

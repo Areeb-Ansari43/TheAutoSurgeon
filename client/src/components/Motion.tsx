@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useLocation } from "wouter";
 
 /*
@@ -24,6 +24,101 @@ const reduceMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/*
+ * Site-wide motion: tag the shared building blocks of every page so all
+ * pages animate without hand-written attributes. Elements that already
+ * animate (or sit inside something that does) are left alone.
+ */
+const AUTO_REVEAL: [string, string][] = [
+  ["main h2:not(.visually-hidden), main .page-title, main .guide-title", "rise"],
+  [
+    [
+      ".info-card",
+      ".process-card",
+      ".pricing-row",
+      ".pricing-header",
+      ".tyre-option",
+      ".contact-row",
+      ".detail-step",
+      ".symptom-grid > *",
+      ".includes-list > *",
+      ".review-card",
+      ".article-section > p",
+      ".guide-sub",
+      ".trouble-card",
+      ".service-help",
+      ".info-note",
+      ".booking-summary",
+      ".form-card:not(.step-form)",
+      ".step-form",
+      ".faq-item",
+      ".value-row",
+      ".law-callout",
+      ".guide-intro-box",
+      ".guide-safety-note",
+      ".guide-video",
+      ".guide-links li",
+      ".toc-card",
+      ".check-list li",
+      ".map-frame-wrap",
+      ".section-description",
+      ".content-copy > p",
+      ".content-copy > .text-link",
+      ".page-intro .intro-buttons",
+      ".footer-main > div",
+    ].join(", "),
+    "up",
+  ],
+  ["img.wide-photo, .workshop-photo, .guide-cover, .detail-photo, .service-hero-photo", "clip"],
+];
+const AUTO_STAGGER = [
+  ".feature-grid",
+  ".process-grid",
+  ".tyre-options",
+  ".pricing-table",
+  ".symptom-grid",
+  ".includes-list",
+  ".review-grid",
+  ".faq-list",
+  ".trouble-list",
+  ".guide-steps",
+  ".guide-links",
+  ".contact-panel",
+  ".check-list",
+  ".footer-main",
+  ".content-copy",
+].join(", ");
+/** Photo frames whose image drifts slightly as the page scrolls. */
+const AUTO_PARALLAX =
+  ".service-photo, .guide-card-photo, .guide-featured-photo, .workshop-gallery-frame, .workshop-photo, .chapters-media";
+
+function autoTag() {
+  for (const [selector, kind] of AUTO_REVEAL) {
+    document.querySelectorAll<HTMLElement>(selector).forEach(el => {
+      if (el.closest(".hero2, .promise, .hx-strip, .wa-quick")) return;
+      if (el.hasAttribute("data-reveal")) return;
+      if (el.parentElement?.closest("[data-reveal]")) return;
+      if (el.querySelector("[data-reveal]")) return;
+      el.setAttribute("data-reveal", kind);
+    });
+  }
+  document.querySelectorAll<HTMLElement>(AUTO_STAGGER).forEach(el => {
+    if (!el.hasAttribute("data-stagger")) el.setAttribute("data-stagger", "");
+  });
+  document.querySelectorAll<HTMLElement>(AUTO_PARALLAX).forEach(el => {
+    if (!el.hasAttribute("data-scroll")) {
+      el.setAttribute("data-scroll", "");
+      el.classList.add("has-parallax");
+    }
+  });
+  document.querySelectorAll<HTMLElement>(".page-intro").forEach(el => {
+    if (!el.hasAttribute("data-scroll")) {
+      el.setAttribute("data-scroll", "exit");
+      el.classList.add("intro-exit");
+    }
+  });
+}
+
 export function ScrollMotion() {
   const [location] = useLocation();
 
@@ -36,6 +131,8 @@ export function ScrollMotion() {
         .forEach(el => el.style.setProperty("--p", "1"));
       return;
     }
+    autoTag();
+
     // Stagger indices
     document.querySelectorAll<HTMLElement>("[data-stagger]").forEach(group => {
       group
@@ -109,6 +206,12 @@ export function ScrollMotion() {
     const update = () => {
       frame = 0;
       updateSpies();
+      // At the very bottom, reveal anything that could never scroll further into view.
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 40) {
+        document
+          .querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)")
+          .forEach(el => el.classList.add("is-in"));
+      }
       if (pageBars.length) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const pageP = max > 0 ? Math.min(1, window.scrollY / max) : 0;
@@ -194,5 +297,96 @@ export function Reveal({
     <Tag data-reveal={kind} className={className}>
       {children}
     </Tag>
+  );
+}
+
+/** Counts a number up from zero the first time it scrolls into view. */
+export function CountUp({
+  value,
+  prefix = "",
+  duration = 1400,
+}: {
+  value: number;
+  prefix?: string;
+  duration?: number;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shown, setShown] = useState(value);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduceMotion()) return;
+    setShown(0);
+    let frame = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        const start = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 4);
+          setShown(Math.round(value * eased));
+          if (t < 1) frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [value, duration]);
+  return (
+    <span ref={ref} aria-label={`${prefix}${value}`}>
+      <span aria-hidden="true">
+        {prefix}
+        {shown}
+      </span>
+    </span>
+  );
+}
+
+/** Two rows of big type that slide in opposite directions as the page scrolls. */
+export function ScrollMarquee() {
+  const words = [
+    "Tyres",
+    "Wheel alignment",
+    "Brakes",
+    "Diagnostics",
+    "Engine oil",
+    "Tesla alignment",
+    "Mercedes specialist",
+  ];
+  const row = [...words, ...words];
+  return (
+    <section className="marquee" data-scroll aria-hidden="true">
+      <div className="marquee-row">
+        {row.map((word, index) => (
+          <span key={index}>
+            {word}
+            <i />
+          </span>
+        ))}
+      </div>
+      <div className="marquee-row is-outline">
+        {[...row].reverse().map((word, index) => (
+          <span key={index}>
+            {word}
+            <i />
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** Thin orange bar at the top of the window showing how far down the page you are. */
+export function PageProgress() {
+  return (
+    <div className="read-progress" data-page-progress aria-hidden="true">
+      <span />
+    </div>
   );
 }
