@@ -47,9 +47,18 @@ export type Guide = {
   faqs: GuideFaq[];
   internalLinks: GuideInternalLink[];
   conclusion: string;
+  /** ISO date the guide was first published. */
+  published: string;
+  /** ISO date the guide content was last reviewed. */
+  updated: string;
 };
 
-export const guides: Guide[] = [
+type GuideEntry = Omit<Guide, "published" | "updated"> & {
+  published?: string;
+  updated?: string;
+};
+
+const guideEntries: GuideEntry[] = [
   {
     slug: "tyre-safety-checks",
     title: "Simple Tyre Safety Checks for Everyday Driving in Hayes",
@@ -316,7 +325,7 @@ export const guides: Guide[] = [
     category: "Emergency repairs",
     summary:
       "What to do when your car suffers a sudden breakdown, puncture, brake fault or red warning light in Hayes, West London.",
-    image: "/assets/photos/hero-orange-caliper.webp",
+    image: "/assets/photos/workshop-engine.webp",
     readTime: "6 min read",
     relatedService: "Auto Diagnostics",
     intro:
@@ -469,7 +478,7 @@ export const guides: Guide[] = [
     category: "Safety checks",
     summary:
       "How to inspect your wheels, suspension, steering and tyres after striking a deep pothole or kerb in Hayes.",
-    image: "/assets/photos/wheel-alignment.webp",
+    image: "/assets/photos/tyre-tread-side.webp",
     readTime: "6 min read",
     relatedService: "Wheel Alignment",
     intro:
@@ -541,7 +550,7 @@ export const guides: Guide[] = [
     category: "Tesla care",
     summary:
       "A practical guide to Tesla Model 3 and Model Y tyre pressure alerts, uneven shoulder wear, cold pressure ratings and specialist 4-wheel alignment.",
-    image: "/assets/photos/wheel-alignment.webp",
+    image: "/assets/photos/tesla-wheel.webp",
     readTime: "7 min read",
     relatedService: "Tesla Wheel Alignment",
     intro:
@@ -694,7 +703,7 @@ export const guides: Guide[] = [
     category: "Mercedes care",
     summary:
       "Demystifying Mercedes A-Class, C-Class, E-Class and GLC ASSYST PLUS service reminders, brake pad wear alerts and engine warnings in Hayes.",
-    image: "/assets/photos/diagnostics-tablet.webp",
+    image: "/assets/photos/workshop-mercedes.webp",
     readTime: "7 min read",
     relatedService: "Auto Diagnostics",
     intro:
@@ -766,7 +775,7 @@ export const guides: Guide[] = [
     category: "Car problems",
     summary:
       "A complete guide to frequent vehicle faults by make, diagnostic symptoms and practical workshop repair solutions in Hayes.",
-    image: "/assets/photos/diagnostics-tablet.webp",
+    image: "/assets/photos/workshop-lift.webp",
     readTime: "9 min read",
     relatedService: "Auto Diagnostics",
     intro:
@@ -835,3 +844,14 @@ export const guides: Guide[] = [
       "Regardless of your vehicle make, catching symptoms early prevents secondary component failure. Contact The Auto Surgeon in Hayes for expert diagnosis and transparent repairs.",
   },
 ];
+
+export const guidesLastReviewed = "2026-11-13";
+
+export const guides: Guide[] = guideEntries.map(guide => ({
+  ...guide,
+  published: guide.published ?? "2026-10-22",
+  updated: guide.updated ?? guidesLastReviewed,
+}));
+
+/** Unique guide categories in display order. */
+export const guideCategories = [...new Set(guides.map(guide => guide.category))];

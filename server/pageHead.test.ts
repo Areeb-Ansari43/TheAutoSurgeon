@@ -1,6 +1,13 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { pageHead } from "./pageHead";
-import { getPageMeta, pageRouteManifest, publicPaths } from "../shared/routes";
+import {
+  getPageMeta,
+  ogImagePath,
+  pageRouteManifest,
+  publicPaths,
+} from "../shared/routes";
 import { formError } from "../client/src/lib/formErrors";
 
 describe("public page metadata", () => {
@@ -16,9 +23,48 @@ describe("public page metadata", () => {
   it("identifies missing and private pages without inventing a public origin", () => {
     expect(getPageMeta("/missing-page")).toBeUndefined();
     expect(pageHead("/missing-page")).toContain("Page Not Found");
-    expect(pageHead("/account")).toContain("noindex, nofollow");
+    expect(pageHead("/account")).toContain("noindex, follow");
+    expect(pageHead("/missing-page")).not.toContain('rel="canonical"');
     expect(publicPaths).not.toContain("/manage");
     expect(pageRouteManifest.routes).toHaveLength(22);
+  });
+  it("gives guides a unique title, canonical URL and article schema", () => {
+    const head = pageHead("/guides/tyre-safety-checks");
+    expect(head).toContain(
+      "<title>Simple Tyre Safety Checks for Everyday Driving in Hayes</title>"
+    );
+    expect(head).toContain(
+      '<link rel="canonical" href="https://theautosurgeon.co.uk/guides/tyre-safety-checks" />'
+    );
+    expect(head).toContain('"@type":"Article"');
+    expect(head).toContain('"@type":"HowTo"');
+    expect(head).toContain('property="og:type" content="article"');
+  });
+  it("points the legacy WhatsApp URL at the real page and keeps it out of the sitemap", () => {
+    expect(pageHead("/whatspp")).toContain(
+      'href="https://theautosurgeon.co.uk/whatsapp"'
+    );
+    expect(publicPaths).not.toContain("/whatspp");
+  });
+});
+describe("social preview cards", () => {
+  it("has a generated 1200×630 card for every public page (run pnpm og:images)", () => {
+    const missing = publicPaths.filter(
+      route =>
+        !fs.existsSync(
+          path.join(import.meta.dirname, "..", "client", "public", ogImagePath(route))
+        )
+    );
+    expect(missing).toEqual([]);
+  });
+  it("uses the page's own card and lists every social profile", () => {
+    const head = pageHead("/guides/tyre-safety-checks");
+    expect(head).toContain(
+      'property="og:image" content="https://theautosurgeon.co.uk/og/guides--tyre-safety-checks.jpg"'
+    );
+    expect(head).toContain('property="og:image:width" content="1200"');
+    expect(head).toContain("https://www.tiktok.com/@theautosurgeon");
+    expect(head).toContain("https://www.instagram.com/theautosurgeon.uk/");
   });
 });
 describe("form error messages", () => {

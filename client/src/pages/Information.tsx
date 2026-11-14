@@ -1,31 +1,24 @@
+import { useState } from "react";
 import { Link } from "wouter";
-import { guides, type Guide } from "@shared/guides";
-import { services as catalogServices } from "@shared/catalog";
-import { WorkshopGallery } from "@/components/Site";
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarCheck,
+  Clock3,
+  Scale,
+  ShieldAlert,
+  Wrench,
+} from "lucide-react";
+import { guides, guideCategories, type Guide } from "@shared/guides";
+import { services as catalogServices, business } from "@shared/catalog";
+import { WorkshopGallery, PageIntro, GuideCard, FAQs } from "@/components/Site";
+import { SocialLinks } from "@/components/Social";
 
 type InformationProps = {
   page: string;
 };
 
-type PageIntroProps = {
-  eyebrow: string;
-  title: string;
-  lead: string;
-};
-
-const address = "Unit 3 Squirrels Trading Estate, Viveash Close, Hayes UB3 4RZ";
-
-function PageIntro({ eyebrow, title, lead }: PageIntroProps) {
-  return (
-    <header className="page-intro">
-      <div className="container">
-        <p className="eyebrow">{eyebrow}</p>
-        <h1 className="page-title">{title}</h1>
-        <p className="page-lead">{lead}</p>
-      </div>
-    </header>
-  );
-}
+const address = business.address;
 
 function BookingBanner({
   title = "Need to discuss your vehicle?",
@@ -35,7 +28,7 @@ function BookingBanner({
   return (
     <section className="section section-alt">
       <div className="container">
-        <div className="cta-banner">
+        <div className="cta-banner" data-reveal="scale">
           <div>
             <p className="eyebrow">Talk to the workshop</p>
             <h2 className="section-heading">{title}</h2>
@@ -65,7 +58,7 @@ function AboutPage() {
       <PageIntro
         eyebrow="About The Auto Surgeon"
         title="Quality car care, based in Hayes."
-        lead="The Auto Surgeon is a Hayes workshop delivering careful, high-quality car care, repairs and vehicle advice for drivers who want a clear answer and a proper fix."
+        description="The Auto Surgeon is a Hayes workshop delivering careful, high-quality car care, repairs and vehicle advice for drivers who want a clear answer and a proper fix."
       />
 
       <section className="section">
@@ -293,7 +286,7 @@ function WorkshopPage() {
       <PageIntro
         eyebrow="Workshop services"
         title="The checks behind the fix"
-        lead="From tyres and brakes to diagnostics and Tesla wheel alignment, each service starts with the vehicle symptoms and the work that is actually needed."
+        description="From tyres and brakes to diagnostics and Tesla wheel alignment, each service starts with the vehicle symptoms and the work that is actually needed."
       />
 
       <section className="section">
@@ -455,7 +448,7 @@ function ReviewsPage() {
       <PageIntro
         eyebrow="Customer feedback"
         title="Trusted in Hayes."
-        lead="Real vehicle concerns. Straightforward workshop conversations. Customer stories shared on our original website."
+        description="Real vehicle concerns. Straightforward workshop conversations. Customer stories shared on our original website."
       />
 
       <section className="section">
@@ -567,7 +560,7 @@ function FaqPage() {
       <PageIntro
         eyebrow="Frequently asked questions"
         title="Answers before you request a booking"
-        lead="Practical guidance on availability, prices, tyres, diagnostics, Tesla alignment and MOT-related enquiries."
+        description="Practical guidance on availability, prices, tyres, diagnostics, Tesla alignment and MOT-related enquiries."
       />
       <section className="section">
         <div className="container">
@@ -599,48 +592,108 @@ function FaqPage() {
   );
 }
 
+const formatDate = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+const sectionId = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/^\d+\.\s*/, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 function GuidesPage() {
+  const [category, setCategory] = useState<string>("All");
+  const [featured, ...rest] = guides;
+  const visible =
+    category === "All" ? rest : guides.filter(guide => guide.category === category);
+
   return (
     <>
       <PageIntro
-        eyebrow="Vehicle care guides"
-        title="Know what to look for"
-        lead="Short, safety-minded guides to help you recognise common tyre, warning-light and alignment concerns before you contact the workshop."
-      />
-      <section className="section">
+        eyebrow="Car care guides"
+        title="Car care guides for Hayes drivers."
+        description="Free, plain-English advice from our workshop on tyre safety, dashboard warning lights, wheel alignment, pothole damage and model-specific care for Tesla, Toyota and Mercedes."
+        image="/assets/photos/diagnostics-tablet.webp"
+      >
+        <div className="intro-stats" data-reveal="up">
+          <span>
+            <BookOpen size={16} /> {guides.length} in-depth guides
+          </span>
+          <span>
+            <CalendarCheck size={16} /> Reviewed {formatDate(guides[0].updated)}
+          </span>
+          <span>
+            <Wrench size={16} /> Written by working mechanics
+          </span>
+        </div>
+        <div className="intro-social" data-reveal="up">
+          <span>Video tips on</span>
+          <SocialLinks />
+        </div>
+      </PageIntro>
+
+      <section className="section guides-hub">
         <div className="container">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Workshop knowledge</p>
-              <h2 className="section-heading">
-                Practical checks, plainly explained
-              </h2>
-            </div>
-            <p className="muted">
-              Use these guides to prepare a useful question, not to diagnose a
-              safety-critical problem yourself.
-            </p>
-          </div>
-          <div className="guide-grid">
-            {guides.map(guide => (
-              <Link
-                href={`/guides/${guide.slug}`}
-                className="guide-card"
-                key={guide.slug}
-              >
-                <img className="guide-image" src={guide.image} alt="" />
-                <div className="guide-body">
-                  <div className="guide-meta">
-                    <span className="badge">{guide.category}</span>
-                    <span>{guide.readTime}</span>
-                  </div>
-                  <h3>{guide.title}</h3>
-                  <p>{guide.summary}</p>
-                  <span className="text-link">Read the guide →</span>
+          {category === "All" && (
+            <Link
+              href={`/guides/${featured.slug}`}
+              className="guide-featured"
+              data-reveal="up"
+            >
+              <div className="guide-featured-photo">
+                <img src={featured.image} alt={featured.title} />
+              </div>
+              <div className="guide-featured-body">
+                <p className="eyebrow">Start here · {featured.category}</p>
+                <h2>{featured.title}</h2>
+                <p>{featured.summary}</p>
+                <div className="guide-meta">
+                  <span>
+                    <Clock3 size={14} /> {featured.readTime}
+                  </span>
+                  <span>Updated {formatDate(featured.updated)}</span>
                 </div>
-              </Link>
+                <span className="btn btn-primary">
+                  Read the guide <ArrowRight size={16} />
+                </span>
+              </div>
+            </Link>
+          )}
+
+          <div className="guide-filter" role="group" aria-label="Filter guides by topic">
+            {["All", ...guideCategories].map(item => (
+              <button
+                key={item}
+                type="button"
+                className={item === category ? "chip is-active" : "chip"}
+                aria-pressed={item === category}
+                onClick={() => setCategory(item)}
+              >
+                {item}
+              </button>
             ))}
           </div>
+
+          <h2 className="visually-hidden">
+            {category === "All" ? "All car care guides" : `${category} guides`}
+          </h2>
+          <div className="guide-grid" key={category}>
+            {visible.map(guide => (
+              <GuideCard key={guide.slug} guide={guide} />
+            ))}
+          </div>
+          <p className="guide-disclaimer">
+            Guides are general advice to help you describe a problem. They are
+            not a substitute for an inspection — if a vehicle feels unsafe, stop
+            driving it and call {business.phone}.
+          </p>
         </div>
       </section>
       <BookingBanner title="Want a workshop check rather than general advice?" />
@@ -654,7 +707,7 @@ function PrivacyPage() {
       <PageIntro
         eyebrow="Privacy"
         title="How website request information is used"
-        lead="A plain-language explanation of the contact, vehicle and account information provided through this website."
+        description="A plain-language explanation of the contact, vehicle and account information provided through this website."
       />
       <section className="section">
         <div className="container article-content">
@@ -732,7 +785,7 @@ function InformationNotFound() {
       <PageIntro
         eyebrow="Information"
         title="Page not found"
-        lead="The information page you requested is not available."
+        description="The information page you requested is not available."
       />
       <section className="section">
         <div className="container content-copy">
@@ -761,7 +814,11 @@ export function GuideDetail({ slug }: { slug: string }) {
     return <InformationNotFound />;
   }
 
-  const relatedGuides = guides.filter(item => item.slug !== guide.slug);
+  // Same category first, then the rest, so related links stay relevant.
+  const relatedGuides = [
+    ...guides.filter(item => item.slug !== guide.slug && item.category === guide.category),
+    ...guides.filter(item => item.slug !== guide.slug && item.category !== guide.category),
+  ];
 
   return <GuideArticle guide={guide} relatedGuides={relatedGuides} />;
 }
@@ -785,251 +842,240 @@ function GuideArticle({
     ? `/quote?service=${encodeURIComponent(relatedService.bookingName)}`
     : "/quote";
 
+  const toc = [
+    ...guide.sections.map(section => ({
+      id: sectionId(section.title),
+      label: section.title.replace(/^\d+\.\s*/, ""),
+    })),
+    ...(guide.steps?.length ? [{ id: "step-by-step", label: "Step-by-step checks" }] : []),
+    ...(guide.troubleshooting?.length
+      ? [{ id: "troubleshooting", label: "Common problems & fixes" }]
+      : []),
+    ...(guide.safetyAndUkLaw ? [{ id: "uk-law", label: "Safety & UK law" }] : []),
+    ...(guide.faqs.length ? [{ id: "faqs", label: "Frequently asked questions" }] : []),
+    { id: "next-steps", label: "Next steps" },
+  ];
+
   return (
     <>
-      <PageIntro
-        eyebrow={guide.category}
-        title={guide.title}
-        lead={guide.intro || guide.summary}
-      />
-      <section className="section">
-        <div className="container article-layout">
-          <article className="article-content">
-            <div className="guide-meta">
-              <span className="badge">{guide.category}</span>
-              <span>{guide.readTime}</span>
+      <div className="read-progress" data-page-progress aria-hidden="true">
+        <span />
+      </div>
+      <header className="guide-hero">
+        <div className="container">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/guides">Car care guides</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{guide.category}</span>
+          </nav>
+          <p className="eyebrow" data-reveal="fade">
+            <span className="orange-line" />
+            {guide.category}
+          </p>
+          <h1 className="guide-title" data-reveal="up">
+            {guide.title}
+          </h1>
+          <p className="guide-lead" data-reveal="up">
+            {guide.summary}
+          </p>
+          <div className="guide-byline" data-reveal="up">
+            <img src="/assets/brand/favicon.png" alt="" width={40} height={40} />
+            <div>
+              <strong>The Auto Surgeon workshop team</strong>
+              <span>
+                Updated{" "}
+                <time dateTime={guide.updated}>{formatDate(guide.updated)}</time>{" "}
+                · {guide.readTime}
+              </span>
             </div>
-            <img className="wide-photo" src={guide.image} alt={guide.title} />
+          </div>
+        </div>
+        <div className="container">
+          <figure className="guide-cover" data-scroll>
+            <img
+              src={guide.image}
+              alt={guide.title}
+              fetchPriority="high"
+            />
+          </figure>
+        </div>
+      </header>
 
-            {/* Main Sections */}
+      <section className="guide-body-section">
+        <div className="container article-layout">
+          <aside className="guide-toc" data-spy=".guide-anchor" aria-label="On this page">
+            <p className="toc-title">On this page</p>
+            <ol>
+              {toc.map(item => (
+                <li key={item.id}>
+                  <a href={`#${item.id}`}>{item.label}</a>
+                </li>
+              ))}
+            </ol>
+            <div className="toc-card">
+              <p className="eyebrow">Related service</p>
+              <strong>{relatedService?.name || guide.relatedService}</strong>
+              {relatedService && (
+                <span className="toc-price">
+                  {relatedService.priceLabel} £{relatedService.price}
+                </span>
+              )}
+              <Link href={relatedServiceHref} className="btn btn-primary">
+                View service
+              </Link>
+              <a href={business.tel} className="btn btn-ghost">
+                Call {business.phone}
+              </a>
+            </div>
+          </aside>
+
+          <article className="article-content guide-article">
+            <div className="guide-intro-box">
+              <p className="eyebrow">In short</p>
+              <p>{guide.intro}</p>
+            </div>
+
             {guide.sections.map(section => (
-              <section className="article-section" key={section.title}>
-                <h2>{section.title}</h2>
+              <section
+                className="article-section guide-anchor"
+                id={sectionId(section.title)}
+                key={section.title}
+              >
+                <h2>{section.title.replace(/^\d+\.\s*/, "")}</h2>
                 <p>{section.text}</p>
                 {section.subsections?.map(sub => (
-                  <div key={sub.title} style={{ marginTop: "16px" }}>
-                    <h3
-                      style={{
-                        fontSize: "20px",
-                        marginBottom: "8px",
-                        color: "var(--orange)",
-                      }}
-                    >
-                      {sub.title}
-                    </h3>
+                  <div className="guide-sub" key={sub.title}>
+                    <h3>{sub.title}</h3>
                     <p>{sub.text}</p>
                   </div>
                 ))}
               </section>
             ))}
 
-            {/* Step-by-Step Advice */}
             {guide.steps && guide.steps.length > 0 && (
-              <section className="article-section">
-                <h2>Practical Step-by-Step Instructions</h2>
-                <div
-                  style={{ display: "grid", gap: "16px", marginTop: "16px" }}
-                >
+              <section className="article-section guide-anchor" id="step-by-step">
+                <h2>Step-by-step checks</h2>
+                <ol className="guide-steps">
                   {guide.steps.map(step => (
-                    <div
-                      key={step.stepNumber}
-                      style={{
-                        background: "rgba(255,255,255,0.85)",
-                        border: "1px solid rgba(17,17,17,0.1)",
-                        borderRadius: "16px",
-                        padding: "20px",
-                        boxShadow: "var(--shadow-glass)",
-                      }}
-                    >
-                      <h3
-                        style={{
-                          fontSize: "18px",
-                          color: "var(--orange)",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        Step {step.stepNumber}: {step.title}
-                      </h3>
-                      <p style={{ margin: 0, fontSize: "13px" }}>{step.text}</p>
-                    </div>
+                    <li key={step.stepNumber} id={`step-${step.stepNumber}`} data-reveal="up">
+                      <span className="guide-step-num">{step.stepNumber}</span>
+                      <div>
+                        <h3>{step.title}</h3>
+                        <p>{step.text}</p>
+                      </div>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </section>
             )}
 
-            {/* Common Mistakes & Troubleshooting */}
             {guide.troubleshooting && guide.troubleshooting.length > 0 && (
-              <section className="article-section">
-                <h2>Common Problems & Troubleshooting</h2>
-                <div
-                  style={{ display: "grid", gap: "16px", marginTop: "16px" }}
-                >
-                  {guide.troubleshooting.map((item, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        background: "#fff9f4",
-                        border: "1px solid #ffd7b5",
-                        borderRadius: "16px",
-                        padding: "20px",
-                      }}
-                    >
-                      <h3
-                        style={{
-                          fontSize: "17px",
-                          color: "#b84d00",
-                          marginBottom: "6px",
-                        }}
-                      >
-                        Problem: {item.problem}
-                      </h3>
-                      <p
-                        style={{
-                          margin: "4px 0 8px",
-                          fontSize: "13px",
-                          color: "#666",
-                        }}
-                      >
-                        <strong>Common Mistake:</strong> {item.mistake}
-                      </p>
-                      <p style={{ margin: 0, fontSize: "13px", color: "#111" }}>
-                        <strong>Professional Fix:</strong> {item.fix}
-                      </p>
+              <section className="article-section guide-anchor" id="troubleshooting">
+                <h2>Common problems &amp; fixes</h2>
+                <div className="trouble-list">
+                  {guide.troubleshooting.map(item => (
+                    <div className="trouble-card" key={item.problem} data-reveal="up">
+                      <h3>{item.problem}</h3>
+                      <dl>
+                        <div>
+                          <dt>Common mistake</dt>
+                          <dd>{item.mistake}</dd>
+                        </div>
+                        <div>
+                          <dt>The right fix</dt>
+                          <dd>{item.fix}</dd>
+                        </div>
+                      </dl>
                     </div>
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Safety & UK Law */}
             {guide.safetyAndUkLaw && (
-              <section className="article-section">
-                <h2>Safety & UK Legal Considerations</h2>
-                <div
-                  style={{
-                    background: "#f26a000a",
-                    border: "1px solid rgba(242,106,0,0.3)",
-                    borderRadius: "16px",
-                    padding: "22px",
-                  }}
-                >
-                  <p
-                    style={{
-                      margin: 0,
-                      fontSize: "13px",
-                      lineHeight: "1.8",
-                      color: "#222",
-                    }}
-                  >
-                    {guide.safetyAndUkLaw}
-                  </p>
+              <section className="article-section guide-anchor" id="uk-law">
+                <h2>Safety &amp; UK law</h2>
+                <div className="law-callout">
+                  <Scale size={24} aria-hidden="true" />
+                  <p>{guide.safetyAndUkLaw}</p>
                 </div>
               </section>
             )}
 
-            {/* Realistic Customer FAQs */}
-            {guide.faqs && guide.faqs.length > 0 && (
-              <section className="article-section">
-                <h2>Frequently Asked Questions</h2>
-                <div className="faq-list">
-                  {guide.faqs.map((faq, idx) => (
-                    <details className="faq-item" key={faq.question}>
-                      <summary>
-                        <span className="faq-number">0{idx + 1}</span>
-                        {faq.question}
-                        <span className="faq-plus">+</span>
-                      </summary>
-                      <p>{faq.answer}</p>
-                    </details>
-                  ))}
-                </div>
+            {guide.faqs.length > 0 && (
+              <section className="article-section guide-anchor" id="faqs">
+                <h2>Frequently asked questions</h2>
+                <FAQs items={guide.faqs} />
               </section>
             )}
 
-            {/* Related Internal Links */}
-            {guide.internalLinks && guide.internalLinks.length > 0 && (
-              <section className="article-section">
-                <h2>Relevant Services & Related Pages</h2>
-                <ul
-                  style={{
-                    listStyle: "none",
-                    padding: 0,
-                    display: "grid",
-                    gap: "10px",
-                  }}
-                >
+            <section className="article-section guide-anchor" id="next-steps">
+              <h2>Next steps</h2>
+              <p>{guide.conclusion}</p>
+              <div className="guide-safety-note">
+                <ShieldAlert size={20} aria-hidden="true" />
+                <p>
+                  If a warning light is red or flashing, the brakes feel wrong,
+                  or a tyre is visibly damaged, stop safely and call us on{" "}
+                  <a href={business.tel}>{business.phone}</a> rather than
+                  driving on.
+                </p>
+              </div>
+              <div className="guide-actions">
+                <Link href={quoteHref} className="btn btn-primary">
+                  Request a written quote <ArrowRight size={16} />
+                </Link>
+                <Link href="/book" className="btn btn-ghost">
+                  Book an inspection
+                </Link>
+              </div>
+              {guide.internalLinks.length > 0 && (
+                <ul className="guide-links">
                   {guide.internalLinks.map(link => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-link">
-                        → {link.label}
+                      <Link href={link.href}>
+                        {link.label} <ArrowRight size={14} />
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </section>
-            )}
-
-            {/* Conclusion */}
-            <section className="article-section">
-              <h2>Conclusion & Next Steps</h2>
-              <p>{guide.conclusion}</p>
-              <div
-                style={{
-                  marginTop: "20px",
-                  display: "flex",
-                  gap: "12px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <Link href={quoteHref} className="btn btn-primary">
-                  Request a Written Quote
-                </Link>
-                <Link href="/contact" className="btn btn-ghost">
-                  Contact Workshop
-                </Link>
+              )}
+              <div className="guide-video">
+                <div>
+                  <strong>Prefer video?</strong>
+                  <p>
+                    We post short repair clips and car-care tips on TikTok
+                    (@theautosurgeon) and Instagram (@theautosurgeon.uk).
+                  </p>
+                </div>
+                <SocialLinks className="social-icons social-icons-light" />
               </div>
             </section>
           </article>
+        </div>
+      </section>
 
-          <aside className="article-sidebar">
-            <p className="eyebrow">Related service</p>
-            <h2>{guide.relatedService}</h2>
-            <p>
-              Discuss the symptoms, vehicle details and the most useful next
-              check with the workshop.
-            </p>
-            <Link
-              href={relatedServiceHref}
-              className="btn btn-primary"
-              style={{ marginBottom: "10px", width: "100%" }}
-            >
-              {relatedService
-                ? `See ${relatedService.name}`
-                : "View workshop services"}
-            </Link>
-            <Link
-              href={quoteHref}
-              className="btn btn-ghost"
-              style={{ marginBottom: "20px", width: "100%" }}
-            >
-              Request a quote
-            </Link>
-
-            <p className="eyebrow">More guides</p>
-            <div style={{ display: "grid", gap: "12px" }}>
-              {relatedGuides.map(relatedGuide => (
-                <div key={relatedGuide.slug}>
-                  <Link
-                    href={`/guides/${relatedGuide.slug}`}
-                    className="text-link"
-                    style={{ fontSize: "13px", textTransform: "none" }}
-                  >
-                    {relatedGuide.title}
-                  </Link>
-                </div>
-              ))}
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-head" data-reveal="up">
+            <div>
+              <p className="eyebrow">
+                <span className="orange-line" />
+                Keep reading
+              </p>
+              <h2 className="section-heading">More car care guides</h2>
             </div>
-          </aside>
+            <Link href="/guides" className="text-link">
+              All guides <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="guide-grid" data-stagger>
+            {relatedGuides.slice(0, 3).map(item => (
+              <GuideCard key={item.slug} guide={item} />
+            ))}
+          </div>
         </div>
       </section>
       <BookingBanner title="Need a vehicle-specific check?" />

@@ -185,6 +185,18 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Stable entry names keep Cloudflare Pages deployments safe for cached HTML,
+    // while still compiling the real React source on every build.
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/app.js",
+        chunkFileNames: "assets/chunk-[name]-[hash].js",
+        assetFileNames: info =>
+          info.names?.some(name => name.endsWith(".css"))
+            ? "assets/app.css"
+            : "assets/[name]-[hash][extname]",
+      },
+    },
   },
   server: {
     host: true,

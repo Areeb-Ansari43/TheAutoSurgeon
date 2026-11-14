@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useLocation } from "wouter";
 import {
+  ArrowLeft,
   ArrowRight,
+  Check,
   Clock3,
   Loader2,
   Mail,
@@ -9,6 +11,7 @@ import {
   MessageCircle,
   Phone,
 } from "lucide-react";
+import { WhatsAppQuick } from "@/components/WhatsAppQuick";
 import { business } from "@shared/catalog";
 import { trpc } from "@/lib/trpc";
 import { formError } from "@/lib/formErrors";
@@ -18,6 +21,22 @@ import {
 } from "@/lib/staticInquiry";
 import { PageIntro, SectionHead } from "@/components/Site";
 import { RequestConfirmation } from "./Request";
+
+const subjects = [
+  "Quote request",
+  "Can you fix my car?",
+  "Service question",
+  "Tyre availability",
+  "Existing appointment",
+];
+
+const steps = [
+  "What can we help with?",
+  "Tell us what’s happening.",
+  "What’s your name?",
+  "How can we reach you?",
+  "Check and send.",
+];
 
 export default function Contact() {
   const [fields, setFields] = useState({
@@ -73,6 +92,67 @@ export default function Contact() {
     setFields(old => ({ ...old, [key]: value }));
     setError("");
   }
+
+  // One question at a time.
+  const [step, setStep] = useState(0);
+  const stepRef = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    stepRef.current
+      ?.querySelector<HTMLElement>("input, textarea, select, button.choice")
+      ?.focus({ preventScroll: true });
+  }, [step]);
+
+  function stepError(index: number) {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim());
+    switch (index) {
+      case 1:
+        return fields.message.trim().length >= 10
+          ? ""
+          : "Please tell us a little more (at least 10 characters).";
+      case 2:
+        return fields.name.trim().length >= 2 ? "" : "Please enter your name.";
+      case 3:
+        return emailOk ? "" : "Please enter a valid email address.";
+      case 4:
+        return fields.consent
+          ? ""
+          : "Please tick the box so we can use your details to reply.";
+      default:
+        return "";
+    }
+  }
+  function next() {
+    const problem = stepError(step);
+    if (problem) {
+      setError(problem);
+      return;
+    }
+    setError("");
+    setStep(value => Math.min(value + 1, steps.length - 1));
+  }
+  function back() {
+    setError("");
+    setStep(value => Math.max(value - 1, 0));
+  }
+  function onFormSubmit(event: FormEvent<HTMLFormElement>) {
+    if (step < steps.length - 1) {
+      event.preventDefault();
+      next();
+      return;
+    }
+    const problem = stepError(step);
+    if (problem) {
+      event.preventDefault();
+      setError(problem);
+      return;
+    }
+    void submit(event);
+  }
   return (
     <>
       <PageIntro
@@ -84,18 +164,23 @@ export default function Contact() {
             <span className="orange-text">Right here in Hayes.</span>
           </>
         }
-        description="Use this form for a quote or to ask whether we can fix your car. For emergencies, sudden faults or urgent repair questions, contact The Auto Surgeon through WhatsApp."
+        description="The quickest way to reach us is a WhatsApp message. Prefer email? Answer a few quick questions below and we’ll reply within 24–48 hours."
       >
         <div className="intro-buttons">
-          <a href="/whatspp" className="btn btn-primary">
-            <MessageCircle size={16} /> Contact us on WhatsApp
+          <a href="#whatsapp" className="btn btn-primary">
+            <MessageCircle size={16} /> Message us on WhatsApp
           </a>
-          <Link href="/services#emergency" className="btn btn-ghost">
-            See emergency repair information <ArrowRight size={16} />
-          </Link>
+          <a href="#message" className="btn btn-ghost">
+            Send a message instead <ArrowRight size={16} />
+          </a>
         </div>
       </PageIntro>
-      <section className="section section-alt">
+      <section className="section wa-section" id="whatsapp">
+        <div className="container">
+          <WhatsAppQuick />
+        </div>
+      </section>
+      <section className="section section-alt" id="message">
         <div className="container contact-layout">
           <div className="contact-panel">
             <SectionHead
@@ -173,128 +258,191 @@ export default function Contact() {
             {reference ? (
               <RequestConfirmation reference={reference} kind="contact" />
             ) : (
-              <form className="form-card" onSubmit={submit}>
-                <div className="eyebrow">SEND A MESSAGE</div>
-                <h2>Tell us what your car needs.</h2>
-                <p className="form-lead">
-                  This form is for quote requests and questions about whether we
-                  can fix your car. For emergencies, use WhatsApp. Fields marked
-                  * are required.
-                </p>
-                <div className="form-grid">
-                  <div className="field">
-                    <label htmlFor="contact-name">
-                      Your name <span>*</span>
-                    </label>
-                    <input
-                      id="contact-name"
-                      value={fields.name}
-                      required
-                      minLength={2}
-                      maxLength={100}
-                      autoComplete="name"
-                      onChange={e => update("name", e.target.value)}
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="contact-email">
-                      Email <span>*</span>
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      value={fields.email}
-                      required
-                      maxLength={320}
-                      autoComplete="email"
-                      onChange={e => update("email", e.target.value)}
-                      placeholder="you@example.com"
-                    />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="contact-phone">Phone</label>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      maxLength={30}
-                      value={fields.phone}
-                      autoComplete="tel"
-                      onChange={e => update("phone", e.target.value)}
-                      placeholder="Your phone number"
-                    />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="contact-subject">
-                      Subject <span>*</span>
-                    </label>
-                    <select
-                      id="contact-subject"
-                      value={fields.subject}
-                      onChange={e => update("subject", e.target.value)}
-                    >
-                      {[
-                        "Quote request",
-                        "Can you fix my car?",
-                        "Service question",
-                        "Tyre availability",
-                        "Existing appointment",
-                      ].map(item => (
-                        <option key={item}>{item}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="field wide">
-                    <label htmlFor="contact-message">
-                      Your message <span>*</span>
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      value={fields.message}
-                      required
-                      minLength={10}
-                      maxLength={3000}
-                      onChange={e => update("message", e.target.value)}
-                      placeholder="Tell us what happened, what warning light appeared or what work you need…"
-                    />
-                  </div>
-                </div>
-                <label className="checkbox-field">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={fields.consent}
-                    onChange={e => update("consent", e.target.checked)}
-                  />
-                  <span>
-                    I agree to the use of these details to handle my message, as
-                    described in the <Link href="/privacy">privacy notice</Link>
-                    .
+              <form className="form-card step-form" onSubmit={onFormSubmit} noValidate>
+                <div className="step-head">
+                  <div className="eyebrow">SEND A MESSAGE</div>
+                  <span className="step-count">
+                    Question {step + 1} of {steps.length}
                   </span>
-                </label>
+                </div>
+                <div
+                  className="step-progress"
+                  role="progressbar"
+                  aria-valuemin={1}
+                  aria-valuemax={steps.length}
+                  aria-valuenow={step + 1}
+                  aria-label="Form progress"
+                >
+                  <span style={{ width: `${((step + 1) / steps.length) * 100}%` }} />
+                </div>
+
+                <div className="step" key={step} ref={stepRef} aria-live="polite">
+                  <h2>{steps[step]}</h2>
+
+                  {step === 0 && (
+                    <div className="choice-grid" role="radiogroup" aria-label="Enquiry type">
+                      {subjects.map(item => (
+                        <button
+                          type="button"
+                          key={item}
+                          role="radio"
+                          aria-checked={fields.subject === item}
+                          className={fields.subject === item ? "choice is-selected" : "choice"}
+                          onClick={() => {
+                            update("subject", item);
+                            setStep(1);
+                          }}
+                        >
+                          {item}
+                          {fields.subject === item && <Check size={16} />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {step === 1 && (
+                    <div className="field">
+                      <label htmlFor="contact-message">
+                        The more detail, the better: symptoms, warning lights,
+                        make and model.
+                      </label>
+                      <textarea
+                        id="contact-message"
+                        value={fields.message}
+                        maxLength={3000}
+                        rows={5}
+                        onChange={e => update("message", e.target.value)}
+                        placeholder="e.g. 2017 Golf, grinding noise when braking since last week…"
+                      />
+                    </div>
+                  )}
+
+                  {step === 2 && (
+                    <div className="field">
+                      <label htmlFor="contact-name">Your full name</label>
+                      <input
+                        id="contact-name"
+                        value={fields.name}
+                        maxLength={100}
+                        autoComplete="name"
+                        onChange={e => update("name", e.target.value)}
+                        placeholder="Your name"
+                      />
+                    </div>
+                  )}
+
+                  {step === 3 && (
+                    <div className="form-grid">
+                      <div className="field">
+                        <label htmlFor="contact-email">
+                          Email <span>*</span>
+                        </label>
+                        <input
+                          id="contact-email"
+                          type="email"
+                          value={fields.email}
+                          maxLength={320}
+                          autoComplete="email"
+                          inputMode="email"
+                          onChange={e => update("email", e.target.value)}
+                          placeholder="you@example.com"
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor="contact-phone">Phone (optional)</label>
+                        <input
+                          id="contact-phone"
+                          type="tel"
+                          maxLength={30}
+                          value={fields.phone}
+                          autoComplete="tel"
+                          inputMode="tel"
+                          onChange={e => update("phone", e.target.value)}
+                          placeholder="07…"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {step === 4 && (
+                    <>
+                      <dl className="step-summary">
+                        {[
+                          ["Enquiry", fields.subject, 0],
+                          ["Message", fields.message, 1],
+                          ["Name", fields.name, 2],
+                          ["Contact", [fields.email, fields.phone].filter(Boolean).join(" · "), 3],
+                        ].map(([label, value, target]) => (
+                          <div key={label as string}>
+                            <dt>{label}</dt>
+                            <dd>{value}</dd>
+                            <button
+                              type="button"
+                              className="step-edit"
+                              onClick={() => setStep(target as number)}
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        ))}
+                      </dl>
+                      <label className="checkbox-field">
+                        <input
+                          type="checkbox"
+                          checked={fields.consent}
+                          onChange={e => update("consent", e.target.checked)}
+                        />
+                        <span>
+                          I agree to the use of these details to handle my
+                          message, as described in the{" "}
+                          <Link href="/privacy">privacy notice</Link>.
+                        </span>
+                      </label>
+                    </>
+                  )}
+                </div>
+
                 {error && (
                   <div className="form-error" role="alert">
                     {error}
                   </div>
                 )}
-                <div className="form-actions">
-                  <p>We’ll email you a confirmation after sending.</p>
-                  <button
-                    className="btn btn-primary"
-                    disabled={mutation.isPending}
-                  >
-                    {mutation.isPending ? (
-                      <>
-                        <Loader2 size={16} className="spinner" /> Saving
-                        message…
-                      </>
-                    ) : (
-                      <>
-                        Send your message <ArrowRight size={16} />
-                      </>
-                    )}
-                  </button>
+
+                <div className="step-actions">
+                  {step > 0 ? (
+                    <button type="button" className="btn btn-ghost" onClick={back}>
+                      <ArrowLeft size={16} /> Back
+                    </button>
+                  ) : (
+                    <span className="step-hint">Tap an option to continue</span>
+                  )}
+                  {step > 0 && step < steps.length - 1 && (
+                    <button type="submit" className="btn btn-primary">
+                      Continue <ArrowRight size={16} />
+                    </button>
+                  )}
+                  {step === steps.length - 1 && (
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={mutation.isPending}
+                    >
+                      {mutation.isPending ? (
+                        <>
+                          <Loader2 size={16} className="spinner" /> Sending…
+                        </>
+                      ) : (
+                        <>
+                          Send your message <ArrowRight size={16} />
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
+                <p className="step-footnote">
+                  We’ll email you a confirmation and reply within 24–48 hours.
+                  Need an answer sooner? Use WhatsApp above.
+                </p>
               </form>
             )}
           </div>

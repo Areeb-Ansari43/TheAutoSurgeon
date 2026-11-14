@@ -1,31 +1,10 @@
-import { useMemo, useState, type FormEvent } from "react";
-import { ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { Link } from "wouter";
 import { business } from "@shared/catalog";
 import { PageIntro } from "@/components/Site";
+import { WhatsAppQuick } from "@/components/WhatsAppQuick";
 
 export default function WhatsApp() {
-  const [name, setName] = useState("");
-  const [registration, setRegistration] = useState("");
-  const [message, setMessage] = useState("");
-  const [generated, setGenerated] = useState(false);
-  const whatsappUrl = useMemo(() => {
-    const text = [
-      `Hello ${business.name},`,
-      name.trim() ? `My name is ${name.trim()}.` : "",
-      registration.trim()
-        ? `Vehicle registration: ${registration.trim()}.`
-        : "",
-      message.trim() || "I need help with my car.",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    return `${business.whatsapp}?text=${encodeURIComponent(text)}`;
-  }, [name, registration, message]);
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setGenerated(true);
-  }
   return (
     <>
       <PageIntro
@@ -48,89 +27,17 @@ export default function WhatsApp() {
           </a>
         </div>
       </PageIntro>
-      <section className="section section-alt">
-        <div className="container whatsapp-layout">
-          <div className="whatsapp-copy">
-            <div className="eyebrow">
-              <span className="orange-line" /> DIRECT ENQUIRIES
-            </div>
-            <h2>Tell us what happened.</h2>
-            <p>
-              Fill in the short form and we’ll prepare a WhatsApp message for
-              you. You can review it before WhatsApp opens.
-            </p>
-            <ul className="check-list">
-              <li>
-                <MessageCircle size={17} /> Repairs, quotes and vehicle symptoms
-              </li>
-              <li>
-                <MessageCircle size={17} /> Hayes workshop contact on 07767
-                909397
-              </li>
-              <li>
-                <MessageCircle size={17} /> No automatic booking or recovery
-                promise
-              </li>
-            </ul>
-          </div>
-          <form className="form-card whatsapp-card" onSubmit={submit}>
-            <div className="eyebrow">YOUR ENQUIRY</div>
-            <h2>Start a WhatsApp message.</h2>
-            <div className="field">
-              <label htmlFor="whatsapp-name">Your name</label>
-              <input
-                id="whatsapp-name"
-                value={name}
-                onChange={event => setName(event.target.value)}
-                maxLength={100}
-                placeholder="Your name"
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="whatsapp-registration">
-                Vehicle registration
-              </label>
-              <input
-                id="whatsapp-registration"
-                value={registration}
-                onChange={event => setRegistration(event.target.value)}
-                maxLength={20}
-                placeholder="e.g. AB12 CDE"
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="whatsapp-message">
-                What do you need help with? <span>*</span>
-              </label>
-              <textarea
-                id="whatsapp-message"
-                value={message}
-                onChange={event => setMessage(event.target.value)}
-                required
-                minLength={5}
-                maxLength={1500}
-                placeholder="Tell us about the repair, warning light, tyre issue or quote you need…"
-              />
-            </div>
-            <button className="btn btn-primary" type="submit">
-              <MessageCircle size={17} /> Prepare WhatsApp message{" "}
-              <ArrowRight size={16} />
-            </button>
-            {generated && (
-              <div className="whatsapp-generated" role="status">
-                <strong>Your message is ready.</strong>
-                <p>Review it in WhatsApp before sending to The Auto Surgeon.</p>
-                <a
-                  className="btn btn-ghost"
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Continue to WhatsApp <ArrowRight size={16} />
-                </a>
-              </div>
-            )}
-          </form>
+      <section className="section wa-section">
+        <div className="container">
+          <WhatsAppQuick title="Tell us what happened." />
+          <p className="wa-note">
+            Prefer email? Use the{" "}
+            <Link href="/contact" className="text-link">
+              contact form
+            </Link>{" "}
+            instead. Do not drive a vehicle you believe is unsafe; call{" "}
+            <a href={business.tel}>{business.phone}</a> for urgent advice.
+          </p>
         </div>
       </section>
     </>

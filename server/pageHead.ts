@@ -1,9 +1,8 @@
-import { getPageMeta, publicPaths } from "../shared/routes";
-import { business, services } from "../shared/catalog";
+import { getPageMeta, ogImagePath, publicPaths } from "../shared/routes";
+import { business, services, socials } from "../shared/catalog";
 import { guides } from "../shared/guides";
 
-const logo =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519664037278955/PNfFIWOvLpgultzE.png";
+const logoPath = "/assets/brand/auto-surgeon-logo.png";
 
 export function escapeHtml(value: string) {
   return value.replace(
@@ -38,9 +37,18 @@ export function pageHead(path: string) {
     meta?.description ||
     "The page you requested could not be found. Return to The Auto Surgeon homepage or explore our Hayes workshop services.";
 
-  const image = origin && meta?.image ? `${origin}${meta.image}` : logo;
-  const pageUrl = origin && meta ? `${origin}${meta.path}` : `${origin}/`;
-  const robots = !meta || meta.private ? "noindex, nofollow" : "index, follow";
+  // Each public page has its own 1200×630 social preview card.
+  const image = `${origin}${
+    meta && !meta.private ? ogImagePath(meta.canonical || meta.path) : "/og/home.jpg"
+  }`;
+  const imageAlt = meta
+    ? `${title.split(/\s[—|]\s/)[0]} — The Auto Surgeon, Hayes`
+    : "The Auto Surgeon car repair workshop in Hayes";
+  const pageUrl = meta ? `${origin}${meta.canonical || meta.path}` : `${origin}/`;
+  const robots =
+    !meta || meta.private
+      ? "noindex, follow"
+      : "index, follow, max-image-preview:large, max-snippet:-1";
 
   const service = services.find(item => path === `/services/${item.slug}`);
   const guide = guides.find(item => path === `/guides/${item.slug}`);
@@ -51,11 +59,15 @@ export function pageHead(path: string) {
       "@type": "AutoRepair",
       "@id": `${origin}/#business`,
       name: business.name,
-      description,
+      description:
+        "Independent car repair workshop in Hayes, UB3 for tyres, wheel alignment, brakes, engine oil, diagnostics and Tesla wheel alignment.",
       telephone: "+447767909397",
-      url: origin,
+      email: business.email,
+      url: `${origin}/`,
+      logo: `${origin}${logoPath}`,
+      sameAs: socials.map(social => social.url),
+      hasMap: business.maps,
       image: [
-        image,
         `${origin}/assets/photos/workshop-lift.webp`,
         `${origin}/assets/photos/workshop-mercedes.webp`,
         `${origin}/assets/photos/workshop-engine.webp`,
@@ -97,7 +109,8 @@ export function pageHead(path: string) {
     {
       "@type": "WebSite",
       "@id": `${origin}/#website`,
-      url: origin,
+      url: `${origin}/`,
+      inLanguage: "en-GB",
       name: business.name,
       description:
         "Precision Car Care, Tyres, Wheel Alignment & Diagnostics in Hayes",
@@ -128,7 +141,8 @@ export function pageHead(path: string) {
       });
     } else if (segments.length >= 2) {
       const parentPath = `/${segments[0]}`;
-      const parentName = segments[0] === "services" ? "Services" : "Guides";
+      const parentName = segments[0] === "services" ? "Services" : "Car care guides";
+      const leafName = service?.name || guide?.title || meta.title.split("—")[0].trim();
       breadcrumbItems.push({
         "@type": "ListItem",
         position: 2,
@@ -138,7 +152,7 @@ export function pageHead(path: string) {
       breadcrumbItems.push({
         "@type": "ListItem",
         position: 3,
-        name: meta.title.split("—")[0].trim(),
+        name: leafName,
         item: `${origin}${meta.path}`,
       });
     }
@@ -185,6 +199,39 @@ export function pageHead(path: string) {
     }
   }
 
+  // Guide Article + HowTo schema
+  if (guide) {
+    structuredEntities.push({
+      "@type": "Article",
+      "@id": `${pageUrl}#article`,
+      headline: guide.title,
+      description: guide.summary,
+      image: [`${origin}${guide.image}`, image],
+      datePublished: guide.published,
+      dateModified: guide.updated,
+      inLanguage: "en-GB",
+      articleSection: guide.category,
+      mainEntityOfPage: pageUrl,
+      author: { "@id": `${origin}/#business` },
+      publisher: { "@id": `${origin}/#business` },
+    });
+    if (guide.steps && guide.steps.length > 0) {
+      structuredEntities.push({
+        "@type": "HowTo",
+        name: guide.title,
+        description: guide.summary,
+        image: `${origin}${guide.image}`,
+        step: guide.steps.map(step => ({
+          "@type": "HowToStep",
+          position: step.stepNumber,
+          name: step.title,
+          text: step.text,
+          url: `${pageUrl}#step-${step.stepNumber}`,
+        })),
+      });
+    }
+  }
+
   // Guide FAQ Schema
   if (guide && guide.faqs && guide.faqs.length > 0) {
     structuredEntities.push({
@@ -211,8 +258,11 @@ export function pageHead(path: string) {
   return `<title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}" />
 <meta name="robots" content="${robots}" />
-<meta name="keywords" content="car repair Hayes, emergency car repairs Hayes, tyre fitting Hayes, wheel alignment Hayes, brake repair Hayes, vehicle diagnostics Hayes, puncture repair Hayes, Tesla wheel alignment Hayes" />
-<meta property="og:type" content="website" />
+${meta ? `<link rel="canonical" href="${escapeHtml(pageUrl)}" />
+<link rel="alternate" hreflang="en-GB" href="${escapeHtml(pageUrl)}" />
+<link rel="alternate" hreflang="x-default" href="${escapeHtml(pageUrl)}" />` : ""}
+<meta property="og:type" content="${guide ? "article" : "website"}" />
+<meta property="og:locale" content="en_GB" />
 <meta property="og:site_name" content="The Auto Surgeon" />
 <meta property="og:title" content="${escapeHtml(title)}" />
 <meta property="og:description" content="${escapeHtml(description)}" />
@@ -222,16 +272,47 @@ export function pageHead(path: string) {
 <meta name="twitter:title" content="${escapeHtml(title)}" />
 <meta name="twitter:description" content="${escapeHtml(description)}" />
 <meta name="twitter:image" content="${escapeHtml(image)}" />
-<link rel="canonical" href="${escapeHtml(pageUrl)}" />
+<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta name="author" content="The Auto Surgeon" />${guide ? `
+<meta property="article:published_time" content="${guide.published}" />
+<meta property="article:modified_time" content="${guide.updated}" />
+<meta property="article:section" content="${escapeHtml(guide.category)}" />` : ""}
 ${structuredData}`;
 }
 
 export function sitemapDocument() {
   const origin = publicOrigin();
-  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publicPaths.map(path => `<url><loc>${escapeHtml(origin + path)}</loc></url>`).join("")}</urlset>`;
+  const today = new Date().toISOString().split("T")[0];
+  const entries = publicPaths.map(path => {
+    const meta = getPageMeta(path);
+    const guide = guides.find(item => path === `/guides/${item.slug}`);
+    const image = meta?.image
+      ? `<image:image><image:loc>${escapeHtml(origin + meta.image)}</image:loc></image:image>`
+      : "";
+    return `  <url><loc>${escapeHtml(origin + path)}</loc><lastmod>${guide?.updated || today}</lastmod>${image}</url>`;
+  });
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${entries.join("\n")}
+</urlset>
+`;
 }
 
 export function robotsDocument() {
   const origin = publicOrigin();
-  return `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /account\nDisallow: /manage\nDisallow: /book\nDisallow: /quote\nDisallow: /login\nDisallow: /register\nSitemap: ${origin}/sitemap.xml\n`;
+  return `User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /account
+Disallow: /manage
+Disallow: /login
+Disallow: /register
+Disallow: /thank-you
+
+Sitemap: ${origin}/sitemap.xml
+`;
 }
