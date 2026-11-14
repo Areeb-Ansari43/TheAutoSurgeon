@@ -1,10 +1,8 @@
-import { getPageMeta, publicPaths } from "../shared/routes";
-import { business, services } from "../shared/catalog";
+import { getPageMeta, ogImagePath, publicPaths } from "../shared/routes";
+import { business, services, socials } from "../shared/catalog";
 import { guides } from "../shared/guides";
 
 const logoPath = "/assets/brand/auto-surgeon-logo.png";
-const defaultImagePath = "/assets/photos/workshop-lift.webp";
-const facebookUrl = "https://www.facebook.com/profile.php?id=61595972917406";
 
 export function escapeHtml(value: string) {
   return value.replace(
@@ -39,7 +37,13 @@ export function pageHead(path: string) {
     meta?.description ||
     "The page you requested could not be found. Return to The Auto Surgeon homepage or explore our Hayes workshop services.";
 
-  const image = `${origin}${meta?.image || defaultImagePath}`;
+  // Each public page has its own 1200×630 social preview card.
+  const image = `${origin}${
+    meta && !meta.private ? ogImagePath(meta.canonical || meta.path) : "/og/home.jpg"
+  }`;
+  const imageAlt = meta
+    ? `${title.split(/\s[—|]\s/)[0]} — The Auto Surgeon, Hayes`
+    : "The Auto Surgeon car repair workshop in Hayes";
   const pageUrl = meta ? `${origin}${meta.canonical || meta.path}` : `${origin}/`;
   const robots =
     !meta || meta.private
@@ -61,7 +65,7 @@ export function pageHead(path: string) {
       email: business.email,
       url: `${origin}/`,
       logo: `${origin}${logoPath}`,
-      sameAs: [facebookUrl],
+      sameAs: socials.map(social => social.url),
       hasMap: business.maps,
       image: [
         `${origin}/assets/photos/workshop-lift.webp`,
@@ -202,7 +206,7 @@ export function pageHead(path: string) {
       "@id": `${pageUrl}#article`,
       headline: guide.title,
       description: guide.summary,
-      image: [`${origin}${guide.image}`],
+      image: [`${origin}${guide.image}`, image],
       datePublished: guide.published,
       dateModified: guide.updated,
       inLanguage: "en-GB",
@@ -268,7 +272,12 @@ ${meta ? `<link rel="canonical" href="${escapeHtml(pageUrl)}" />
 <meta name="twitter:title" content="${escapeHtml(title)}" />
 <meta name="twitter:description" content="${escapeHtml(description)}" />
 <meta name="twitter:image" content="${escapeHtml(image)}" />
-<meta property="og:image:alt" content="${escapeHtml(title)}" />${guide ? `
+<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta name="author" content="The Auto Surgeon" />${guide ? `
 <meta property="article:published_time" content="${guide.published}" />
 <meta property="article:modified_time" content="${guide.updated}" />
 <meta property="article:section" content="${escapeHtml(guide.category)}" />` : ""}

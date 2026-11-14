@@ -11,11 +11,10 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { business, type Service } from "@shared/catalog";
+import { business, socials, type Service } from "@shared/catalog";
+import { SocialIcon, SocialLinks } from "./Social";
 import type { Guide } from "@shared/guides";
 
-const facebookUrl =
-  "https://www.facebook.com/profile.php?id=61595972917406";
 
 const workshopPhotos = [
   {
@@ -37,28 +36,6 @@ const workshopPhotos = [
     className: "workshop-gallery-card-portrait",
   },
 ];
-
-function FacebookMark() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z"
-      />
-    </svg>
-  );
-}
-
-function WhatsAppMark() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2Zm0 16a7.2 7.2 0 0 1-3.7-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 1 1 12 19.2Zm4-5.4c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a5.9 5.9 0 0 1-2.9-2.6c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.3c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1l-.6-.4Z"
-      />
-    </svg>
-  );
-}
 
 const navLinks = [
   ["/guides", "Car care guides"],
@@ -166,23 +143,14 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="island-actions">
-            <a
-              href={facebookUrl}
-              className="nav-icon nav-icon-facebook"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="The Auto Surgeon on Facebook"
-              title="Facebook"
-            >
-              <FacebookMark />
-            </a>
+            <SocialLinks className="social-icons nav-socials" />
             <Link
               href="/whatsapp"
-              className="nav-icon nav-icon-whatsapp"
+              className="social-icon social-icon-whatsapp nav-whatsapp"
               aria-label="Message us on WhatsApp"
               title="WhatsApp"
             >
-              <WhatsAppMark />
+              <SocialIcon id="whatsapp" />
             </Link>
             <a
               href={business.tel}
@@ -241,17 +209,10 @@ export function SiteHeader() {
                 <ArrowRight size={15} />
               </Link>
             ))}
-            <a
-              href={facebookUrl}
-              className="island-facebook mobile-facebook"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Visit The Auto Surgeon on Facebook"
-            >
-              <span aria-hidden="true">f</span>
-              Facebook
-              <ArrowRight size={15} />
-            </a>
+            <div className="mobile-socials">
+              <span className="mobile-nav-label">Follow the workshop</span>
+              <SocialLinks />
+            </div>
             <a href={business.tel} className="mobile-phone">
               <Phone size={15} />
               {business.phone}
@@ -398,34 +359,46 @@ export function WorkshopGallery() {
 export function SocialsSection() {
   return (
     <section className="section social-section" aria-labelledby="social-heading">
-      <div className="container social-panel">
-        <div>
-          <div className="eyebrow">
-            <span className="orange-line" />FOLLOW THE WORKSHOP
+      <div className="container">
+        <div className="section-head" data-reveal="up">
+          <div>
+            <p className="eyebrow">
+              <span className="orange-line" />
+              Follow the workshop
+            </p>
+            <h2 id="social-heading" className="section-heading">
+              Watch us work.
+            </h2>
+            <p className="section-description">
+              Repair videos, quick car-care tips and the cars in our Hayes
+              workshop this week. Follow us on TikTok, Instagram and Facebook.
+            </p>
           </div>
-          <h2 id="social-heading" className="section-heading">
-            See what we’re working on.
-          </h2>
-          <p>
-            Follow The Auto Surgeon for workshop updates, Mercedes specialist
-            work and practical car-care news from Hayes. More social channels
-            will be added here soon.
-          </p>
         </div>
-        <a
-          className="social-link social-link-facebook"
-          href={facebookUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Visit The Auto Surgeon on Facebook"
-        >
-          <span className="social-mark" aria-hidden="true">f</span>
-          <span>
-            <strong>Facebook</strong>
-            <small>Visit our page</small>
-          </span>
-          <ArrowRight size={18} />
-        </a>
+        <div className="social-cards" data-stagger>
+          {socials.map(social => (
+            <a
+              key={social.id}
+              className={`social-card social-card-${social.id}`}
+              href={social.url}
+              target="_blank"
+              rel="me noopener noreferrer"
+              data-reveal="up"
+            >
+              <span className="social-card-icon">
+                <SocialIcon id={social.id} size={26} />
+              </span>
+              <span className="social-card-body">
+                <strong>{social.name}</strong>
+                <span className="social-card-handle">{social.handle}</span>
+                <span className="social-card-blurb">{social.blurb}</span>
+              </span>
+              <span className="social-card-cta">
+                Follow <ArrowRight size={16} />
+              </span>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -618,14 +591,7 @@ export function SiteFooter() {
               Sunday by appointment
             </p>
             <a href={`mailto:${business.email}`}>{business.email}</a>
-            <a
-              href={facebookUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="The Auto Surgeon Facebook page"
-            >
-              Facebook · follow the workshop
-            </a>
+            <SocialLinks className="social-icons footer-socials" />
             <Link href="/contact" className="footer-directions">
               Get directions
               <ArrowRight size={14} />

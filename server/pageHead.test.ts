@@ -1,6 +1,13 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { pageHead } from "./pageHead";
-import { getPageMeta, pageRouteManifest, publicPaths } from "../shared/routes";
+import {
+  getPageMeta,
+  ogImagePath,
+  pageRouteManifest,
+  publicPaths,
+} from "../shared/routes";
 import { formError } from "../client/src/lib/formErrors";
 
 describe("public page metadata", () => {
@@ -38,6 +45,26 @@ describe("public page metadata", () => {
       'href="https://theautosurgeon.co.uk/whatsapp"'
     );
     expect(publicPaths).not.toContain("/whatspp");
+  });
+});
+describe("social preview cards", () => {
+  it("has a generated 1200×630 card for every public page (run pnpm og:images)", () => {
+    const missing = publicPaths.filter(
+      route =>
+        !fs.existsSync(
+          path.join(import.meta.dirname, "..", "client", "public", ogImagePath(route))
+        )
+    );
+    expect(missing).toEqual([]);
+  });
+  it("uses the page's own card and lists every social profile", () => {
+    const head = pageHead("/guides/tyre-safety-checks");
+    expect(head).toContain(
+      'property="og:image" content="https://theautosurgeon.co.uk/og/guides--tyre-safety-checks.jpg"'
+    );
+    expect(head).toContain('property="og:image:width" content="1200"');
+    expect(head).toContain("https://www.tiktok.com/@theautosurgeon");
+    expect(head).toContain("https://www.instagram.com/theautosurgeon.uk/");
   });
 });
 describe("form error messages", () => {

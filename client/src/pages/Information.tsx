@@ -12,6 +12,7 @@ import {
 import { guides, guideCategories, type Guide } from "@shared/guides";
 import { services as catalogServices, business } from "@shared/catalog";
 import { WorkshopGallery, PageIntro, GuideCard, FAQs } from "@/components/Site";
+import { SocialLinks } from "@/components/Social";
 
 type InformationProps = {
   page: string;
@@ -632,6 +633,10 @@ function GuidesPage() {
             <Wrench size={16} /> Written by working mechanics
           </span>
         </div>
+        <div className="intro-social" data-reveal="up">
+          <span>Video tips on</span>
+          <SocialLinks />
+        </div>
       </PageIntro>
 
       <section className="section guides-hub">
@@ -1037,6 +1042,16 @@ function GuideArticle({
                   ))}
                 </ul>
               )}
+              <div className="guide-video">
+                <div>
+                  <strong>Prefer video?</strong>
+                  <p>
+                    We post short repair clips and car-care tips on TikTok
+                    (@theautosurgeon) and Instagram (@theautosurgeon.uk).
+                  </p>
+                </div>
+                <SocialLinks className="social-icons social-icons-light" />
+              </div>
             </section>
           </article>
         </div>

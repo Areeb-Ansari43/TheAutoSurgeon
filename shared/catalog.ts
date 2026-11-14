@@ -8,6 +8,33 @@ export const business = {
   maps: "https://www.google.com/maps/search/?api=1&query=Unit+3+Squirrels+Trading+Estate+Viveash+Close+Hayes+UB3+4RZ",
 };
 
+/** Official social profiles. Used in the UI and as schema.org `sameAs`. */
+export const socials = [
+  {
+    id: "tiktok",
+    name: "TikTok",
+    handle: "@theautosurgeon",
+    url: "https://www.tiktok.com/@theautosurgeon",
+    blurb: "Short repair videos and quick car-care tips from the workshop.",
+  },
+  {
+    id: "instagram",
+    name: "Instagram",
+    handle: "@theautosurgeon.uk",
+    url: "https://www.instagram.com/theautosurgeon.uk/",
+    blurb: "Reels and photos of the cars and repairs in our Hayes workshop.",
+  },
+  {
+    id: "facebook",
+    name: "Facebook",
+    handle: "The Auto Surgeon",
+    url: "https://www.facebook.com/profile.php?id=61595972917406",
+    blurb: "Workshop news, Mercedes specialist work and local updates.",
+  },
+] as const;
+
+export type SocialId = (typeof socials)[number]["id"];
+
 export type Service = {
   slug: string;
   name: string;
