@@ -3134,3 +3134,50 @@ main > .container:last-child .cta-banner {
     opacity: 1;
   }
 }
+
+/* ───────────── Large & ultrawide screens ───────────── */
+/* Hero: centre the copy instead of pinning it to the bottom, and stop it
+   growing endlessly on very tall monitors. */
+.hero2 {
+  align-items: center;
+  min-height: clamp(640px, 100svh, 1040px);
+}
+.hero2-inner {
+  padding-top: clamp(120px, 14vh, 170px);
+  padding-bottom: clamp(48px, 7vh, 96px);
+}
+@media (min-width: 1800px) {
+  .container {
+    max-width: 1560px;
+  }
+  .island-shell {
+    max-width: 1560px;
+  }
+  .hero2-copy {
+    max-width: 900px;
+  }
+  .hero2-title {
+    font-size: clamp(96px, 5.6vw, 132px);
+  }
+  .hero2-lead {
+    font-size: 21px;
+  }
+  .hero2-tiles {
+    max-width: 1100px;
+  }
+  .section-heading {
+    font-size: clamp(56px, 3.4vw, 76px);
+  }
+  .page-intro .page-title {
+    font-size: clamp(76px, 4.4vw, 100px);
+  }
+}
+@media (min-width: 2400px) {
+  .container,
+  .island-shell {
+    max-width: 1760px;
+  }
+  body {
+    font-size: 18px;
+  }
+}
