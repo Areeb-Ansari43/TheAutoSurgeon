@@ -67,7 +67,7 @@ export default function Account() {
             <div className="signin-card">
               <div className="signin-copy">
                 <img
-                  src="/assets/brand/auto-surgeon-logo.png"
+                  src="/assets/brand/auto-surgeon-logo.webp"
                   alt="The Auto Surgeon"
                 />
                 <div className="eyebrow">YOUR PERSONAL WORKSHOP CONNECTION</div>

@@ -47,7 +47,7 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/workshop",
-    title: "Inside Our Workshop & Process — The Auto Surgeon",
+    title: "How Our Hayes Car Repair Workshop Works — The Auto Surgeon",
     description:
       "Understand what happens at your visit, from first inspection and vehicle-specific checks to agreed repairs and the final check.",
     image: "/assets/photos/workshop-engine.webp",
@@ -61,7 +61,7 @@ export const staticPages: PageMeta[] = [
   },
   {
     path: "/faq",
-    title: "Your Car Care Questions Answered — The Auto Surgeon",
+    title: "Car Repair FAQs, Hayes UB3 — The Auto Surgeon",
     description:
       "Answers about workshop visits, requests, labour prices, tyres, diagnostics and Tesla alignment. Know what to expect before contacting us.",
     image: "/assets/photos/diagnostics-tablet.webp",
@@ -70,7 +70,7 @@ export const staticPages: PageMeta[] = [
     path: "/guides",
     title: "Car Care Guides for Hayes Drivers — The Auto Surgeon",
     description:
-      "Free, mechanic-written guides on tyre safety, dashboard warning lights, wheel alignment, pothole damage, maintenance and Tesla, Toyota and Mercedes care in Hayes.",
+      "Free guides on tyre safety, warning lights, wheel alignment, pothole damage, maintenance and Tesla, Toyota and Mercedes care for Hayes drivers.",
     image: "/assets/photos/diagnostics-tablet.webp",
   },
   {

@@ -94,7 +94,7 @@ export function SiteHeader() {
             aria-label="The Auto Surgeon home"
           >
             <img
-              src="/assets/brand/auto-surgeon-logo.png"
+              src="/assets/brand/auto-surgeon-logo.webp"
               alt="The Auto Surgeon"
               width={160}
               height={60}
@@ -547,8 +547,10 @@ export function SiteFooter() {
           <div className="footer-brand">
             <Link href="/">
               <img
-                src="/assets/brand/auto-surgeon-logo.png"
+                src="/assets/brand/auto-surgeon-logo.webp"
                 alt="The Auto Surgeon"
+                width={200}
+                height={82}
                 loading="lazy"
               />
             </Link>

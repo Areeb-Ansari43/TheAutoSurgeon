@@ -391,7 +391,7 @@ const guideEntries: GuideEntry[] = [
     internalLinks: [
       { label: "Contact Emergency Workshop Line", href: "/contact" },
       { label: "View All Workshop Services", href: "/services" },
-      { label: "WhatsApp Direct Message", href: "/whatspp" },
+      { label: "WhatsApp Direct Message", href: "/whatsapp" },
     ],
     conclusion:
       "When unexpected vehicle faults occur in Hayes, prioritize safety first and call the workshop directly for urgent advice and repair priority.",
@@ -623,7 +623,7 @@ const guideEntries: GuideEntry[] = [
   },
   {
     slug: "toyota-hybrid-warning-lights",
-    title: "Toyota Hybrid Warning Lights: Safe Next Steps for Hayes Drivers",
+    title: "Toyota Hybrid Warning Lights: Next Steps in Hayes",
     category: "Toyota care",
     summary:
       "Safe, practical advice on Toyota Yaris, Corolla, Prius and RAV4 hybrid warnings, master warning symbols and brake messages.",
@@ -771,7 +771,7 @@ const guideEntries: GuideEntry[] = [
   },
   {
     slug: "common-car-problems-by-make",
-    title: "Common Car Problems by Make: Tesla, Toyota, Mercedes, BMW & VW",
+    title: "Car Problems by Make: Tesla, Toyota, Mercedes, BMW & VW",
     category: "Car problems",
     summary:
       "A complete guide to frequent vehicle faults by make, diagnostic symptoms and practical workshop repair solutions in Hayes.",
